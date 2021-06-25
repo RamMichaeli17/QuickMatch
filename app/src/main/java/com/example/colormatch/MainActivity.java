@@ -29,10 +29,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
- /*   public void Music(View view){
+    public void Music(View view){
         song.setLooping(true);
         song.start();
-    }*/
+    }
 
     @Override
     protected void onPause() {

@@ -3,4 +3,8 @@
     <string name="app_name">Color Match</string>
     <string name="about_us_title">אודותינו</string>
     <string name="about_us_des">© רם מיכאלי, גל ישראלי ויוליה קודרקו\nפורסם לראשונה: 15 ביולי 2021</string>
+    <string name="easy_btn">מתחילים</string>
+    <string name="medium_btn">מתקדמים</string>
+    <string name="hard_btn">מקצוענים</string>
+    <string name="dual_btn">אחד על אחד</string>
 </resources>
