@@ -22,6 +22,9 @@
 
 
         </activity>
+        <activity android:name=".AboutUsPopup"
+            android:theme="@style/Theme.AppCompat.CustomTheme">
+        </activity>
     </application>
 
 </manifest>
