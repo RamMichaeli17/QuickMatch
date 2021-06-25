@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:id="@+id/music_button"
-        android:onClick="Music"
-        android:src="@drawable/music_on" />
+        android:src="@drawable/music_selector" />
 </LinearLayout>
 
