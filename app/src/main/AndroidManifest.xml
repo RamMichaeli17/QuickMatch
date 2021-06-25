@@ -10,11 +10,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ColorMatch">
         <activity android:name=".MainActivity">
+
+        </activity>
+
+        <activity android:name=".SplashActivity" android:theme="@style/Theme.ColorMatch1">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
         </activity>
     </application>
 
