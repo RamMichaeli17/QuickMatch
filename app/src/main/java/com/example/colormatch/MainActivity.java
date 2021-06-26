@@ -16,10 +16,16 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    //Topic Animations
+    ImageView colorIv, matchIv;
+    Animation tweenAnim1, tweenAnim2;
 
     ImageButton about_us_bn, music_bn;
     MediaPlayer song;
@@ -32,10 +38,21 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Topic Animations
+        colorIv = findViewById(R.id.color_topic);
+        matchIv = findViewById(R.id.match_topic);
+        tweenAnim1=AnimationUtils.loadAnimation(this,R.anim.tween_anim_1);
+        tweenAnim2=AnimationUtils.loadAnimation(this,R.anim.tween_anim_2);
+        colorIv.startAnimation(tweenAnim1);
+        matchIv.startAnimation(tweenAnim2);
+
 
         easyBtn = findViewById(R.id.easy_btn);
         mediumBtn = findViewById(R.id.medium_btn);
