@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView colorIv, matchIv;
     Animation tweenAnim1, tweenAnim2;
 
-    ImageButton about_us_bn, music_bn;
+
     ImageButton about_us_bn, music_bn, sound_btn;
     MediaPlayer song;
     boolean musicButtonState = true;
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     Button easyBtn, mediumBtn, hardBtn, dualBtn;
     Animation scaleUp, scaleDown;
 
-    Button goToDB;
+    ImageButton goToDB;
 
 
 
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        goToDB=findViewById(R.id.goToDBbtn);
+        goToDB=findViewById(R.id.trophy_button);
 
         goToDB.setOnClickListener(new View.OnClickListener() {
             @Override
