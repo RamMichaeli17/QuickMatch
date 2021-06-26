@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     Button easyBtn, mediumBtn, hardBtn, dualBtn;
     Animation scaleUp, scaleDown;
 
-    FloatingActionButton goToDB;
+    Button goToDB;
 
 
 
