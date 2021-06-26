@@ -100,5 +100,11 @@
         android:layout_gravity="center"
         android:id="@+id/music_button"
         android:src="@drawable/music_selector" />
+
+    <Button
+        android:id="@+id/goToDBbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true" />
 </LinearLayout>
 

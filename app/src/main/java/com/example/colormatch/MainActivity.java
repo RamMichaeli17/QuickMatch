@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.provider.ContactsContract;
@@ -14,6 +15,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.view.View;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +27,10 @@ public class MainActivity extends AppCompatActivity {
 
     Button easyBtn, mediumBtn, hardBtn, dualBtn;
     Animation scaleUp, scaleDown;
+
+    FloatingActionButton goToDB;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +135,21 @@ public class MainActivity extends AppCompatActivity {
               if (music_bn.callOnClick()){
                     song.release();
                 }*/
+            }
+
+
+
+
+        });
+
+
+        goToDB=findViewById(R.id.goToDBbtn);
+
+        goToDB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, DBActivity.class);
+                startActivity(intent);
             }
         });
     }

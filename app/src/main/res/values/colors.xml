@@ -8,4 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="lightGrey">#EFEFEF</color>
+    <color name="galcustom">#FDE2E2</color>
+    <color name="lightblack">#9F9F9F</color>
+    <color name="galcustom2">#FDF4F4</color>
 </resources>
