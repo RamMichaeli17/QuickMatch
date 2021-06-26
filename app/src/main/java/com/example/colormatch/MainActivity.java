@@ -41,10 +41,15 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Click Sound
+        final MediaPlayer clickSound = MediaPlayer.create(this,R.raw.click_sound);
 
         //Topic Animations
         colorIv = findViewById(R.id.color_topic);
@@ -126,6 +131,34 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+                easyBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        clickSound.start();
+                    }
+                });
+
+                mediumBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        clickSound.start();
+                    }
+                });
+
+                hardBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        clickSound.start();
+                    }
+                });
+
+                dualBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        clickSound.start();
+                    }
+                });
 
 
         song = MediaPlayer.create(MainActivity.this, R.raw.mixaund_happy_day_);
