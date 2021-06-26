@@ -2,15 +2,12 @@ package com.example.colormatch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
-import android.provider.ContactsContract;
 import android.view.View;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -19,6 +16,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,7 +26,10 @@ public class MainActivity extends AppCompatActivity {
     Animation tweenAnim1, tweenAnim2;
 
     ImageButton about_us_bn, music_bn;
+    ImageButton about_us_bn, music_bn, sound_btn;
     MediaPlayer song;
+    boolean musicButtonState = true;
+    boolean soundButtonState = true;
 
 
     Button easyBtn, mediumBtn, hardBtn, dualBtn;
@@ -127,14 +128,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-
-
-
-
-        song=MediaPlayer.create(MainActivity.this,R.raw.boy_oh_boy);
-        about_us_bn = (ImageButton)findViewById(R.id.about_us_button);
-        music_bn=(ImageButton)findViewById(R.id.music_button);
+        song = MediaPlayer.create(MainActivity.this, R.raw.mixaund_happy_day_);
+        about_us_bn = (ImageButton) findViewById(R.id.about_us_button);
+        music_bn = (ImageButton) findViewById(R.id.music_button);
+        sound_btn = (ImageButton) findViewById(R.id.pink_sound_button);
 
         about_us_bn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,12 +143,18 @@ public class MainActivity extends AppCompatActivity {
         music_bn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (musicButtonState) {
+                    song.pause();
+                    musicButtonState = false;
+                    music_bn.setImageResource(R.drawable.music_off);
+                    Toast.makeText(MainActivity.this, R.string.no_music, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 song.setLooping(true);
-                song.stop();
-             /*   music_bn.setImageDrawable();
-              if (music_bn.callOnClick()){
-                    song.release();
-                }*/
+                song.start();
+                music_bn.setImageResource(R.drawable.music_on);
+                Toast.makeText(MainActivity.this, R.string.music_on, Toast.LENGTH_SHORT).show();
+                musicButtonState = true;
             }
 
 
@@ -169,14 +172,30 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        sound_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (soundButtonState) {
+                    soundButtonState = false;
+                    sound_btn.setImageResource(R.drawable.sound_off);
+                    Toast.makeText(MainActivity.this, R.string.no_sound, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                song.setLooping(true);
+                sound_btn.setImageResource(R.drawable.sound_on);
+                Toast.makeText(MainActivity.this, R.string.sound_on, Toast.LENGTH_SHORT).show();
+                soundButtonState = true;
+            }
+        });
     }
 
-    @Override
+/*    @Override
     protected void onPause() {
         super.onPause();
-        /*song.release();*/
+        *//*song.release();*//*
         song.start();
-    }
+    }*/
 
     @Override
     protected void onStart() {
