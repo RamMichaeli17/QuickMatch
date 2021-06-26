@@ -36,8 +36,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 song.setLooping(true);
-                song.start();
-              /* if (music_bn.callOnClick()){
+                song.stop();
+             /*   music_bn.setImageDrawable();
+              if (music_bn.callOnClick()){
                     song.release();
                 }*/
             }
