@@ -16,54 +16,67 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
         <Button
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="30sp"
             android:textAllCaps="false"
-            android:textColor="#3F51B5"
+            android:textColor="#5666C3"
             android:background="@drawable/custom_button"
             android:text="@string/easy_btn"
             android:fontFamily="@font/noot_aj"
-            android:id="@+id/easy_btn"/>
+            android:id="@+id/easy_btn"
+            android:paddingTop="5dp"
+            android:shadowColor="@color/white"
+            android:shadowRadius="10"/>
         <Button
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="30sp"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="#5666C3"
             android:background="@drawable/custom_button"
             android:text="@string/medium_btn"
             android:fontFamily="@font/noot_aj"
             android:layout_marginTop="25dp"
-            android:id="@+id/medium_btn"/>
+            android:id="@+id/medium_btn"
+            android:paddingTop="5dp"
+            android:shadowColor="@color/white"
+            android:shadowRadius="10"/>
         <Button
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="30sp"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="#5666C3"
             android:background="@drawable/custom_button"
             android:text="@string/hard_btn"
             android:fontFamily="@font/noot_aj"
             android:layout_marginTop="25dp"
-            android:id="@+id/hard_btn"/>
+            android:id="@+id/hard_btn"
+            android:paddingTop="5dp"
+            android:shadowColor="@color/white"
+            android:shadowRadius="10"/>
         <Button
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="30sp"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="#5666C3"
             android:background="@drawable/custom_button"
             android:text="@string/dual_btn"
             android:fontFamily="@font/noot_aj"
             android:layout_marginTop="25dp"
-            android:id="@+id/dual_btn"/>
+            android:id="@+id/dual_btn"
+            android:paddingTop="5dp"
+            android:shadowColor="@color/white"
+            android:shadowRadius="10"/>
 
 
 
