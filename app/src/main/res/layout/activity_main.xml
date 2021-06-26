@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="match_parent">
 
-    <ImageView
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/goToDBbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:src="@drawable/logo"
-        android:layout_alignParentTop="true"/>
-
-
-</RelativeLayout>
+        android:clickable="true"
+        app:srcCompat="@android:drawable/ic_menu_add" />
+</LinearLayout>
