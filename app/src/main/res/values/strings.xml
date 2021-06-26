@@ -6,8 +6,8 @@
     <string name="medium_btn">Advanced</string>
     <string name="hard_btn">Professional</string>
     <string name="dual_btn">1 VS 1</string>
-    <string name="no_music">music is off</string>
-    <string name="no_sound">sound is off</string>
-    <string name="music_on">music is on</string>
-    <string name="sound_on">sound is on</string>
+    <string name="no_music">Music is off 🔇</string>
+    <string name="no_sound">Sound is off 🔕</string>
+    <string name="music_on">Music is on 🔈</string>
+    <string name="sound_on">Sound is on 🔔</string>
 </resources>

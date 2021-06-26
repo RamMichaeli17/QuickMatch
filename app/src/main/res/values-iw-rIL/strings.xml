@@ -7,8 +7,8 @@
     <string name="medium_btn">מתקדמים</string>
     <string name="hard_btn">מקצוענים</string>
     <string name="dual_btn">אחד על אחד</string>
-    <string name="no_music">מוזיקה כבוייה</string>
-    <string name="no_sound">צליל כבוי</string>
-    <string name="music_on">מוזיקה דלוקה</string>
-    <string name="sound_on">צליל דלוק</string>
+    <string name="no_music">מוזיקה כבוייה 🔇</string>
+    <string name="no_sound">צליל כבוי 🔕</string>
+    <string name="music_on">מוזיקה דלוקה 🔈</string>
+    <string name="sound_on">צליל דלוק 🔔</string>
 </resources>
