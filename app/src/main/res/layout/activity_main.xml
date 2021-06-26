@@ -25,7 +25,7 @@
             android:textSize="30sp"
             android:textAllCaps="false"
             android:textColor="#5666C3"
-            android:background="@drawable/custom_button"
+            android:background="@drawable/shape_selector"
             android:text="@string/easy_btn"
             android:fontFamily="@font/noot_aj"
             android:id="@+id/easy_btn"
@@ -39,7 +39,7 @@
             android:textSize="30sp"
             android:textAllCaps="false"
             android:textColor="#5666C3"
-            android:background="@drawable/custom_button"
+            android:background="@drawable/shape_selector"
             android:text="@string/medium_btn"
             android:fontFamily="@font/noot_aj"
             android:layout_marginTop="25dp"
@@ -54,7 +54,7 @@
             android:textSize="30sp"
             android:textAllCaps="false"
             android:textColor="#5666C3"
-            android:background="@drawable/custom_button"
+            android:background="@drawable/shape_selector"
             android:text="@string/hard_btn"
             android:fontFamily="@font/noot_aj"
             android:layout_marginTop="25dp"
@@ -69,14 +69,15 @@
             android:textSize="30sp"
             android:textAllCaps="false"
             android:textColor="#5666C3"
-            android:background="@drawable/custom_button"
+            android:background="@drawable/shape_selector"
             android:text="@string/dual_btn"
             android:fontFamily="@font/noot_aj"
             android:layout_marginTop="25dp"
             android:id="@+id/dual_btn"
             android:paddingTop="5dp"
             android:shadowColor="@color/white"
-            android:shadowRadius="10"/>
+            android:shadowRadius="10"
+            android:layout_marginBottom="20dp"/>
 
 
 
