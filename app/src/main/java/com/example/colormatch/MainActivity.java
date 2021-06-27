@@ -119,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
                     settingsBtn.startAnimation(rotateClose);
                     clicked=false;
                 }
+                if(soundButtonState)clickSound.start();
+
             }
         });
 
@@ -191,13 +193,15 @@ public class MainActivity extends AppCompatActivity {
                 easyBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        clickSound.start();
+
+                        if(soundButtonState)clickSound.start();
                     }
                 });
 
                 mediumBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if(soundButtonState)
                         clickSound.start();
                     }
                 });
@@ -205,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
                 hardBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if(soundButtonState)
                         clickSound.start();
                     }
                 });
@@ -212,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
                 dualBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if(soundButtonState)
                         clickSound.start();
                     }
                 });
@@ -226,6 +232,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this,AboutUsPopup.class));
+                if(soundButtonState)clickSound.start();
             }
         });
 
@@ -244,12 +251,14 @@ public class MainActivity extends AppCompatActivity {
                 music_bn.setImageResource(R.drawable.music_on);
                 Toast.makeText(MainActivity.this, R.string.music_on, Toast.LENGTH_SHORT).show();
                 musicButtonState = true;
+                if(soundButtonState)clickSound.start();
             }
 
 
 
 
         });
+
 
 
         goToDB=findViewById(R.id.trophy_button);
@@ -266,15 +275,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (soundButtonState) {
+                    clickSound.pause();
                     soundButtonState = false;
                     sound_btn.setImageResource(R.drawable.sound_off);
                     Toast.makeText(MainActivity.this, R.string.no_sound, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                song.setLooping(true);
                 sound_btn.setImageResource(R.drawable.sound_on);
+                clickSound.start();
                 Toast.makeText(MainActivity.this, R.string.sound_on, Toast.LENGTH_SHORT).show();
                 soundButtonState = true;
+                if(soundButtonState)clickSound.start();
+                if(soundButtonState)clickSound.start();
             }
         });
     }

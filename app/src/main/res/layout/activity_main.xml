@@ -102,7 +102,7 @@
         <ImageButton
             android:layout_width="75dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_settings"
+            android:src="@drawable/settings_icon"
             android:layout_marginLeft="10dp"
             android:scaleType="fitCenter"
             android:background="@null"
