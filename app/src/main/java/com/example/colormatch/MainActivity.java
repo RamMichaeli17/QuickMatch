@@ -37,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
 
     ImageButton goToDB;
 
+    //Pop Up Menu
+    Animation rotateOpen, rotateClose, fromBottom, toBottom;
+    ImageButton settingsBtn;
+    boolean clicked = false;
+
 
 
 
@@ -59,6 +64,14 @@ public class MainActivity extends AppCompatActivity {
         colorIv.startAnimation(tweenAnim1);
         matchIv.startAnimation(tweenAnim2);
 
+        //Pop Up Menu
+        rotateOpen= AnimationUtils.loadAnimation(this,R.anim.rotate_open_anim);
+        rotateClose= AnimationUtils.loadAnimation(this,R.anim.rotate_close_anim);
+        fromBottom= AnimationUtils.loadAnimation(this,R.anim.from_bottom_anim);
+        toBottom= AnimationUtils.loadAnimation(this,R.anim.to_bottom_anim);
+        settingsBtn= findViewById(R.id.settings_btn);
+
+
 
         easyBtn = findViewById(R.id.easy_btn);
         mediumBtn = findViewById(R.id.medium_btn);
@@ -67,6 +80,49 @@ public class MainActivity extends AppCompatActivity {
 
         scaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up);
         scaleDown = AnimationUtils.loadAnimation(this,R.anim.scale_down);
+
+
+        //Pop Up Menu
+
+        settingsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!clicked) {
+                    about_us_bn.setVisibility(View.VISIBLE);
+                    about_us_bn.startAnimation(fromBottom);
+                    about_us_bn.setClickable(true);
+                    music_bn.setVisibility(View.VISIBLE);
+                    music_bn.startAnimation(fromBottom);
+                    music_bn.setClickable(true);
+                    sound_btn.setVisibility(View.VISIBLE);
+                    sound_btn.startAnimation(fromBottom);
+                    sound_btn.setClickable(true);
+                    goToDB.setVisibility(View.VISIBLE);
+                    goToDB.startAnimation(fromBottom);
+                    goToDB.setClickable(true);
+                    settingsBtn.startAnimation(rotateOpen);
+                    clicked=true;
+                }
+                else {
+                    about_us_bn.setVisibility(View.INVISIBLE);
+                    about_us_bn.startAnimation(toBottom);
+                    about_us_bn.setClickable(false);
+                    music_bn.setVisibility(View.INVISIBLE);
+                    music_bn.startAnimation(toBottom);
+                    music_bn.setClickable(false);
+                    sound_btn.setVisibility(View.INVISIBLE);
+                    sound_btn.startAnimation(toBottom);
+                    sound_btn.setClickable(false);
+                    goToDB.setVisibility(View.INVISIBLE);
+                    goToDB.startAnimation(toBottom);
+                    goToDB.setClickable(false);
+                    settingsBtn.startAnimation(rotateClose);
+                    clicked=false;
+                }
+            }
+        });
+
+
 
         easyBtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
