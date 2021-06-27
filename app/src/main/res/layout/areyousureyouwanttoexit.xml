@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/leaving_selector"
+
+
+    >
+
+    <ImageView
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/questionmarkleaving"
+        android:id="@+id/questionmarkimage"
+        android:layout_margin="10dp"
+        android:background="@null"
+
+        />
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/questionmarkimage"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:fontFamily="@font/noot_aj"
+        android:shadowColor="@color/white"
+        android:text="@string/areYouSureYouWannaQuit"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="25sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv"
+        android:layout_centerInParent="true"
+        android:layout_margin="10dp">
+    <Button
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:text="Yes"
+        android:textStyle="bold"
+        android:fontFamily="@font/noot_aj"
+        android:textAllCaps="false"
+        android:textSize="25sp"
+        android:layout_below="@+id/tv"
+        android:id="@+id/btnyes"
+        android:background="@drawable/custom_button_2"
+        >
+
+    </Button>
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="0dp"/>
+
+    <Button
+        android:id="@+id/btnno"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv"
+        android:layout_centerHorizontal="true"
+        android:textSize="25sp"
+        android:fontFamily="@font/noot_aj"
+        android:text="No"
+        android:layout_toRightOf="@+id/btnyes"
+        android:textAllCaps="false"
+        android:background="@drawable/custom_button_2">
+
+    </Button>
+    </LinearLayout>
+</RelativeLayout>
+

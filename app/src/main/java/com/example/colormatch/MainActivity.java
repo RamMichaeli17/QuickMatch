@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         scaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up);
         scaleDown = AnimationUtils.loadAnimation(this,R.anim.scale_down);
 
+        goToDB=findViewById(R.id.goToDBbtn);
+
+
         easyBtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -126,6 +129,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
         music_bn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,8 +148,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        goToDB=findViewById(R.id.goToDBbtn);
-
         goToDB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,6 +155,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(MainActivity.this,AreYouSureYouWantToExit.class));
+       // super.onBackPressed();
     }
 
     @Override

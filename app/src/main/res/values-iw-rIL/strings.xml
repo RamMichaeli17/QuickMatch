@@ -7,4 +7,5 @@
     <string name="medium_btn">מתקדמים</string>
     <string name="hard_btn">מקצוענים</string>
     <string name="dual_btn">אחד על אחד</string>
+    <string name="areYouSureYouWannaQuit">האם אתה בטוח שברצונך לצאת?</string>
 </resources>

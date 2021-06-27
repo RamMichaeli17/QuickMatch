@@ -6,4 +6,5 @@
     <string name="medium_btn">Advanced</string>
     <string name="hard_btn">Professional</string>
     <string name="dual_btn">1 VS 1</string>
+    <string name="areYouSureYouWannaQuit">Are you sure you want to quit?</string>
 </resources>
