@@ -26,6 +26,9 @@
         <activity android:name=".AboutUsPopup"
             android:theme="@style/Theme.AppCompat.CustomTheme">
         </activity>
+        <activity android:name=".AreYouSureYouWantToExit"
+            android:theme="@style/Theme.Transparent">
+        </activity>
         <activity android:name =".DBActivity"/>
     </application>
 

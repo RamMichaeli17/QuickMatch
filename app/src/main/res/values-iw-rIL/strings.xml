@@ -11,4 +11,5 @@
     <string name="no_sound">צליל כבוי 🔕</string>
     <string name="music_on">מוזיקה דלוקה 🔈</string>
     <string name="sound_on">צליל דלוק 🔔</string>
+    <string name="areYouSureYouWannaQuit">האם אתה בטוח שברצונך לצאת?</string>
 </resources>

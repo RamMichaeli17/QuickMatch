@@ -10,4 +10,5 @@
     <string name="no_sound">Sound is off 🔕</string>
     <string name="music_on">Music is on 🔈</string>
     <string name="sound_on">Sound is on 🔔</string>
+    <string name="areYouSureYouWannaQuit">Are you sure you want to quit?</string>
 </resources>
