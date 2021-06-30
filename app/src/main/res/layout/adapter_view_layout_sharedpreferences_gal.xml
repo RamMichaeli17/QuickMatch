@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,7 +10,8 @@
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="33.3"
+        android:id="@+id/LinearLayout1"
+        android:layout_toRightOf="@id/LinearLayout2"
         >
 
         <TextView
@@ -18,7 +19,6 @@
             android:text="Username"
             android:layout_width="match_parent"
             android:textSize="20dp"
-            android:layout_marginLeft="50dp"
             android:layout_height="30dp"
             android:textStyle="bold"
             android:fontFamily="@font/noot_aj"
@@ -26,7 +26,6 @@
 
         <TextView
             android:gravity="left"
-            android:layout_marginLeft="51dp"
             android:text="Score"
             android:fontFamily="monospace"
             android:layout_width="match_parent"
@@ -37,4 +36,18 @@
             />
     </LinearLayout>
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/LinearLayout2"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/scoreImage"
+        android:src="@drawable/highscores_numberonebadge"
+        />
+    </LinearLayout>
+
+</RelativeLayout>

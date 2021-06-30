@@ -4,18 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class listAdapter_gal extends ArrayAdapter<Person> {
@@ -43,9 +39,18 @@ public class listAdapter_gal extends ArrayAdapter<Person> {
 
         TextView tvUserName = (TextView) convertView.findViewById(R.id.textView2);
         TextView tvScore = (TextView) convertView.findViewById(R.id.textView3);
+        ImageView image = (ImageView) convertView.findViewById(R.id.scoreImage);
 
         tvUserName.setText(username);
         tvScore.setText(score);
+
+        if (position == 0)
+            image.setImageAlpha(255);
+        else
+            image.setImageAlpha(0);
+
+
+
 
         return convertView;
     }

@@ -1,25 +1,23 @@
 package com.example.colormatch;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 
-import java.lang.reflect.Array;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 public class Gal_SharedPreferencesAttemptInsteadOfSQLITE extends AppCompatActivity {
 
     ListView scorelistview;
     EditText usernameET,scoreET;
-    Button addButton;
-    ArrayList<Person> peopleList = new ArrayList<>();
-    ImageView numberonebadge;
+    Button addButton,clearBTN;
+    ArrayList<Person> peopleList;
+  //  ImageView numberonebadge;
     int addButtonCounter=0;
 
     @Override
@@ -32,10 +30,22 @@ public class Gal_SharedPreferencesAttemptInsteadOfSQLITE extends AppCompatActivi
         usernameET=findViewById(R.id.usernameET);
         scoreET=findViewById(R.id.scoreET);
         addButton=findViewById(R.id.addBTNsharedPreferences);
-        numberonebadge=findViewById(R.id.numberonebadge);
+        clearBTN=findViewById(R.id.clearBTN);
+       // numberonebadge=findViewById(R.id.numberonebadge);
 
+        // Shared Preferences - get data
+        peopleList = PrefConfigGal.readListFromPref(this);
+        if ( peopleList==null)
+            peopleList = new ArrayList<>();
+        else {
+            addButtonCounter = 1;
+        }
 
-        showTrophy();
+        // Initial screen load
+        refreshScreen();
+
+        //Show #1 medal icon if there is atleast 1 score
+       // showTrophy();
 
         addButton.setOnClickListener(new View.OnClickListener() {
 
@@ -43,23 +53,36 @@ public class Gal_SharedPreferencesAttemptInsteadOfSQLITE extends AppCompatActivi
             public void onClick(View v) {
 
                 addButtonCounter++;
-                showTrophy();
+             //   showTrophy();
                 Person newPerson = new Person(usernameET.getText().toString(),scoreET.getText().toString());
 
                 peopleList.add(newPerson);
 
+
                 Collections.sort(peopleList);
 
+                // Shared Preferences
+                PrefConfigGal.writeListInPref(getApplicationContext(),peopleList);
+                //
 
-                listAdapter_gal adapter = new listAdapter_gal(Gal_SharedPreferencesAttemptInsteadOfSQLITE.this, R.layout.adapter_view_layout_sharedpreferences_gal, peopleList);
 
-                scorelistview.setAdapter(adapter);
+                refreshScreen();
+            }
+        });
+
+        clearBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                peopleList.clear();
+                addButtonCounter=0;
+               // showTrophy();
+                refreshScreen();
             }
         });
 
     }
 
-    public void showTrophy()
+   /* public void showTrophy()
     {
         if (addButtonCounter == 0) {
             numberonebadge.setVisibility(View.INVISIBLE);
@@ -67,5 +90,11 @@ public class Gal_SharedPreferencesAttemptInsteadOfSQLITE extends AppCompatActivi
             numberonebadge.setVisibility(View.VISIBLE);
         }
 
+    }*/
+
+    public void refreshScreen()
+    {
+        listAdapter_gal adapter = new listAdapter_gal(Gal_SharedPreferencesAttemptInsteadOfSQLITE.this, R.layout.adapter_view_layout_sharedpreferences_gal, peopleList);
+        scorelistview.setAdapter(adapter);
     }
 }

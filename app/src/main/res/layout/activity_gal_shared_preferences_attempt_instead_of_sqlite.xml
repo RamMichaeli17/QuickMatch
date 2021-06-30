@@ -20,13 +20,13 @@
 
         />
 
-    <ImageView
+   <!-- <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/highscores_numberonebadge"
         android:layout_below="@id/LinearLayout"
         android:layout_marginTop="12dp"
-        android:id="@+id/numberonebadge"/>
+        android:id="@+id/numberonebadge"/> -->
 
 
 <LinearLayout
@@ -67,7 +67,19 @@
 
 
         />
+    <Button
+        android:id="@+id/clearBTN"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="20dp"
+        android:text="Clear"
+        android:layout_marginTop="5dp"
+        android:textAllCaps="false"
+        android:textSize="15sp"
+        android:background="@null"
 
+
+        />
 </LinearLayout>
 
     <ListView
