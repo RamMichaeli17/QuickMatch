@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ColorMatch">
+        <activity android:name=".Gal_SharedPreferencesAttemptInsteadOfSQLITE"
+            android:windowSoftInputMode="adjustPan"
+            >
         <activity android:name=".SecondActivityGame"></activity>
         <activity
             android:name=".MainActivity"
@@ -21,14 +24,17 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
         </activity>
         <activity
             android:name=".AboutUsPopup"
-            android:theme="@style/Theme.AppCompat.CustomTheme"></activity>
+            android:theme="@style/Theme.AppCompat.CustomTheme" >
+        </activity>
         <activity
             android:name=".AreYouSureYouWantToExit"
-            android:theme="@style/Theme.Transparent"></activity>
-        <activity android:name=".DBActivity" />
+            android:theme="@style/Theme.Transparent" >
+        </activity>
     </application>
 
 </manifest>

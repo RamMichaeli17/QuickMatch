@@ -16,6 +16,8 @@ public class AreYouSureYouWantToExit extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.areyousureyouwanttoexit);
 
+
+
         DisplayMetrics dm= new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getRealMetrics(dm);
 
@@ -31,9 +33,7 @@ public class AreYouSureYouWantToExit extends Activity {
 
         yesToQuitBTN.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                    AreYouSureYouWantToExit.this.finishAffinity();
-            }
+            public void onClick(View v) { finishAffinity(); }
         });
 
         noToQuitBTN.setOnClickListener(new View.OnClickListener() {
