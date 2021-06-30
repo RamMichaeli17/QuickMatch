@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Color Match</string>
     <string name="about_us_title">About Us:</string>
-    <string name="about_us_des">© Ram Michaeli, Gal Israeli and Yulia Kuderko\n     First published: July 15th, 2021\n</string>
+    <string name="about_us_des">© Ram Michaeli, Gal Israeli and Yulia Kuderko\n     First published: July 13th, 2021\n</string>
     <string name="easy_btn">Beginner</string>
     <string name="medium_btn">Advanced</string>
     <string name="hard_btn">Professional</string>
     <string name="dual_btn">1 VS 1</string>
-    <string name="no_music">Music is off 🔇</string>
-    <string name="no_sound">Sound is off 🔕</string>
-    <string name="music_on">Music is on 🔈</string>
-    <string name="sound_on">Sound is on 🔔</string>
+    <string name="no_music">Music is off 🔕</string>
+    <string name="no_sound">Sound is off 🔈</string>
+    <string name="music_on">Music is on 🔔</string>
+    <string name="sound_on">Sound is on 🔇</string>
 </resources>

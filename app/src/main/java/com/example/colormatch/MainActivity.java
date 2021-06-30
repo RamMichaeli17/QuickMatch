@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,10 +11,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.view.View;
 import android.widget.ImageView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     Animation tweenAnim1, tweenAnim2;
 
 
-    ImageButton about_us_bn, music_bn, sound_btn;
+    ImageButton about_us_btn, music_btn, sound_btn;
     MediaPlayer song;
     boolean musicButtonState = true;
     boolean soundButtonState = true;
@@ -41,9 +38,6 @@ public class MainActivity extends AppCompatActivity {
     Animation rotateOpen, rotateClose, fromBottom, toBottom;
     ImageButton settingsBtn;
     boolean clicked = false;
-
-
-
 
 
 
@@ -72,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         settingsBtn= findViewById(R.id.settings_btn);
 
 
-
         easyBtn = findViewById(R.id.easy_btn);
         mediumBtn = findViewById(R.id.medium_btn);
         hardBtn = findViewById(R.id.hard_btn);
@@ -83,17 +76,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Pop Up Menu
-
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!clicked) {
-                    about_us_bn.setVisibility(View.VISIBLE);
-                    about_us_bn.startAnimation(fromBottom);
-                    about_us_bn.setClickable(true);
-                    music_bn.setVisibility(View.VISIBLE);
-                    music_bn.startAnimation(fromBottom);
-                    music_bn.setClickable(true);
+                    about_us_btn.setVisibility(View.VISIBLE);
+                    about_us_btn.startAnimation(fromBottom);
+                    about_us_btn.setClickable(true);
+                    music_btn.setVisibility(View.VISIBLE);
+                    music_btn.startAnimation(fromBottom);
+                    music_btn.setClickable(true);
                     sound_btn.setVisibility(View.VISIBLE);
                     sound_btn.startAnimation(fromBottom);
                     sound_btn.setClickable(true);
@@ -104,12 +96,12 @@ public class MainActivity extends AppCompatActivity {
                     clicked=true;
                 }
                 else {
-                    about_us_bn.setVisibility(View.INVISIBLE);
-                    about_us_bn.startAnimation(toBottom);
-                    about_us_bn.setClickable(false);
-                    music_bn.setVisibility(View.INVISIBLE);
-                    music_bn.startAnimation(toBottom);
-                    music_bn.setClickable(false);
+                    about_us_btn.setVisibility(View.INVISIBLE);
+                    about_us_btn.startAnimation(toBottom);
+                    about_us_btn.setClickable(false);
+                    music_btn.setVisibility(View.INVISIBLE);
+                    music_btn.startAnimation(toBottom);
+                    music_btn.setClickable(false);
                     sound_btn.setVisibility(View.INVISIBLE);
                     sound_btn.startAnimation(toBottom);
                     sound_btn.setClickable(false);
@@ -224,11 +216,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         song = MediaPlayer.create(MainActivity.this, R.raw.mixaund_happy_day_);
-        about_us_bn = (ImageButton) findViewById(R.id.about_us_button);
-        music_bn = (ImageButton) findViewById(R.id.music_button);
+        about_us_btn = (ImageButton) findViewById(R.id.about_us_button);
+        music_btn = (ImageButton) findViewById(R.id.music_button);
         sound_btn = (ImageButton) findViewById(R.id.pink_sound_button);
+        goToDB=findViewById(R.id.trophy_button);
 
-        about_us_bn.setOnClickListener(new View.OnClickListener() {
+        about_us_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this,AboutUsPopup.class));
@@ -236,40 +229,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        music_bn.setOnClickListener(new View.OnClickListener() {
+
+        music_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (musicButtonState) {
                     song.pause();
                     musicButtonState = false;
-                    music_bn.setImageResource(R.drawable.music_off);
+                    music_btn.setImageResource(R.drawable.music_off);
                     Toast.makeText(MainActivity.this, R.string.no_music, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 song.setLooping(true);
                 song.start();
-                music_bn.setImageResource(R.drawable.music_on);
+                music_btn.setImageResource(R.drawable.music_on);
                 Toast.makeText(MainActivity.this, R.string.music_on, Toast.LENGTH_SHORT).show();
                 musicButtonState = true;
                 if(soundButtonState)clickSound.start();
             }
 
-
-
-
         });
 
-
-
-        goToDB=findViewById(R.id.trophy_button);
 
         goToDB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, DBActivity.class);
                 startActivity(intent);
+                if(soundButtonState)clickSound.start();
             }
         });
+
 
         sound_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -285,8 +275,6 @@ public class MainActivity extends AppCompatActivity {
                 clickSound.start();
                 Toast.makeText(MainActivity.this, R.string.sound_on, Toast.LENGTH_SHORT).show();
                 soundButtonState = true;
-                if(soundButtonState)clickSound.start();
-                if(soundButtonState)clickSound.start();
             }
         });
     }
