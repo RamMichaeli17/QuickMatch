@@ -269,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
         goToDB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, DBActivity.class);
+                Intent intent = new Intent(MainActivity.this, Gal_SharedPreferencesAttemptInsteadOfSQLITE.class);
                 startActivity(intent);
             }
         });
@@ -306,10 +306,10 @@ public class MainActivity extends AppCompatActivity {
         song.start();
     }*/
 
-    @Override
-    protected void onStart() {
+ //   @Override
+  /*  protected void onStart() {
         super.onStart();
-        song.setLooping(true);
+        song.setLooping(false);
         song.start();
     }
 
@@ -318,4 +318,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         song.release();
     }
+    */
+
 }
