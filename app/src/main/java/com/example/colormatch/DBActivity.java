@@ -1,5 +1,6 @@
 package com.example.colormatch;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,6 +22,7 @@ public class DBActivity extends AppCompatActivity {
     Switch activeuser;
     ListView highscoreList;
     CheckBox cbdelete;
+    MediaPlayer song;
 
     ArrayAdapter userArrayAdapter;
     DataBaseHelper dataBaseHelper;
@@ -39,6 +41,7 @@ public class DBActivity extends AppCompatActivity {
         activeuser=findViewById(R.id.active);
         highscoreList=findViewById(R.id.highscoreList);
         cbdelete = findViewById(R.id.checkBoxDelete);
+        song = MediaPlayer.create(DBActivity.this, R.raw.mixaund_happy_day_);
 
         DataBaseHelper dataBaseHelper = new DataBaseHelper(DBActivity.this);
 
@@ -118,5 +121,18 @@ public class DBActivity extends AppCompatActivity {
     private void ShowUserList(DataBaseHelper dataBaseHelper) {
         userArrayAdapter = new ArrayAdapter<customerModel>(DBActivity.this, android.R.layout.simple_list_item_1, dataBaseHelper.getEveryone());
         highscoreList.setAdapter(userArrayAdapter);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        song.setLooping(true);
+        song.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        song.release();
     }
 }

@@ -255,6 +255,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, DBActivity.class);
+               /* intent.putExtra("selectedMp3",SELECTED_MP3_INT);*/
                 startActivity(intent);
                 if(soundButtonState)clickSound.start();
             }
