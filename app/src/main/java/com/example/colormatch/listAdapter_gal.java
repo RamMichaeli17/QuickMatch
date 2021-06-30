@@ -17,9 +17,6 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by User on 3/14/2017.
- */
 
 public class listAdapter_gal extends ArrayAdapter<Person> {
 
