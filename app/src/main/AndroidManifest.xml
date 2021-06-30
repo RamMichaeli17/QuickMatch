@@ -9,27 +9,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ColorMatch">
-        <activity android:name=".MainActivity"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
-
-        <activity android:name=".SplashActivity" android:theme="@style/Theme.ColorMatch1">
+        <activity android:name=".SecondActivityGame"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/Theme.ColorMatch1">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
-
-        <activity android:name=".AboutUsPopup"
-            android:theme="@style/Theme.AppCompat.CustomTheme">
-        </activity>
-        <activity android:name=".AreYouSureYouWantToExit"
-            android:theme="@style/Theme.Transparent">
-        </activity>
-        <activity android:name =".DBActivity"/>
+        <activity
+            android:name=".AboutUsPopup"
+            android:theme="@style/Theme.AppCompat.CustomTheme"></activity>
+        <activity
+            android:name=".AreYouSureYouWantToExit"
+            android:theme="@style/Theme.Transparent"></activity>
+        <activity android:name=".DBActivity" />
     </application>
 
 </manifest>

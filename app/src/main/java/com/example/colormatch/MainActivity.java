@@ -198,6 +198,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
 
                         if(soundButtonState)clickSound.start();
+
+                        startActivity(new Intent(MainActivity.this,SecondActivityGame.class));
                     }
                 });
 
@@ -307,6 +309,7 @@ public class MainActivity extends AppCompatActivity {
     }*/
 
     @Override
+
     protected void onStart() {
         super.onStart();
         song.setLooping(true);
