@@ -45,11 +45,7 @@ public class listAdapter_gal extends ArrayAdapter<Person> {
         tvScore.setText(score);
 
         if (position == 0)
-            image.setImageAlpha(255);
-        else
-            image.setImageAlpha(0);
-
-
+            image.setImageResource(R.drawable.highscores_numberonebadge);
 
 
         return convertView;
