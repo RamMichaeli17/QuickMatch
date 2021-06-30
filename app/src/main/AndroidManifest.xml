@@ -11,6 +11,7 @@
         android:theme="@style/Theme.ColorMatch">
         <activity android:name=".Gal_SharedPreferencesAttemptInsteadOfSQLITE"
             android:windowSoftInputMode="adjustPan"></activity>
+
         <activity android:name=".SecondActivityGame"></activity>
         <activity
             android:name=".MainActivity"
