@@ -1,25 +1,22 @@
 package com.example.colormatch;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Dialog;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.MotionEvent;
-import android.provider.ContactsContract;
 import android.view.View;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
-import android.view.View;
 import android.widget.ImageView;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     Animation rotateOpen, rotateClose, fromBottom, toBottom;
     ImageButton settingsBtn;
     boolean clicked = false;
+
+    private String inputUsername = "";
 
 
 
@@ -199,7 +198,38 @@ public class MainActivity extends AppCompatActivity {
 
                         if(soundButtonState)clickSound.start();
 
-                        startActivity(new Intent(MainActivity.this,SecondActivityGame.class));
+                        // Asking for username dialog (before entering game)
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setTitle("Enter username");
+
+
+                        final EditText input = new EditText(MainActivity.this);
+
+                        input.setInputType(InputType.TYPE_CLASS_TEXT);
+                        builder.setView(input);
+
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                inputUsername = input.getText().toString();
+                                Intent myIntent = new Intent(MainActivity.this,SecondActivityGame.class);
+                                if (inputUsername.isEmpty())
+                                    inputUsername = "Unknown";
+                                myIntent.putExtra("userName",inputUsername);
+                                startActivity(myIntent);
+                            }
+                        });
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        builder.show();
+
+
                     }
                 });
 
@@ -311,7 +341,7 @@ public class MainActivity extends AppCompatActivity {
         song.start();
     }*/
 
-    @Override
+  /*  @Override
     protected void onStart() {
         super.onStart();
         song.setLooping(true);
@@ -323,4 +353,5 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         song.release();
     }
+   */
 }

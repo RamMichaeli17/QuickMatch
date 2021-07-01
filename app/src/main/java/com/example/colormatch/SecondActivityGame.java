@@ -1,7 +1,5 @@
 package com.example.colormatch;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -13,6 +11,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class SecondActivityGame extends AppCompatActivity {
@@ -40,16 +42,35 @@ public class SecondActivityGame extends AppCompatActivity {
 
     int currentPoints = 0;
 
+    int addButtonCounter=0;
+    ArrayList<Person> peopleList;
+
+    String userName;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_activity);
+
+        Bundle extras = getIntent().getExtras();
+        if(extras !=null) {
+             userName = extras.getString("userName");
+        }
 
         iv_button=findViewById(R.id.iv_button);
         iv_arrow=findViewById(R.id.iv_arrow);
         tv_points=findViewById(R.id.tv_points);
         progressBar=findViewById(R.id.progresbar);
 
+
+        // Shared Preferences - get data
+        peopleList = PrefConfigGal.readListFromPref(this);
+        if ( peopleList==null)
+            peopleList = new ArrayList<>();
+        else {
+            addButtonCounter = 1;
+        }
 
 
         //set the initial progressbar time to 4 seconds
@@ -108,7 +129,8 @@ public class SecondActivityGame extends AppCompatActivity {
                         }
                         else {
                             iv_button.setEnabled(false);
-                            Toast.makeText(SecondActivityGame.this, "Gamer Over You fucking LOSER", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SecondActivityGame.this, "Game Over", Toast.LENGTH_SHORT).show();
+                            updateHighScores();
                         }
                 }
             }
@@ -197,4 +219,22 @@ public class SecondActivityGame extends AppCompatActivity {
                 break;
         }
     }
+
+    private void updateHighScores()
+    {
+        addButtonCounter++;
+        //   showTrophy();
+        Person newPerson = new Person(userName,Integer.toString(currentPoints));
+
+        peopleList.add(newPerson);
+
+
+        Collections.sort(peopleList);
+
+        // Shared Preferences
+        PrefConfigGal.writeListInPref(getApplicationContext(),peopleList);
+        //
+
+    }
+
 }

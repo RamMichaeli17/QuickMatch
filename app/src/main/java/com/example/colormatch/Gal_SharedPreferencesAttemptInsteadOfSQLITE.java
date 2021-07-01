@@ -1,5 +1,7 @@
 package com.example.colormatch;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,7 +11,6 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Gal_SharedPreferencesAttemptInsteadOfSQLITE extends AppCompatActivity {
 
@@ -17,7 +18,7 @@ public class Gal_SharedPreferencesAttemptInsteadOfSQLITE extends AppCompatActivi
     EditText usernameET,scoreET;
     Button addButton,clearBTN;
     ArrayList<Person> peopleList;
-  //  ImageView numberonebadge;
+
     int addButtonCounter=0;
 
     @Override
@@ -27,11 +28,14 @@ public class Gal_SharedPreferencesAttemptInsteadOfSQLITE extends AppCompatActivi
 
 
         scorelistview=findViewById(R.id.listView);
+        /*
         usernameET=findViewById(R.id.usernameET);
         scoreET=findViewById(R.id.scoreET);
         addButton=findViewById(R.id.addBTNsharedPreferences);
+        */
+
         clearBTN=findViewById(R.id.clearBTN);
-       // numberonebadge=findViewById(R.id.numberonebadge);
+
 
         // Shared Preferences - get data
         peopleList = PrefConfigGal.readListFromPref(this);
@@ -44,16 +48,17 @@ public class Gal_SharedPreferencesAttemptInsteadOfSQLITE extends AppCompatActivi
         // Initial screen load
         refreshScreen();
 
-        //Show #1 medal icon if there is atleast 1 score
-       // showTrophy();
 
-        addButton.setOnClickListener(new View.OnClickListener() {
+
+/*        //This is the manual "add" button , not longer used because scores come from the game now
+
+          addButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
                 addButtonCounter++;
-             //   showTrophy();
+
                 Person newPerson = new Person(usernameET.getText().toString(),scoreET.getText().toString());
 
                 peopleList.add(newPerson);
@@ -68,29 +73,40 @@ public class Gal_SharedPreferencesAttemptInsteadOfSQLITE extends AppCompatActivi
 
                 refreshScreen();
             }
-        });
+        });*/
 
         clearBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                peopleList.clear();
-                addButtonCounter=0;
-               // showTrophy();
-                refreshScreen();
+                AlertDialog.Builder builder = new AlertDialog.Builder(Gal_SharedPreferencesAttemptInsteadOfSQLITE.this);
+                builder.setTitle("Are you sure?");
+
+
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        peopleList.clear();
+                        PrefConfigGal.writeListInPref(getApplicationContext(),peopleList); // This line ensures that both lists (from game and from highscores) reset
+                        addButtonCounter=0;
+                        refreshScreen();
+
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+
+
             }
         });
 
     }
 
-   /* public void showTrophy()
-    {
-        if (addButtonCounter == 0) {
-            numberonebadge.setVisibility(View.INVISIBLE);
-        } else {
-            numberonebadge.setVisibility(View.VISIBLE);
-        }
-
-    }*/
 
     public void refreshScreen()
     {
