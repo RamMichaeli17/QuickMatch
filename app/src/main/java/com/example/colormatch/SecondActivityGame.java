@@ -19,7 +19,7 @@ import java.util.Random;
 
 public class SecondActivityGame extends AppCompatActivity {
 
-    ImageView iv_button, iv_arrow;
+    ImageView iv_button,iv_button2, iv_arrow;
     TextView tv_points;
     ProgressBar progressBar;
 
@@ -35,6 +35,7 @@ public class SecondActivityGame extends AppCompatActivity {
 
 
     int buttonState = STATE_BLUE;
+    int buttonState2 = STATE_BLUE;
     int arrowState = STATE_BLUE;
 
     int currentTime = 4000;
@@ -42,7 +43,6 @@ public class SecondActivityGame extends AppCompatActivity {
 
     int currentPoints = 0;
 
-    int addButtonCounter=0;
     ArrayList<Person> peopleList;
 
     String userName;
@@ -53,12 +53,13 @@ public class SecondActivityGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_activity);
 
-        Bundle extras = getIntent().getExtras();
+        Bundle extras = getIntent().getExtras(); // Get username from mainActivity (dialog that pops before game)
         if(extras !=null) {
              userName = extras.getString("userName");
         }
 
         iv_button=findViewById(R.id.iv_button);
+        iv_button2=findViewById(R.id.iv_button2);
         iv_arrow=findViewById(R.id.iv_arrow);
         tv_points=findViewById(R.id.tv_points);
         progressBar=findViewById(R.id.progresbar);
@@ -68,9 +69,7 @@ public class SecondActivityGame extends AppCompatActivity {
         peopleList = PrefConfigGal.readListFromPref(this);
         if ( peopleList==null)
             peopleList = new ArrayList<>();
-        else {
-            addButtonCounter = 1;
-        }
+
 
 
         //set the initial progressbar time to 4 seconds
@@ -92,6 +91,15 @@ public class SecondActivityGame extends AppCompatActivity {
                 setButtonImage(setButtonPosition(buttonState));
             }
         });
+
+        iv_button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setButtonImage2(setButtonPosition(buttonState2));
+            }
+        });
+
+
         //main game loop
         handler = new Handler();
         runnable = new Runnable() {
@@ -106,7 +114,7 @@ public class SecondActivityGame extends AppCompatActivity {
                     handler.postDelayed(runnable, 100);
                 }
                     else{ // check if the colors of the arrow and the button are the same
-                        if (buttonState == arrowState)
+                        if (buttonState == arrowState && buttonState2 == arrowState)
                         {
                             //increase points and show time
                             currentPoints = currentPoints +1;
@@ -129,6 +137,7 @@ public class SecondActivityGame extends AppCompatActivity {
                         }
                         else {
                             iv_button.setEnabled(false);
+                            iv_button2.setEnabled(false);
                             Toast.makeText(SecondActivityGame.this, "Game Over", Toast.LENGTH_SHORT).show();
                             updateHighScores();
                         }
@@ -220,10 +229,30 @@ public class SecondActivityGame extends AppCompatActivity {
         }
     }
 
+    // Right side
+    private void setButtonImage2(int state){
+        switch (state) {
+            case STATE_BLUE:
+                setRotation(iv_button2,R.drawable.ic_button_blue);
+                buttonState2 = STATE_BLUE;
+                break;
+            case STATE_RED:
+                setRotation(iv_button2,R.drawable.ic_button_red);
+                buttonState2 = STATE_RED;
+                break;
+            case STATE_YELLOW:
+                setRotation(iv_button2,R.drawable.ic_button_yellow);
+                buttonState2 = STATE_YELLOW;
+                break;
+            case STATE_GREEN:
+                setRotation(iv_button2,R.drawable.ic_button_green);
+                buttonState2 = STATE_GREEN;
+                break;
+        }
+    }
+
     private void updateHighScores()
     {
-        addButtonCounter++;
-        //   showTrophy();
         Person newPerson = new Person(userName,Integer.toString(currentPoints));
 
         peopleList.add(newPerson);

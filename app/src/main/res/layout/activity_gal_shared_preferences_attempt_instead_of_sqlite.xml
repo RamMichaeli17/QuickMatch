@@ -11,12 +11,12 @@
         android:src="@drawable/backgroundgalversion"
         android:layout_marginTop="25dp"/>
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:src="@drawable/trophy"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@null"
+
 
         />
 
@@ -121,7 +121,8 @@
         android:background="@null"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_margin="20dp"/>
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="10dp"/>
 
 
         />

@@ -19,8 +19,6 @@ public class Gal_SharedPreferencesAttemptInsteadOfSQLITE extends AppCompatActivi
     Button addButton,clearBTN;
     ArrayList<Person> peopleList;
 
-    int addButtonCounter=0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +39,6 @@ public class Gal_SharedPreferencesAttemptInsteadOfSQLITE extends AppCompatActivi
         peopleList = PrefConfigGal.readListFromPref(this);
         if ( peopleList==null)
             peopleList = new ArrayList<>();
-        else {
-            addButtonCounter = 1;
-        }
 
         // Initial screen load
         refreshScreen();
@@ -57,7 +52,6 @@ public class Gal_SharedPreferencesAttemptInsteadOfSQLITE extends AppCompatActivi
             @Override
             public void onClick(View v) {
 
-                addButtonCounter++;
 
                 Person newPerson = new Person(usernameET.getText().toString(),scoreET.getText().toString());
 
@@ -87,7 +81,6 @@ public class Gal_SharedPreferencesAttemptInsteadOfSQLITE extends AppCompatActivi
                     public void onClick(DialogInterface dialog, int which) {
                         peopleList.clear();
                         PrefConfigGal.writeListInPref(getApplicationContext(),peopleList); // This line ensures that both lists (from game and from highscores) reset
-                        addButtonCounter=0;
                         refreshScreen();
 
                     }
