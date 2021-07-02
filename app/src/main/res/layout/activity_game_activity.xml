@@ -30,12 +30,22 @@
         android:layout_height="80dp"
         android:scaleType="centerInside"
         android:layout_below="@id/progresbar"
-        android:id="@+id/iv_arrow"
-        android:src="@drawable/ic_blue"
+        android:id="@+id/iv_arrow2stroke"
         android:layout_centerHorizontal="true"
 
 
         />
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerInside"
+        android:layout_below="@id/progresbar"
+        android:id="@+id/iv_arrow"
+        android:layout_centerHorizontal="true"
+
+
+        />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

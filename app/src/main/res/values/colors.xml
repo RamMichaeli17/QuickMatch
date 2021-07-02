@@ -11,6 +11,9 @@
     <color name="galcustom">#FDE2E2</color>
     <color name="lightblack">#9F9F9F</color>
     <color name="galcustom2">#FDF4F4</color>
-    <color name="galblue">#436BBC</color>
+    <color name="galblue">#5E91F8</color>
+    <color name="blue">#276EFF</color>
     <color name="red">#FF1100</color>
+    <color name="green">#4CCF05</color>
+    <color name="yellow">#FDEC54</color>
 </resources>

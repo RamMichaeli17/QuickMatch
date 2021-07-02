@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +20,7 @@ import java.util.Random;
 
 public class SecondActivityGame extends AppCompatActivity {
 
-    ImageView iv_button,iv_button2, iv_arrow;
+    ImageView iv_button,iv_button2, iv_arrow , iv_arrow2stroke;
     TextView tv_points;
     ProgressBar progressBar;
 
@@ -36,7 +37,10 @@ public class SecondActivityGame extends AppCompatActivity {
 
     int buttonState = STATE_BLUE;
     int buttonState2 = STATE_BLUE;
-    int arrowState = STATE_BLUE;
+
+    int arrowState = STATE_BLUE; // DELETE
+    int chosenShape = 1;
+    int chosenColor = 1;
 
     int currentTime = 4000;
     int startTime = 4000;
@@ -61,6 +65,7 @@ public class SecondActivityGame extends AppCompatActivity {
         iv_button=findViewById(R.id.iv_button);
         iv_button2=findViewById(R.id.iv_button2);
         iv_arrow=findViewById(R.id.iv_arrow);
+        iv_arrow2stroke=findViewById(R.id.iv_arrow2stroke);
         tv_points=findViewById(R.id.tv_points);
         progressBar=findViewById(R.id.progresbar);
 
@@ -80,9 +85,13 @@ public class SecondActivityGame extends AppCompatActivity {
         tv_points.setText("Points: " + currentPoints);
 
         //generate random arrow color at the start of the game
+        //generate random shape and color at the start of the game
         r = new Random();
-        arrowState=r.nextInt(4) + 1;
-        setArrowImage(arrowState);
+        chosenShape= 1; // only 1 option for testing
+        r = new Random();
+        chosenColor=r.nextInt(4) + 1; // only 2 options for testing
+        setImageShape(chosenShape);
+        setImageColor(chosenColor);
 
         iv_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,14 +123,14 @@ public class SecondActivityGame extends AppCompatActivity {
                     handler.postDelayed(runnable, 100);
                 }
                     else{ // check if the colors of the arrow and the button are the same
-                        if (buttonState == arrowState && buttonState2 == arrowState)
+                        if (true /*buttonState == arrowState && buttonState2 == arrowState*/)
                         {
                             //increase points and show time
                             currentPoints = currentPoints +1;
                             tv_points.setText("Points: "+currentPoints);
 
                             //make the speed higher after every turn / if the speed is 1 second make it again 2 seconds
-                            startTime=startTime-100;
+                            startTime=startTime-3000;
                             if (startTime < 1000){
                                 startTime = 2000;
                             }
@@ -130,8 +139,18 @@ public class SecondActivityGame extends AppCompatActivity {
                             progressBar.setProgress(currentTime);
 
                             //generate new color of the arrow
-                            arrowState=r.nextInt(4) +1;
-                            setArrowImage(arrowState);
+                               //arrowState=r.nextInt(4) +1;
+                               //  setArrowImage(arrowState);
+
+
+                            //generate new color and shape
+                            chosenShape= 1; // only 1 option for testing;
+                            r = new Random();
+                            chosenColor=r.nextInt(4) + 1;
+                            setImageShape(chosenShape);
+                            setImageColor(chosenColor);
+
+
 
                             handler.postDelayed(runnable,100);
                         }
@@ -264,6 +283,59 @@ public class SecondActivityGame extends AppCompatActivity {
         PrefConfigGal.writeListInPref(getApplicationContext(),peopleList);
         //
 
+    }
+ //   setImageShape(chosenShape);
+   // setImageColor(chosenColor);
+
+    public void setImageShape(int theShape)
+    {
+        switch (theShape) {
+            case 1:
+                iv_arrow2stroke.setImageResource(R.drawable.ic_oie_6ppwctotng3q222222222222222222);
+                chosenShape = 1;
+                break;
+//            case STATE_GREEN:
+//                iv_arrow.setImageResource(R.drawable.ic_oie_6ppwctotng3q);
+//                iv_arrow.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.green), android.graphics.PorterDuff.Mode.SRC_IN);
+//                chosenColor = STATE_GREEN;
+//                break;
+//            case STATE_RED:
+//                iv_arrow.setImageResource(R.drawable.ic_red);
+//                chosenColor = STATE_RED;
+//                break;
+//            case STATE_YELLOW:
+//                iv_arrow.setImageResource(R.drawable.ic_yellow);
+//                chosenColor = STATE_YELLOW;
+//                break;
+
+        }
+    }
+
+    public void setImageColor(int theColor)
+    {
+        switch (theColor) {
+            case STATE_BLUE:
+                iv_arrow.setImageResource(R.drawable.ic_oie_6ppwctotng3q);
+                iv_arrow.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.blue), android.graphics.PorterDuff.Mode.SRC_IN);
+                chosenColor = STATE_BLUE;
+                break;
+            case STATE_GREEN:
+                iv_arrow.setImageResource(R.drawable.ic_oie_6ppwctotng3q);
+                iv_arrow.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.green), android.graphics.PorterDuff.Mode.SRC_IN);
+                chosenColor = STATE_GREEN;
+                break;
+           case STATE_RED:
+                iv_arrow.setImageResource(R.drawable.ic_oie_6ppwctotng3q);
+                iv_arrow.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.red), android.graphics.PorterDuff.Mode.SRC_IN);
+                chosenColor = STATE_RED;
+                break;
+            case STATE_YELLOW:
+                 iv_arrow.setImageResource(R.drawable.ic_oie_6ppwctotng3q);
+                 iv_arrow.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN);
+                 chosenColor = STATE_YELLOW;
+                 break;
+
+        }
     }
 
 }
