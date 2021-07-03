@@ -1,6 +1,8 @@
 package com.example.colormatch;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -21,7 +23,7 @@ import java.util.Random;
 
 public class SecondActivityGame extends AppCompatActivity {
 
-    ImageView iv_button,iv_button2, iv_arrow , iv_arrow2stroke;
+    ImageView iv_button,iv_button2, ShapeFillerColor, ShapeOutline;
     TextView tv_points,highestscoreTV,paused;
     ProgressBar progressBar;
 
@@ -49,15 +51,64 @@ public class SecondActivityGame extends AppCompatActivity {
 
     int currentPoints = 0;
 
-    ArrayList<Person> peopleList;
+    ArrayList<highScore> highScoreList;
 
     String userName;
+
+    int[] ShapesFillerColor = {R.drawable.ic_r_strangeshape_firstshape_color,R.drawable.ic_strangeshape_a_color,R.drawable.ic_strangeshape_b_color,R.drawable.ic_strangeshape_c_color,R.drawable.ic_strangeshape_d_color,R.drawable.ic_strangeshape_e_color,R.drawable.ic_strangeshape_f_color,R.drawable.ic_strangeshape_g_color,R.drawable.ic_strangeshape_h_color,R.drawable.ic_strangeshape_i_color,R.drawable.ic_strangeshape_j_color,R.drawable.ic_strangeshape_k_color,R.drawable.ic_strangeshape_l_color,R.drawable.ic_strangeshape_m_color,R.drawable.ic_strangeshape_n_color,R.drawable.ic_strangeshape_o_color};
+    int[] ShapesOutline = {R.drawable.ic_r_strangeshape_firstshape_outline,R.drawable.ic_strangeshape_a_outline,R.drawable.ic_strangeshape_b_outline,R.drawable.ic_strangeshape_c_outline,R.drawable.ic_strangeshape_d_outline,R.drawable.ic_strangeshape_e_outline,R.drawable.ic_strangeshape_f_outline,R.drawable.ic_strangeshape_g_outline,R.drawable.ic_strangeshape_h_outline,R.drawable.ic_strangeshape_i_outline,R.drawable.ic_strangeshape_j_outline,R.drawable.ic_strangeshape_k_outline,R.drawable.ic_strangeshape_l_outline,R.drawable.ic_strangeshape_m_outline,R.drawable.ic_strangeshape_n_outline,R.drawable.ic_strangeshape_o_outline};
+
+
+    private int currentApiVersion;
+    @SuppressLint("NewApi")
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_activity);
+
+
+
+        //The next 32 lines of code is used to permanently hide & draw over the navigation bar at the right side of the screen
+        currentApiVersion = android.os.Build.VERSION.SDK_INT;
+
+        final int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+
+        // This work only for android 4.4+
+        if(currentApiVersion >= Build.VERSION_CODES.KITKAT)
+        {
+
+            getWindow().getDecorView().setSystemUiVisibility(flags);
+
+            // Code below is to handle presses of Volume up or Volume down.
+            // Without this, after pressing volume buttons, the navigation bar will
+            // show up and won't hide
+            final View decorView = getWindow().getDecorView();
+            decorView
+                    .setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener()
+                    {
+
+                        @Override
+                        public void onSystemUiVisibilityChange(int visibility)
+                        {
+                            if((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0)
+                            {
+                                decorView.setSystemUiVisibility(flags);
+                            }
+                        }
+                    });
+        }
+
+
+
+
+
 
         Bundle extras = getIntent().getExtras(); // Get username from mainActivity (dialog that pops before game)
         if(extras !=null) {
@@ -66,8 +117,8 @@ public class SecondActivityGame extends AppCompatActivity {
 
         iv_button=findViewById(R.id.iv_button);
        // iv_button2=findViewById(R.id.iv_button2a);
-        iv_arrow=findViewById(R.id.iv_arrow);
-        iv_arrow2stroke=findViewById(R.id.iv_arrow2stroke);
+        ShapeFillerColor =findViewById(R.id.iv_arrow);
+        ShapeOutline =findViewById(R.id.iv_arrow2stroke);
         tv_points=findViewById(R.id.tv_points);
         progressBar=findViewById(R.id.progressbar);
         highestscoreTV=findViewById(R.id.highestscoreTV);
@@ -76,13 +127,13 @@ public class SecondActivityGame extends AppCompatActivity {
 
 
         // Shared Preferences - get data
-        peopleList = PrefConfigGal.readListFromPref(this);
-        if ( peopleList==null || peopleList.isEmpty()) {
+        highScoreList = PrefConfigGal.readListFromPref(this);
+        if ( highScoreList ==null || highScoreList.isEmpty()) {
             highestscoreTV.setText("0");
-            peopleList = new ArrayList<>();
+            highScoreList = new ArrayList<>();
         }
         else
-            highestscoreTV.setText(peopleList.get(0).getScore());
+            highestscoreTV.setText(highScoreList.get(0).getScore());
 
 
 
@@ -96,7 +147,7 @@ public class SecondActivityGame extends AppCompatActivity {
         //generate random arrow color at the start of the game
         //generate random shape and color at the start of the game
         r = new Random();
-        chosenShape= 1; // starts from 1 -> last for testing purposes
+        chosenShape= 0; // starts from 0 -> last for testing purposes
         setImageShape(chosenShape);
        // setImageColor(chosenColor);
 
@@ -153,11 +204,10 @@ public class SecondActivityGame extends AppCompatActivity {
                             //generate new color and shape
                            // chosenShape=r.nextInt(4) + 1;
 
-                            // Show all shapes one after another - for testing purposes
-                           if(chosenShape!=16)
-                                chosenShape++;
-                            else
-                                chosenShape=1;
+                            // Show all shapes one after another - for testing purposes [0->15 = 16 shapes]
+                            chosenShape++;
+                           if(chosenShape==16)
+                                chosenShape=0;
 
 
                             setImageShape(chosenShape);
@@ -184,19 +234,19 @@ public class SecondActivityGame extends AppCompatActivity {
     {
         switch (state) {
             case STATE_BLUE:
-                iv_arrow.setImageResource(R.drawable.ic_blue);
+                ShapeFillerColor.setImageResource(R.drawable.ic_blue);
                 arrowState = STATE_BLUE;
                 break;
             case STATE_RED:
-                iv_arrow.setImageResource(R.drawable.ic_red);
+                ShapeFillerColor.setImageResource(R.drawable.ic_red);
                 arrowState = STATE_RED;
                 break;
             case STATE_YELLOW:
-                iv_arrow.setImageResource(R.drawable.ic_yellow);
+                ShapeFillerColor.setImageResource(R.drawable.ic_yellow);
                 arrowState = STATE_YELLOW;
                 break;
             case STATE_GREEN:
-                iv_arrow.setImageResource(R.drawable.ic_green);
+                ShapeFillerColor.setImageResource(R.drawable.ic_green);
                 arrowState = STATE_GREEN;
                 break;
         }
@@ -283,142 +333,24 @@ public class SecondActivityGame extends AppCompatActivity {
 
     private void updateHighScores()
     {
-        Person newPerson = new Person(userName,Integer.toString(currentPoints));
-
-        peopleList.add(newPerson);
-
-
-        Collections.sort(peopleList);
-
+        highScore newHighScore = new highScore(userName,Integer.toString(currentPoints)); // Create a new highscore with username and current points
+        highScoreList.add(newHighScore); // Add it to the list
+        Collections.sort(highScoreList); // Sort the list in descending order , so the highest score will be first
         // Shared Preferences
-        PrefConfigGal.writeListInPref(getApplicationContext(),peopleList);
-        //
-
+        PrefConfigGal.writeListInPref(getApplicationContext(), highScoreList); // Write list to shared preferences for other activities to use
     }
- //   setImageShape(chosenShape);
-   // setImageColor(chosenColor);
 
     public void setImageShape(int theShape)
     {
-        switch (theShape) {
-            case 1:
-                chosenShape = 1;
-                iv_arrow2stroke.setImageResource(R.drawable.ic_oie_6ppwctotng3q222222222222222222);
-                iv_arrow.setImageResource(R.drawable.ic_oie_6ppwctotng3q);
-                chosenColor=r.nextInt(4) + 1;
-                colorTheShape(iv_arrow);
-                break;
+        chosenShape = theShape;
+        chosenColor=r.nextInt(4) + 1;
 
-            case 2:
-                chosenShape = 2;
-                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_a_outline);
-                iv_arrow.setImageResource(R.drawable.ic_strangeshape_a_color);
-                chosenColor=r.nextInt(4) + 1;
-                colorTheShape(iv_arrow);
-                break;
-            case 3:
-                chosenShape = 3;
-                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_b_outline);
-                iv_arrow.setImageResource(R.drawable.ic_strangeshape_b_color);
-                chosenColor=r.nextInt(4) + 1;
-                colorTheShape(iv_arrow);
-                break;
-            case 4:
-                chosenShape = 4;
-                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_c_outline);
-                iv_arrow.setImageResource(R.drawable.ic_strangeshape_c_color);
-                chosenColor=r.nextInt(4) + 1;
-                colorTheShape(iv_arrow);
-                break;
-            case 5:
-                chosenShape = 5;
-                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_d_outline);
-                iv_arrow.setImageResource(R.drawable.ic_strangeshape_d_color);
-                chosenColor=r.nextInt(4) + 1;
-                colorTheShape(iv_arrow);
-                break;
-            case 6:
-                chosenShape = 6;
-                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_e_outline);
-                iv_arrow.setImageResource(R.drawable.ic_strangeshape_e_color);
-                chosenColor=r.nextInt(4) + 1;
-                colorTheShape(iv_arrow);
-                break;
-            case 7:
-                chosenShape = 7;
-                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_f_outline);
-                iv_arrow.setImageResource(R.drawable.ic_strangeshape_f_color);
-                chosenColor=r.nextInt(4) + 1;
-                colorTheShape(iv_arrow);
-                break;
-            case 8:
-                chosenShape = 8;
-                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_g_outline);
-                iv_arrow.setImageResource(R.drawable.ic_strangeshape_g_color);
-                chosenColor=r.nextInt(4) + 1;
-                colorTheShape(iv_arrow);
-                break;
-            case 9:
-                chosenShape = 9;
-                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_h_outline);
-                iv_arrow.setImageResource(R.drawable.ic_strangeshape_h_color);
-                chosenColor=r.nextInt(4) + 1;
-                colorTheShape(iv_arrow);
-                break;
-            case 10:
-                chosenShape = 10;
-                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_i_outline);
-                iv_arrow.setImageResource(R.drawable.ic_strangeshape_i_color);
-                chosenColor=r.nextInt(4) + 1;
-                colorTheShape(iv_arrow);
-                break;
-            case 11:
-                chosenShape = 11;
-                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_j_outline);
-                iv_arrow.setImageResource(R.drawable.ic_strangeshape_j_color);
-                chosenColor=r.nextInt(4) + 1;
-                colorTheShape(iv_arrow);
-                break;
-            case 12:
-                chosenShape = 12;
-                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_k_outline);
-                iv_arrow.setImageResource(R.drawable.ic_strangeshape_k_color);
-                chosenColor=r.nextInt(4) + 1;
-                colorTheShape(iv_arrow);
-                break;
-            case 13:
-                chosenShape = 13;
-                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_l_outline);
-                iv_arrow.setImageResource(R.drawable.ic_strangeshape_l_color);
-                chosenColor=r.nextInt(4) + 1;
-                colorTheShape(iv_arrow);
+                ShapeOutline.setImageResource(ShapesOutline[theShape]);
+                ShapeFillerColor.setImageResource(ShapesFillerColor[theShape]);
+                colorTheShape(ShapeFillerColor);
 
-            case 14:
-                chosenShape = 14;
-                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_m_outline);
-                iv_arrow.setImageResource(R.drawable.ic_strangeshape_m_color);
-                chosenColor=r.nextInt(4) + 1;
-                colorTheShape(iv_arrow);
-                break;
-
-            case 15:
-                chosenShape = 15;
-                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_n_outline);
-                iv_arrow.setImageResource(R.drawable.ic_strangeshape_n_color);
-                colorTheShape(iv_arrow);
-                break;
-
-            case 16:
-                chosenShape = 16;
-                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_o_outline);
-                iv_arrow.setImageResource(R.drawable.ic_strangeshape_o_color);
-                colorTheShape(iv_arrow);
-                break;
-
-
-
-        }
     }
+
 
     public void colorTheShape(ImageView theImage)
     {
@@ -426,16 +358,16 @@ public class SecondActivityGame extends AppCompatActivity {
         switch (chosenColor)
         {
             case 1:
-                theImage.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.blue), android.graphics.PorterDuff.Mode.SRC_IN);
+                theImage.setColorFilter(ContextCompat.getColor(ShapeFillerColor.getContext(), R.color.blue), android.graphics.PorterDuff.Mode.SRC_IN);
                 break;
             case 2:
-                theImage.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.green), android.graphics.PorterDuff.Mode.SRC_IN);
+                theImage.setColorFilter(ContextCompat.getColor(ShapeFillerColor.getContext(), R.color.green), android.graphics.PorterDuff.Mode.SRC_IN);
                 break;
             case 3:
-                theImage.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.red), android.graphics.PorterDuff.Mode.SRC_IN);
+                theImage.setColorFilter(ContextCompat.getColor(ShapeFillerColor.getContext(), R.color.red), android.graphics.PorterDuff.Mode.SRC_IN);
                 break;
             case 4:
-                theImage.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN);
+                theImage.setColorFilter(ContextCompat.getColor(ShapeFillerColor.getContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN);
                 break;
         }
     }
@@ -466,21 +398,29 @@ public class SecondActivityGame extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
-        handler.removeCallbacks(runnable);
+        handler.removeCallbacks(runnable); // stop the handler - a way to pause the game
         paused.setVisibility(View.VISIBLE);
         Intent myIntent = new Intent(SecondActivityGame.this,paused.class);
+        myIntent.putExtra("username",userName); // pass username+score to paused.class to save score in highscores in case user wants to exit the game before losing
+        myIntent.putExtra("score",currentPoints);
         startActivity(myIntent);
 
     }
 
     @Override
     protected void onResume() {
+        super.onResume();
+            View decorView = getWindow().getDecorView();
+            // Hides the status and navigation bar until the user clicks
+            // on the screeen.
+            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
         handler.postDelayed(runnable,0);
         currentTime=0;
         currentPoints--;
         paused.setVisibility(View.INVISIBLE);
-        super.onResume();
+
     }
 
     @Override
@@ -488,4 +428,22 @@ public class SecondActivityGame extends AppCompatActivity {
         handler.removeCallbacks(runnable);
         super.onPause();
     }
+
+    @SuppressLint("NewApi")
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus)
+    {
+        super.onWindowFocusChanged(hasFocus);
+        if(currentApiVersion >= Build.VERSION_CODES.KITKAT && hasFocus)
+        {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
+    }
+
 }

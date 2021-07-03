@@ -14,12 +14,12 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 
-public class listAdapter_gal extends ArrayAdapter<Person> {
+public class listAdapter_gal extends ArrayAdapter<highScore> {
 
     private Context mContext;
     int mResource;
 
-    public listAdapter_gal(Context context, int resource, ArrayList<Person> objects)
+    public listAdapter_gal(Context context, int resource, ArrayList<highScore> objects)
     {
         super(context,resource,objects);
         mContext=context;
@@ -32,7 +32,7 @@ public class listAdapter_gal extends ArrayAdapter<Person> {
         String username = getItem(position).getUsername();
         String score = getItem(position).getScore();
 
-        Person person = new Person(username,score);
+        highScore highScore = new highScore(username,score);
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource,parent,false);

@@ -1,7 +1,6 @@
 package com.example.colormatch;
 
 import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -33,7 +32,9 @@ public class AreYouSureYouWantToExit extends Activity {
 
         yesToQuitBTN.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { finishAffinity(); }
+            public void onClick(View v) {
+                finishAffinity();
+            }
         });
 
         noToQuitBTN.setOnClickListener(new View.OnClickListener() {

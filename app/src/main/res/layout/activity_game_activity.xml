@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layoutDirection="ltr">
 
     <TextView
         android:layout_width="wrap_content"
@@ -137,7 +138,7 @@
                 android:layout_height="75dp"
                 android:layout_gravity="bottom"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_oie_6ppwctotng3q222222222222222222"
+                android:src="@drawable/ic_r_strangeshape_firstshape_outline"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/iv_button2a"
                 app:layout_constraintTop_toTopOf="parent"

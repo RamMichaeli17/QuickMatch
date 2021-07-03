@@ -17,7 +17,7 @@ public class Gal_SharedPreferencesAttemptInsteadOfSQLITE extends AppCompatActivi
     ListView scorelistview;
     EditText usernameET,scoreET;
     Button addButton,clearBTN;
-    ArrayList<Person> peopleList;
+    ArrayList<highScore> peopleList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

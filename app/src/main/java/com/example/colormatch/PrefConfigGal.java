@@ -14,7 +14,7 @@ public class PrefConfigGal {
 
     private static final String LIST_KEY = "list_key";
 
-    public static void writeListInPref(Context context, ArrayList<Person> list) {
+    public static void writeListInPref(Context context, ArrayList<highScore> list) {
         Gson gson = new Gson();
         String jsonString = gson.toJson(list);
 
@@ -24,13 +24,13 @@ public class PrefConfigGal {
         editor.apply();
     }
 
-    public static ArrayList<Person> readListFromPref(Context context) {
+    public static ArrayList<highScore> readListFromPref(Context context) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         String jsonString = pref.getString(LIST_KEY,"");
 
         Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<Person>>(){}.getType();
-        ArrayList<Person> list = gson.fromJson(jsonString,type);
+        Type type = new TypeToken<ArrayList<highScore>>(){}.getType();
+        ArrayList<highScore> list = gson.fromJson(jsonString,type);
         return list;
     }
 }
