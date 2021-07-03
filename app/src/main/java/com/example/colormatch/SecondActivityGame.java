@@ -1,5 +1,6 @@
 package com.example.colormatch;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -21,13 +22,14 @@ import java.util.Random;
 public class SecondActivityGame extends AppCompatActivity {
 
     ImageView iv_button,iv_button2, iv_arrow , iv_arrow2stroke;
-    TextView tv_points;
+    TextView tv_points,highestscoreTV,paused;
     ProgressBar progressBar;
 
     Handler handler;
     Runnable runnable;
 
     Random r;
+
 
     private final static int STATE_BLUE = 1;
     private final static int STATE_GREEN = 2;
@@ -42,8 +44,8 @@ public class SecondActivityGame extends AppCompatActivity {
     int chosenShape = 1;
     int chosenColor = 1;
 
-    int currentTime = 4000;
-    int startTime = 4000;
+    int currentTime = 12000;
+    int startTime = 12000;
 
     int currentPoints = 0;
 
@@ -63,17 +65,24 @@ public class SecondActivityGame extends AppCompatActivity {
         }
 
         iv_button=findViewById(R.id.iv_button);
-        iv_button2=findViewById(R.id.iv_button2);
+       // iv_button2=findViewById(R.id.iv_button2a);
         iv_arrow=findViewById(R.id.iv_arrow);
         iv_arrow2stroke=findViewById(R.id.iv_arrow2stroke);
         tv_points=findViewById(R.id.tv_points);
-        progressBar=findViewById(R.id.progresbar);
+        progressBar=findViewById(R.id.progressbar);
+        highestscoreTV=findViewById(R.id.highestscoreTV);
+        paused=findViewById(R.id.pause);
+
 
 
         // Shared Preferences - get data
         peopleList = PrefConfigGal.readListFromPref(this);
-        if ( peopleList==null)
+        if ( peopleList==null || peopleList.isEmpty()) {
+            highestscoreTV.setText("0");
             peopleList = new ArrayList<>();
+        }
+        else
+            highestscoreTV.setText(peopleList.get(0).getScore());
 
 
 
@@ -87,11 +96,9 @@ public class SecondActivityGame extends AppCompatActivity {
         //generate random arrow color at the start of the game
         //generate random shape and color at the start of the game
         r = new Random();
-        chosenShape= 1; // only 1 option for testing
-        r = new Random();
-        chosenColor=r.nextInt(4) + 1; // only 2 options for testing
+        chosenShape= 1; // starts from 1 -> last for testing purposes
         setImageShape(chosenShape);
-        setImageColor(chosenColor);
+       // setImageColor(chosenColor);
 
         iv_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,12 +108,12 @@ public class SecondActivityGame extends AppCompatActivity {
             }
         });
 
-        iv_button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setButtonImage2(setButtonPosition(buttonState2));
-            }
-        });
+//        iv_button2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                setButtonImage2(setButtonPosition(buttonState2));
+//            }
+//        });
 
 
         //main game loop
@@ -120,7 +127,7 @@ public class SecondActivityGame extends AppCompatActivity {
 
                 //check if there is still some time left in the progressBar
                 if (currentTime>0) {
-                    handler.postDelayed(runnable, 100);
+                    handler.postDelayed(runnable, 10);
                 }
                     else{ // check if the colors of the arrow and the button are the same
                         if (true /*buttonState == arrowState && buttonState2 == arrowState*/)
@@ -130,7 +137,7 @@ public class SecondActivityGame extends AppCompatActivity {
                             tv_points.setText("Points: "+currentPoints);
 
                             //make the speed higher after every turn / if the speed is 1 second make it again 2 seconds
-                            startTime=startTime-3000;
+                            startTime=startTime-100;
                             if (startTime < 1000){
                                 startTime = 2000;
                             }
@@ -144,15 +151,19 @@ public class SecondActivityGame extends AppCompatActivity {
 
 
                             //generate new color and shape
-                            chosenShape= 1; // only 1 option for testing;
-                            r = new Random();
-                            chosenColor=r.nextInt(4) + 1;
+                           // chosenShape=r.nextInt(4) + 1;
+
+                            // Show all shapes one after another - for testing purposes
+                           if(chosenShape!=16)
+                                chosenShape++;
+                            else
+                                chosenShape=1;
+
+
                             setImageShape(chosenShape);
-                            setImageColor(chosenColor);
+                            //setImageColor(chosenColor);
 
-
-
-                            handler.postDelayed(runnable,100);
+                            handler.postDelayed(runnable,20);
                         }
                         else {
                             iv_button.setEnabled(false);
@@ -291,51 +302,190 @@ public class SecondActivityGame extends AppCompatActivity {
     {
         switch (theShape) {
             case 1:
-                iv_arrow2stroke.setImageResource(R.drawable.ic_oie_6ppwctotng3q222222222222222222);
                 chosenShape = 1;
+                iv_arrow2stroke.setImageResource(R.drawable.ic_oie_6ppwctotng3q222222222222222222);
+                iv_arrow.setImageResource(R.drawable.ic_oie_6ppwctotng3q);
+                chosenColor=r.nextInt(4) + 1;
+                colorTheShape(iv_arrow);
                 break;
+
+            case 2:
+                chosenShape = 2;
+                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_a_outline);
+                iv_arrow.setImageResource(R.drawable.ic_strangeshape_a_color);
+                chosenColor=r.nextInt(4) + 1;
+                colorTheShape(iv_arrow);
+                break;
+            case 3:
+                chosenShape = 3;
+                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_b_outline);
+                iv_arrow.setImageResource(R.drawable.ic_strangeshape_b_color);
+                chosenColor=r.nextInt(4) + 1;
+                colorTheShape(iv_arrow);
+                break;
+            case 4:
+                chosenShape = 4;
+                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_c_outline);
+                iv_arrow.setImageResource(R.drawable.ic_strangeshape_c_color);
+                chosenColor=r.nextInt(4) + 1;
+                colorTheShape(iv_arrow);
+                break;
+            case 5:
+                chosenShape = 5;
+                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_d_outline);
+                iv_arrow.setImageResource(R.drawable.ic_strangeshape_d_color);
+                chosenColor=r.nextInt(4) + 1;
+                colorTheShape(iv_arrow);
+                break;
+            case 6:
+                chosenShape = 6;
+                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_e_outline);
+                iv_arrow.setImageResource(R.drawable.ic_strangeshape_e_color);
+                chosenColor=r.nextInt(4) + 1;
+                colorTheShape(iv_arrow);
+                break;
+            case 7:
+                chosenShape = 7;
+                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_f_outline);
+                iv_arrow.setImageResource(R.drawable.ic_strangeshape_f_color);
+                chosenColor=r.nextInt(4) + 1;
+                colorTheShape(iv_arrow);
+                break;
+            case 8:
+                chosenShape = 8;
+                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_g_outline);
+                iv_arrow.setImageResource(R.drawable.ic_strangeshape_g_color);
+                chosenColor=r.nextInt(4) + 1;
+                colorTheShape(iv_arrow);
+                break;
+            case 9:
+                chosenShape = 9;
+                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_h_outline);
+                iv_arrow.setImageResource(R.drawable.ic_strangeshape_h_color);
+                chosenColor=r.nextInt(4) + 1;
+                colorTheShape(iv_arrow);
+                break;
+            case 10:
+                chosenShape = 10;
+                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_i_outline);
+                iv_arrow.setImageResource(R.drawable.ic_strangeshape_i_color);
+                chosenColor=r.nextInt(4) + 1;
+                colorTheShape(iv_arrow);
+                break;
+            case 11:
+                chosenShape = 11;
+                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_j_outline);
+                iv_arrow.setImageResource(R.drawable.ic_strangeshape_j_color);
+                chosenColor=r.nextInt(4) + 1;
+                colorTheShape(iv_arrow);
+                break;
+            case 12:
+                chosenShape = 12;
+                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_k_outline);
+                iv_arrow.setImageResource(R.drawable.ic_strangeshape_k_color);
+                chosenColor=r.nextInt(4) + 1;
+                colorTheShape(iv_arrow);
+                break;
+            case 13:
+                chosenShape = 13;
+                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_l_outline);
+                iv_arrow.setImageResource(R.drawable.ic_strangeshape_l_color);
+                chosenColor=r.nextInt(4) + 1;
+                colorTheShape(iv_arrow);
+
+            case 14:
+                chosenShape = 14;
+                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_m_outline);
+                iv_arrow.setImageResource(R.drawable.ic_strangeshape_m_color);
+                chosenColor=r.nextInt(4) + 1;
+                colorTheShape(iv_arrow);
+                break;
+
+            case 15:
+                chosenShape = 15;
+                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_n_outline);
+                iv_arrow.setImageResource(R.drawable.ic_strangeshape_n_color);
+                colorTheShape(iv_arrow);
+                break;
+
+            case 16:
+                chosenShape = 16;
+                iv_arrow2stroke.setImageResource(R.drawable.ic_strangeshape_o_outline);
+                iv_arrow.setImageResource(R.drawable.ic_strangeshape_o_color);
+                colorTheShape(iv_arrow);
+                break;
+
+
+
+        }
+    }
+
+    public void colorTheShape(ImageView theImage)
+    {
+        chosenColor=r.nextInt(4) + 1;
+        switch (chosenColor)
+        {
+            case 1:
+                theImage.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.blue), android.graphics.PorterDuff.Mode.SRC_IN);
+                break;
+            case 2:
+                theImage.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.green), android.graphics.PorterDuff.Mode.SRC_IN);
+                break;
+            case 3:
+                theImage.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.red), android.graphics.PorterDuff.Mode.SRC_IN);
+                break;
+            case 4:
+                theImage.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN);
+                break;
+        }
+    }
+
+//    public void setImageColor(int theColor)
+//    {
+//        switch (theColor) {
+//            case STATE_BLUE:
+//                break;
 //            case STATE_GREEN:
 //                iv_arrow.setImageResource(R.drawable.ic_oie_6ppwctotng3q);
 //                iv_arrow.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.green), android.graphics.PorterDuff.Mode.SRC_IN);
 //                chosenColor = STATE_GREEN;
 //                break;
-//            case STATE_RED:
-//                iv_arrow.setImageResource(R.drawable.ic_red);
+//           case STATE_RED:
+//                iv_arrow.setImageResource(R.drawable.ic_oie_6ppwctotng3q);
+//                iv_arrow.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.red), android.graphics.PorterDuff.Mode.SRC_IN);
 //                chosenColor = STATE_RED;
 //                break;
 //            case STATE_YELLOW:
-//                iv_arrow.setImageResource(R.drawable.ic_yellow);
-//                chosenColor = STATE_YELLOW;
-//                break;
+//                 iv_arrow.setImageResource(R.drawable.ic_oie_6ppwctotng3q);
+//                 iv_arrow.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN);
+//                 chosenColor = STATE_YELLOW;
+//                 break;
+//
+//        }
+//    }
 
-        }
+    @Override
+    public void onBackPressed() {
+
+        handler.removeCallbacks(runnable);
+        paused.setVisibility(View.VISIBLE);
+        Intent myIntent = new Intent(SecondActivityGame.this,paused.class);
+        startActivity(myIntent);
+
     }
 
-    public void setImageColor(int theColor)
-    {
-        switch (theColor) {
-            case STATE_BLUE:
-                iv_arrow.setImageResource(R.drawable.ic_oie_6ppwctotng3q);
-                iv_arrow.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.blue), android.graphics.PorterDuff.Mode.SRC_IN);
-                chosenColor = STATE_BLUE;
-                break;
-            case STATE_GREEN:
-                iv_arrow.setImageResource(R.drawable.ic_oie_6ppwctotng3q);
-                iv_arrow.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.green), android.graphics.PorterDuff.Mode.SRC_IN);
-                chosenColor = STATE_GREEN;
-                break;
-           case STATE_RED:
-                iv_arrow.setImageResource(R.drawable.ic_oie_6ppwctotng3q);
-                iv_arrow.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.red), android.graphics.PorterDuff.Mode.SRC_IN);
-                chosenColor = STATE_RED;
-                break;
-            case STATE_YELLOW:
-                 iv_arrow.setImageResource(R.drawable.ic_oie_6ppwctotng3q);
-                 iv_arrow.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN);
-                 chosenColor = STATE_YELLOW;
-                 break;
-
-        }
+    @Override
+    protected void onResume() {
+        handler.postDelayed(runnable,0);
+        currentTime=0;
+        currentPoints--;
+        paused.setVisibility(View.INVISIBLE);
+        super.onResume();
     }
 
+    @Override
+    protected void onPause() {
+        handler.removeCallbacks(runnable);
+        super.onPause();
+    }
 }

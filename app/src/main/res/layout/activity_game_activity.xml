@@ -1,9 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:padding="20dp"
     xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rotation="5"
+        android:text="Paused"
+        android:layout_centerInParent="true"
+        android:textSize="50dp"
+        android:fontFamily="@font/noot_aj"
+        android:visibility="invisible"
+        android:id="@+id/pause"
+        />
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/currenthighscoretrophy"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/currenthighscoretrophy"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/noot_aj"
+        android:text="37"
+        android:layout_toRightOf="@id/currenthighscoretrophy"
+        android:layout_marginTop="4.5dp"
+        android:textSize="25dp"
+        android:id="@+id/highestscoreTV"
+        ></TextView>
 
     <TextView
         android:id="@+id/tv_points"
@@ -11,35 +41,44 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="Points: 0">
+        android:text="Points: 0"
+        android:textStyle="bold"
+        android:fontFamily="@font/noot_aj"
+        android:textSize="25dp"
+        android:layout_marginTop="3dp"
+        >
 
     </TextView>
 
     <ProgressBar
-        android:id="@+id/progresbar"
+        android:id="@+id/progressbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="15dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_below="@id/tv_points"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginStart="25dp"
+        android:paddingBottom="5dp"
+        android:progressDrawable="@drawable/custom_progressbar"
         />
 
     <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:scaleType="centerInside"
-        android:layout_below="@id/progresbar"
+        android:layout_below="@id/progressbar"
         android:id="@+id/iv_arrow2stroke"
         android:layout_centerHorizontal="true"
 
 
         />
     <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:scaleType="centerInside"
-        android:layout_below="@id/progresbar"
+        android:layout_below="@id/progressbar"
         android:id="@+id/iv_arrow"
         android:layout_centerHorizontal="true"
 
@@ -47,27 +86,75 @@
         />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="2"
         android:layout_below="@id/iv_arrow"
         android:layout_centerHorizontal="true">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
     <ImageView
-        android:layout_width="300dp"
+        android:layout_width="365dp"
         android:layout_height="wrap_content"
         android:scaleType="centerInside"
         android:layout_alignParentStart="true"
         android:id="@+id/iv_button"
         android:src="@drawable/ic_button_blue"
         />
-    <ImageView
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:scaleType="centerInside"
-        android:layout_toEndOf="@id/iv_button"
-        android:id="@+id/iv_button2"
-        android:src="@drawable/ic_button_blue"
-        />
+
+        </RelativeLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_button2a"
+                android:layout_width="100dp"
+                android:layout_height="75dp"
+                android:layout_centerHorizontal="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_strangeshape_a_outline"
+                app:layout_constraintBottom_toTopOf="@+id/iv_button2b"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_button2b"
+                android:layout_width="99dp"
+                android:layout_height="73dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_strangeshape_k_outline"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_button2d"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_button2c"
+                android:layout_width="100dp"
+                android:layout_height="75dp"
+                android:layout_gravity="bottom"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_oie_6ppwctotng3q222222222222222222"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/iv_button2a"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.503" />
+
+            <ImageView
+                android:id="@+id/iv_button2d"
+                android:layout_width="100dp"
+                android:layout_height="75dp"
+                android:layout_gravity="bottom"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_strangeshape_e_outline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_button2c" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
 
