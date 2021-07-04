@@ -9,13 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ColorMatch">
-        <activity android:name=".paused"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/Theme.Transparent"
-            android:screenOrientation="landscape"
-            android:launchMode="singleInstance">
-
-        </activity>
 
         <activity android:name=".Gal_SharedPreferencesAttemptInsteadOfSQLITE"
             android:windowSoftInputMode="adjustPan"

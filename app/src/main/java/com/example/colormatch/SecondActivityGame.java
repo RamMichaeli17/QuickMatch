@@ -1,7 +1,6 @@
 package com.example.colormatch;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,7 +8,9 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,9 @@ public class SecondActivityGame extends AppCompatActivity {
     ImageView iv_button,iv_button2, ShapeFillerColor, ShapeOutline;
     TextView tv_points,highestscoreTV,paused;
     ProgressBar progressBar;
+    Button continueBTN,exitBTN;
+    LinearLayout rotatingAnswersLL;
+    boolean firstTimeOnResumeCalled, gameIsNotPaused;
 
     Handler handler;
     Runnable runnable;
@@ -115,6 +119,8 @@ public class SecondActivityGame extends AppCompatActivity {
              userName = extras.getString("userName");
         }
 
+        firstTimeOnResumeCalled=true;
+        gameIsNotPaused =true;
         iv_button=findViewById(R.id.iv_button);
        // iv_button2=findViewById(R.id.iv_button2a);
         ShapeFillerColor =findViewById(R.id.iv_arrow);
@@ -123,6 +129,9 @@ public class SecondActivityGame extends AppCompatActivity {
         progressBar=findViewById(R.id.progressbar);
         highestscoreTV=findViewById(R.id.highestscoreTV);
         paused=findViewById(R.id.pause);
+        continueBTN=findViewById(R.id.continueplay);
+        exitBTN=findViewById(R.id.exit);
+        rotatingAnswersLL=findViewById(R.id.rotatingAnswersLinearLayout);
 
 
 
@@ -151,6 +160,20 @@ public class SecondActivityGame extends AppCompatActivity {
         setImageShape(chosenShape);
        // setImageColor(chosenColor);
 
+        continueBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                continueTheGame();
+            }
+        });
+
+        exitBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateHighScores();
+                finish();
+            }
+        });
         iv_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -398,33 +421,97 @@ public class SecondActivityGame extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        handler.removeCallbacks(runnable); // stop the handler - a way to pause the game
-        paused.setVisibility(View.VISIBLE);
-        Intent myIntent = new Intent(SecondActivityGame.this,paused.class);
-        myIntent.putExtra("username",userName); // pass username+score to paused.class to save score in highscores in case user wants to exit the game before losing
-        myIntent.putExtra("score",currentPoints);
-        startActivity(myIntent);
+        System.out.println("onBackPressed()");
+        if(gameIsNotPaused)
+        pauseTheGame();
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-            View decorView = getWindow().getDecorView();
-            // Hides the status and navigation bar until the user clicks
-            // on the screeen.
-            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
-        handler.postDelayed(runnable,0);
-        currentTime=0;
-        currentPoints--;
-        paused.setVisibility(View.INVISIBLE);
+        System.out.println("OnResume()");
+
+        View decorView = getWindow().getDecorView();
+        // Hides the status and navigation bar until the user clicks
+        // on the screeen.
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+
+        if (firstTimeOnResumeCalled) {
+            firstTimeOnResumeCalled = false;
+        }
+        else {
+            if(gameIsNotPaused)
+             pauseTheGame();
+        }
+
+
+    }
+
+    public void pauseTheGame()
+    {
+        gameIsNotPaused=false;
+        currentTime=startTime;
+       // currentPoints--;
+        handler.removeCallbacks(runnable); // stop the handler - a way to pause the game
+        continueBTN.setVisibility(View.VISIBLE);
+        exitBTN.setVisibility(View.VISIBLE);
+        rotatingAnswersLL.setVisibility(View.GONE);
+        paused.setVisibility(View.VISIBLE);
+        ShapeFillerColor.setVisibility(View.INVISIBLE);
+        ShapeOutline.setVisibility(View.INVISIBLE);
+    }
+
+    public void continueTheGame()
+    {
+        continueBTN.setVisibility(View.GONE);
+        exitBTN.setVisibility(View.GONE);
+        rotatingAnswersLL.setVisibility(View.VISIBLE);
+        handler.postDelayed(runnable,3000);
+        paused.setText("3");
+
+        Handler resumeGameHandler;
+
+
+
+        if (!gameIsNotPaused) {
+            resumeGameHandler = new Handler();
+            resumeGameHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    paused.setText("2");
+                }
+            }, 1000);
+
+            resumeGameHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    paused.setText("1");
+                }
+            }, 2000);
+
+            resumeGameHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    paused.setVisibility(View.GONE);
+                    paused.setText("Paused");
+
+                    gameIsNotPaused = true;
+
+                    ShapeFillerColor.setVisibility(View.VISIBLE);
+                    ShapeOutline.setVisibility(View.VISIBLE);
+
+                }
+            }, 3000);
+        }
 
     }
 
     @Override
     protected void onPause() {
+        System.out.println("OnPause()");
         handler.removeCallbacks(runnable);
         super.onPause();
     }
