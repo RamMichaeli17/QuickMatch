@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
@@ -30,6 +31,7 @@ public class SecondActivityGame extends AppCompatActivity {
     Button continueBTN,exitBTN;
     LinearLayout rotatingAnswersLL;
     boolean firstTimeOnResumeCalled, gameIsNotPaused;
+    
 
     Handler handler;
     Runnable runnable;
@@ -67,12 +69,12 @@ public class SecondActivityGame extends AppCompatActivity {
     @SuppressLint("NewApi")
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_activity);
-
-
 
         //The next 32 lines of code is used to permanently hide & draw over the navigation bar at the right side of the screen
         currentApiVersion = android.os.Build.VERSION.SDK_INT;
@@ -135,6 +137,7 @@ public class SecondActivityGame extends AppCompatActivity {
 
 
 
+
         // Shared Preferences - get data
         highScoreList = PrefConfigGal.readListFromPref(this);
         if ( highScoreList ==null || highScoreList.isEmpty()) {
@@ -174,6 +177,7 @@ public class SecondActivityGame extends AppCompatActivity {
                 finish();
             }
         });
+
         iv_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,6 +185,7 @@ public class SecondActivityGame extends AppCompatActivity {
                 setButtonImage(setButtonPosition(buttonState));
             }
         });
+
 
 //        iv_button2.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -454,11 +459,11 @@ public class SecondActivityGame extends AppCompatActivity {
     {
         gameIsNotPaused=false;
         currentTime=startTime;
-       // currentPoints--;
         handler.removeCallbacks(runnable); // stop the handler - a way to pause the game
         continueBTN.setVisibility(View.VISIBLE);
         exitBTN.setVisibility(View.VISIBLE);
-        rotatingAnswersLL.setVisibility(View.GONE);
+        rotatingAnswersLL.setAlpha((float) 0.1);
+        iv_button.setClickable(false);
         paused.setVisibility(View.VISIBLE);
         ShapeFillerColor.setVisibility(View.INVISIBLE);
         ShapeOutline.setVisibility(View.INVISIBLE);
@@ -468,7 +473,7 @@ public class SecondActivityGame extends AppCompatActivity {
     {
         continueBTN.setVisibility(View.GONE);
         exitBTN.setVisibility(View.GONE);
-        rotatingAnswersLL.setVisibility(View.VISIBLE);
+        rotatingAnswersLL.setAlpha((float) 1);
         handler.postDelayed(runnable,3000);
         paused.setText("3");
 
@@ -498,6 +503,8 @@ public class SecondActivityGame extends AppCompatActivity {
                     paused.setVisibility(View.GONE);
                     paused.setText("Paused");
 
+                    iv_button.setClickable(true);
+
                     gameIsNotPaused = true;
 
                     ShapeFillerColor.setVisibility(View.VISIBLE);
@@ -513,6 +520,8 @@ public class SecondActivityGame extends AppCompatActivity {
     protected void onPause() {
         System.out.println("OnPause()");
         handler.removeCallbacks(runnable);
+        if (gameIsNotPaused)
+            pauseTheGame();
         super.onPause();
     }
 
