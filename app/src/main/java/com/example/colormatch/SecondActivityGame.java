@@ -501,10 +501,45 @@ public class SecondActivityGame extends AppCompatActivity {
     {
         continueBTN.setVisibility(View.GONE);
         exitBTN.setVisibility(View.GONE);
-        rotatingAnswersLL.setAlpha((float) 1);
         handler.postDelayed(runnable,3000);
         paused.setText("3");
+        rotatingAnswersLL.animate().alpha(1).setDuration(1500);
+        paused.setAlpha(0);
+        if (!gameIsNotPaused) {
+            paused.animate().alpha(1).setDuration(1000).withEndAction(new Runnable() {
+                @Override
+                public void run() {
+                    paused.setAlpha(0);
+                    paused.setText("2");
+                    paused.animate().alpha(1).setDuration(1000).withEndAction(new Runnable() {
+                        @Override
+                        public void run() {
+                            paused.setAlpha(0);
+                            paused.setText("1");
+                            paused.animate().alpha(1).setDuration(1000).withEndAction(new Runnable() {
+                                @Override
+                                public void run() {
+                                    paused.setVisibility(View.GONE);
+                                    paused.setText("Paused");
 
+                                    iv_button.setClickable(true);
+
+                                    gameIsNotPaused = true;
+
+                                    ShapeFillerColor.setVisibility(View.VISIBLE);
+                                    ShapeOutline.setVisibility(View.VISIBLE);
+
+                                }
+                            });
+                        }
+                    });
+
+                }
+            });
+        }
+
+
+        /*
         Handler resumeGameHandler;
 
 
@@ -540,7 +575,7 @@ public class SecondActivityGame extends AppCompatActivity {
 
                 }
             }, 3000);
-        }
+        }*/
 
     }
 
