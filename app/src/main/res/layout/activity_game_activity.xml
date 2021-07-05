@@ -9,6 +9,19 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:text="Moving shape!"
+        android:textStyle="bold"
+        android:fontFamily="@font/noot_aj"
+        android:textSize="30dp"
+        android:alpha="0"
+        android:id="@+id/movingShapeAlert"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Paused"
         android:layout_alignBottom="@id/iv_arrow"
         android:layout_centerHorizontal="true"

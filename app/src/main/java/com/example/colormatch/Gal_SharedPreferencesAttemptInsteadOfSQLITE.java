@@ -1,11 +1,15 @@
 package com.example.colormatch;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AnimationSet;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +22,7 @@ public class Gal_SharedPreferencesAttemptInsteadOfSQLITE extends AppCompatActivi
     EditText usernameET,scoreET;
     Button addButton,clearBTN;
     ArrayList<highScore> peopleList;
+    ImageView backgroundStars;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +36,44 @@ public class Gal_SharedPreferencesAttemptInsteadOfSQLITE extends AppCompatActivi
         scoreET=findViewById(R.id.scoreET);
         addButton=findViewById(R.id.addBTNsharedPreferences);
         */
+        /*
+        ObjectAnimator animation1 = ObjectAnimator.ofFloat(ShapeFillerColor,"translationX",1000);
+        animation1.setDuration(1000);
+        ObjectAnimator animation1b = ObjectAnimator.ofFloat(ShapeOutline,"translationX",1000);
+        animation1b.setDuration(1000);
+        ObjectAnimator animation2 = ObjectAnimator.ofFloat(ShapeFillerColor,"translationX",-1000);
+        animation2.setDuration(2000);
+        ObjectAnimator animation2b = ObjectAnimator.ofFloat(ShapeOutline,"translationX",-1000);
+        animation2b.setDuration(2000);
+        ObjectAnimator animation3 = ObjectAnimator.ofFloat(ShapeFillerColor,"translationX",0);
+        animation3.setDuration(1300);
+        ObjectAnimator animation3b = ObjectAnimator.ofFloat(ShapeOutline,"translationX",0);
+        animation3b.setDuration(1300);
+        AnimatorSet set = new AnimatorSet();
+        AnimatorSet set2 = new AnimatorSet();
+        AnimatorSet set3 = new AnimatorSet();
+        set.play(animation1).with(animation1b);
+        set.start();
+        set2.play(animation2).with(animation2b);
+        set2.setStartDelay(1000);
+        set2.start();
+        set3.play(animation3).with(animation3b);
+        set3.setStartDelay(3000);
+        set3.start();
+
+*/
 
         clearBTN=findViewById(R.id.clearBTN);
+        backgroundStars=findViewById(R.id.backgroundStars);
+
+        ObjectAnimator animation1 = ObjectAnimator.ofFloat(backgroundStars,"translationY",-450);
+        animation1.setDuration(1200);
+        ObjectAnimator animation2 = ObjectAnimator.ofFloat(backgroundStars,"alpha",1);
+        animation2.setDuration(2500);
+
+        AnimatorSet set = new AnimatorSet();
+        set.play(animation1).with(animation2);
+        set.start();
 
 
         // Shared Preferences - get data

@@ -1,5 +1,7 @@
 package com.example.colormatch;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
@@ -7,6 +9,7 @@ import android.os.Handler;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
@@ -26,7 +29,7 @@ import java.util.Random;
 public class SecondActivityGame extends AppCompatActivity {
 
     ImageView iv_button,iv_button2, ShapeFillerColor, ShapeOutline;
-    TextView tv_points,highestscoreTV,paused;
+    TextView tv_points,highestscoreTV,paused,movingShapeAlert;
     ProgressBar progressBar;
     Button continueBTN,exitBTN;
     LinearLayout rotatingAnswersLL;
@@ -134,8 +137,7 @@ public class SecondActivityGame extends AppCompatActivity {
         continueBTN=findViewById(R.id.continueplay);
         exitBTN=findViewById(R.id.exit);
         rotatingAnswersLL=findViewById(R.id.rotatingAnswersLinearLayout);
-
-
+        movingShapeAlert=findViewById(R.id.movingShapeAlert);
 
 
         // Shared Preferences - get data
@@ -212,6 +214,7 @@ public class SecondActivityGame extends AppCompatActivity {
                         if (true /*buttonState == arrowState && buttonState2 == arrowState*/)
                         {
                             //increase points and show time
+
                             currentPoints = currentPoints +1;
                             tv_points.setText("Points: "+currentPoints);
 
@@ -220,6 +223,15 @@ public class SecondActivityGame extends AppCompatActivity {
                             if (startTime < 1000){
                                 startTime = 2000;
                             }
+
+                            // Adding difficulty
+                            if (currentPoints==3)
+                                alertUserToCustomDifficulty();
+                            if (currentPoints==4)
+                                moveShape();
+
+
+
                             progressBar.setMax(startTime);
                             currentTime=startTime;
                             progressBar.setProgress(currentTime);
@@ -437,13 +449,6 @@ public class SecondActivityGame extends AppCompatActivity {
         super.onResume();
         System.out.println("OnResume()");
 
-        View decorView = getWindow().getDecorView();
-        // Hides the status and navigation bar until the user clicks
-        // on the screeen.
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
-
         if (firstTimeOnResumeCalled) {
             firstTimeOnResumeCalled = false;
         }
@@ -453,6 +458,29 @@ public class SecondActivityGame extends AppCompatActivity {
         }
 
 
+    }
+
+    public void alertUserToCustomDifficulty()
+    {
+        movingShapeAlert.animate().alpha(0.6f).setDuration(800);
+    }
+    public void moveShape()
+    {
+        movingShapeAlert.animate().alpha(0).setDuration(400);
+        ShapeOutline.animate().translationX(800).setDuration(350);
+        ShapeFillerColor.animate().translationX(800).setDuration(350).withEndAction(new Runnable() {
+            @Override
+            public void run() {
+                ShapeOutline.animate().translationX(-800).setDuration(700);
+                ShapeFillerColor.animate().translationX(-800).setDuration(700).withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        ShapeOutline.animate().translationX(-0).setDuration(400);
+                        ShapeFillerColor.animate().translationX(0).setDuration(400);
+                    }
+                });
+            }
+        });
     }
 
     public void pauseTheGame()
@@ -525,21 +553,6 @@ public class SecondActivityGame extends AppCompatActivity {
         super.onPause();
     }
 
-    @SuppressLint("NewApi")
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus)
-    {
-        super.onWindowFocusChanged(hasFocus);
-        if(currentApiVersion >= Build.VERSION_CODES.KITKAT && hasFocus)
-        {
-            getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        }
-    }
+
 
 }

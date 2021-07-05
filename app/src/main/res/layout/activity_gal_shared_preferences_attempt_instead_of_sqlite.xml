@@ -9,13 +9,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/backgroundgalversion"
-        android:layout_marginTop="25dp"/>
+        android:layout_marginTop="25dp"
+        android:alpha="0"
+        android:id="@+id/backgroundStars"/>
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:src="@drawable/trophy"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:background="@color/backgroundGray"
 
 
         />
