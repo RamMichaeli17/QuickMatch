@@ -3,14 +3,14 @@ package com.example.colormatch;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.graphics.Path;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.LinearInterpolator;
+import android.view.animation.PathInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,7 +29,7 @@ import java.util.Random;
 public class SecondActivityGame extends AppCompatActivity {
 
     ImageView iv_button,iv_button2, ShapeFillerColor, ShapeOutline;
-    TextView tv_points,highestscoreTV,paused,movingShapeAlert;
+    TextView tv_points,highestscoreTV,paused, difficuiltyAlertTV;
     ProgressBar progressBar;
     Button continueBTN,exitBTN;
     LinearLayout rotatingAnswersLL;
@@ -73,11 +73,11 @@ public class SecondActivityGame extends AppCompatActivity {
 
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_activity);
+
 
         //The next 32 lines of code is used to permanently hide & draw over the navigation bar at the right side of the screen
         currentApiVersion = android.os.Build.VERSION.SDK_INT;
@@ -137,7 +137,7 @@ public class SecondActivityGame extends AppCompatActivity {
         continueBTN=findViewById(R.id.continueplay);
         exitBTN=findViewById(R.id.exit);
         rotatingAnswersLL=findViewById(R.id.rotatingAnswersLinearLayout);
-        movingShapeAlert=findViewById(R.id.movingShapeAlert);
+        difficuiltyAlertTV =findViewById(R.id.movingShapeAlert);
 
 
         // Shared Preferences - get data
@@ -225,9 +225,9 @@ public class SecondActivityGame extends AppCompatActivity {
                             }
 
                             // Adding difficulty
-                            if (currentPoints==3)
+                            if (currentPoints==0)
                                 alertUserToCustomDifficulty();
-                            if (currentPoints==4)
+                            if (currentPoints==1)
                                 moveShape();
 
 
@@ -462,11 +462,46 @@ public class SecondActivityGame extends AppCompatActivity {
 
     public void alertUserToCustomDifficulty()
     {
-        movingShapeAlert.animate().alpha(0.6f).setDuration(800);
+        difficuiltyAlertTV.animate().alpha(0.6f).setDuration(800);
     }
     public void moveShape()
     {
-        movingShapeAlert.animate().alpha(0).setDuration(400);
+        /*
+        Path path;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            path = new Path();
+            path.arcTo();
+            PathInterpolator pathInterpolator = new PathInterpolator(path);
+        }
+        AnimatorSet set = new AnimatorSet();
+
+        ObjectAnimator animation1 = ObjectAnimator.ofFloat(ShapeOutline, "translationX", 800);
+        ObjectAnimator animation1b = ObjectAnimator.ofFloat(ShapeFillerColor, "translationX", 800);
+        animation1.setDuration(350);
+        animation1b.setDuration(350);
+        ObjectAnimator animation2 = ObjectAnimator.ofFloat(ShapeOutline, "translationX", -800);
+        ObjectAnimator animation2b = ObjectAnimator.ofFloat(ShapeFillerColor, "translationX", -800);
+        animation2.setDuration(700);
+        animation2b.setDuration(700);
+        ObjectAnimator animation3 = ObjectAnimator.ofFloat(ShapeOutline, "translationX", 0);
+        ObjectAnimator animation3b = ObjectAnimator.ofFloat(ShapeFillerColor, "translationX", 0);
+        animation3.setDuration(400);
+        animation3b.setDuration(400);
+//
+//        set.play(animation1).with(animation1b);
+//        set.start();
+//        set.setStartDelay(0);
+//        set.play(animation2).with(animation2b);
+//        set.start();
+//        set.setStartDelay(350);
+//        set.play(animation3).with(animation3b);
+//        set.start();
+//        set.setStartDelay(1150);
+
+*/
+
+        difficuiltyAlertTV.animate().alpha(0).setDuration(400);
+        /*
         ShapeOutline.animate().translationX(800).setDuration(350);
         ShapeFillerColor.animate().translationX(800).setDuration(350).withEndAction(new Runnable() {
             @Override
@@ -475,16 +510,19 @@ public class SecondActivityGame extends AppCompatActivity {
                 ShapeFillerColor.animate().translationX(-800).setDuration(700).withEndAction(new Runnable() {
                     @Override
                     public void run() {
-                        ShapeOutline.animate().translationX(-0).setDuration(400);
+                        ShapeOutline.animate().translationX(0).setDuration(400);
                         ShapeFillerColor.animate().translationX(0).setDuration(400);
                     }
                 });
             }
         });
+        */
     }
 
     public void pauseTheGame()
     {
+        if(difficuiltyAlertTV.getAlpha()==0.6f)
+            difficuiltyAlertTV.setAlpha(0.1f);
         gameIsNotPaused=false;
         currentTime=startTime;
         handler.removeCallbacks(runnable); // stop the handler - a way to pause the game
@@ -499,6 +537,8 @@ public class SecondActivityGame extends AppCompatActivity {
 
     public void continueTheGame()
     {
+        if(difficuiltyAlertTV.getAlpha()==0.1f)
+            difficuiltyAlertTV.animate().alpha(0.6f).setDuration(1500);
         continueBTN.setVisibility(View.GONE);
         exitBTN.setVisibility(View.GONE);
         handler.postDelayed(runnable,3000);
