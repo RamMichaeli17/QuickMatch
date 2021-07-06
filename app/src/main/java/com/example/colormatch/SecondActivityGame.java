@@ -225,9 +225,9 @@ public class SecondActivityGame extends AppCompatActivity {
                             }
 
                             // Adding difficulty
-                            if (currentPoints==0)
-                                alertUserToCustomDifficulty();
                             if (currentPoints==1)
+                                alertUserToCustomDifficulty();
+                            if (currentPoints==2)
                                 moveShape();
 
 
@@ -466,42 +466,9 @@ public class SecondActivityGame extends AppCompatActivity {
     }
     public void moveShape()
     {
-        /*
-        Path path;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            path = new Path();
-            path.arcTo();
-            PathInterpolator pathInterpolator = new PathInterpolator(path);
-        }
-        AnimatorSet set = new AnimatorSet();
-
-        ObjectAnimator animation1 = ObjectAnimator.ofFloat(ShapeOutline, "translationX", 800);
-        ObjectAnimator animation1b = ObjectAnimator.ofFloat(ShapeFillerColor, "translationX", 800);
-        animation1.setDuration(350);
-        animation1b.setDuration(350);
-        ObjectAnimator animation2 = ObjectAnimator.ofFloat(ShapeOutline, "translationX", -800);
-        ObjectAnimator animation2b = ObjectAnimator.ofFloat(ShapeFillerColor, "translationX", -800);
-        animation2.setDuration(700);
-        animation2b.setDuration(700);
-        ObjectAnimator animation3 = ObjectAnimator.ofFloat(ShapeOutline, "translationX", 0);
-        ObjectAnimator animation3b = ObjectAnimator.ofFloat(ShapeFillerColor, "translationX", 0);
-        animation3.setDuration(400);
-        animation3b.setDuration(400);
-//
-//        set.play(animation1).with(animation1b);
-//        set.start();
-//        set.setStartDelay(0);
-//        set.play(animation2).with(animation2b);
-//        set.start();
-//        set.setStartDelay(350);
-//        set.play(animation3).with(animation3b);
-//        set.start();
-//        set.setStartDelay(1150);
-
-*/
 
         difficuiltyAlertTV.animate().alpha(0).setDuration(400);
-        /*
+
         ShapeOutline.animate().translationX(800).setDuration(350);
         ShapeFillerColor.animate().translationX(800).setDuration(350).withEndAction(new Runnable() {
             @Override
@@ -516,7 +483,7 @@ public class SecondActivityGame extends AppCompatActivity {
                 });
             }
         });
-        */
+
     }
 
     public void pauseTheGame()
