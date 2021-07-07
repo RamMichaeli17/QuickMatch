@@ -117,7 +117,6 @@ public class BeginnerActivity extends AppCompatActivity {
             }
         }
 
-        // לא ברור מה הולך פה - דרוש הסבר
         Bundle extras = getIntent().getExtras(); // Get username from mainActivity (dialog that pops before game)
         if(extras !=null) {
              userName = extras.getString("userName");
@@ -187,8 +186,8 @@ public class BeginnerActivity extends AppCompatActivity {
                                  4     2
                                     3
          */
-        // שוב, למה פלוס 1?
-        // למה הקטע הרנדומלי לא בתוך הפונקציה ?
+
+
         chosenShapePositionInAnswers=r.nextInt(4)+1; // 4 possible options for answer to be in (1=top 2= right 3=bottom 4=left)
         generateAnswerAtPosition(chosenShapePositionInAnswers,chosenShape);
 
@@ -363,9 +362,6 @@ public class BeginnerActivity extends AppCompatActivity {
     {
         // This function is used to create the shape+color in the middle of the screen (the main shape)
         chosenShape=r.nextInt(16); // random shape
-        chosenColor=r.nextInt(4) + 1; // random color
-        // למה הוספת +1 למען השם ?
-        //בפונקציה הבאה יש גם קריאה לרנדום למה למען השם #2?
 
         ShapeOutline.setImageResource(ShapesOutlineArray[chosenShape]); // Drawing the outline
         ShapeFillerColor.setImageResource(ShapesFillerColorArray[chosenShape]); // Drawing the inside (default red)
@@ -373,7 +369,7 @@ public class BeginnerActivity extends AppCompatActivity {
 
     }
 
-    //מה זה האנרואיד גרפיכ פורטרדאף ?
+
     public void colorTheShape(ImageView theImage)
     {
         chosenColor=r.nextInt(4) + 1; // generate random color
@@ -451,10 +447,10 @@ public class BeginnerActivity extends AppCompatActivity {
 
     }
 
-    // למה למען השם יש פה אריאיייליסט ולא מערך רגיל עם הרצה רגילה
-    public void generateOtherThreeShapes()
+
+    public void generateOtherThreeShapes() // This method sets 3 random WRONG answers at all the positions except the chosenShapePosition
     {
-        ArrayList<Integer> list = new ArrayList<Integer>(); // This method sets 3 random WRONG answers at all the positions except the chosenShapePosition
+        ArrayList<Integer> list = new ArrayList<Integer>();
         for (int i = 1; i <= 4; i++) { // Make a list with 1,2,3,4
             list.add(new Integer(i));
         }
@@ -466,9 +462,6 @@ public class BeginnerActivity extends AppCompatActivity {
                 while(chosenAnswers[otherThreeAnswers]==1)
                     otherThreeAnswers=r.nextInt(16); // Generate a new random shape until the random shape is unique and isn't a duplicate of an already existing answer)
 
-                //כפילות של קוד כמו בפונקציה למטה , למה למען השם #3?
-
-                chosenAnswers[otherThreeAnswers]=1; // Mark the recent answer as chosen (so it won't be chosen again in this turn)
                 generateAnswerAtPosition(list.get(i), otherThreeAnswers); // finally , we draw the random image (wrong answer) at a random (empty) position
             }
         }

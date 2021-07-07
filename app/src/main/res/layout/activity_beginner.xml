@@ -136,7 +136,7 @@
         android:id="@+id/main_shape_color"
         android:layout_centerHorizontal="true" />
 
-    <!--        lama lo android:orientation="horizontal" ?????-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -144,10 +144,7 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/rotating_answers_linear_layout">
 
-<!--        lama relativelayout stami caze ?-->
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+
 
     <ImageView
         android:layout_width="365dp"
@@ -158,8 +155,7 @@
         android:src="@drawable/ic_button_blue"
         />
 
-        </RelativeLayout>
-<!--        ****************-->
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
