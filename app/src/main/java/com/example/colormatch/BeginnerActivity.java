@@ -117,7 +117,7 @@ public class BeginnerActivity extends AppCompatActivity {
             }
         }
 
-
+        // לא ברור מה הולך פה - דרוש הסבר
         Bundle extras = getIntent().getExtras(); // Get username from mainActivity (dialog that pops before game)
         if(extras !=null) {
              userName = extras.getString("userName");
@@ -125,7 +125,7 @@ public class BeginnerActivity extends AppCompatActivity {
 
         firstTimeOnResumeCalled=true;
         gameIsNotPaused =true;
-        fourColorsImage =findViewById(R.id.fourColorsImage);
+        fourColorsImage =findViewById(R.id.fourColorsImage); //צריך להחליף לצבעים ולשנות בהתאם
         ShapeFillerColor =findViewById(R.id.main_shape_color);
         ShapeOutline =findViewById(R.id.main_shape_outline);
         tv_points=findViewById(R.id.tv_points);
@@ -154,7 +154,7 @@ public class BeginnerActivity extends AppCompatActivity {
             highestscoreTV.setText(highScoreList.get(0).getScore());
 
 
-
+        // איך 4 שניות אם למעלה רשום 12 ?
         //set the initial progressbar time to 4 seconds
         progressBar.setMax(startTime);
         progressBar.setProgress(startTime);
@@ -165,6 +165,7 @@ public class BeginnerActivity extends AppCompatActivity {
         //generate random shape and color at the start of the game
         r = new Random();
         setImageShapeAndColor(); // The function will use the above random
+        // לכפות על הביגינר שיהיו 2 דומים ולא רק 1 אותו דבר כדי שבאמת יהיה עניין למשחק....
 
         /*
            in the next few lines of code we generate the chosenShape at a random position (logic is inside functions for reuse later in main-game loop)
@@ -186,8 +187,9 @@ public class BeginnerActivity extends AppCompatActivity {
                                  4     2
                                     3
          */
-
-        chosenShapePositionInAnswers=r.nextInt(4)+1; // 4 possible options for answer to be in (1=top 2= right 3=bottom 4=left
+        // שוב, למה פלוס 1?
+        // למה הקטע הרנדומלי לא בתוך הפונקציה ?
+        chosenShapePositionInAnswers=r.nextInt(4)+1; // 4 possible options for answer to be in (1=top 2= right 3=bottom 4=left)
         generateAnswerAtPosition(chosenShapePositionInAnswers,chosenShape);
 
         generateOtherThreeShapes();
@@ -229,7 +231,7 @@ public class BeginnerActivity extends AppCompatActivity {
 
                 //check if there is still some time left in the progressBar
                 if (currentTime>0) {
-                    handler.postDelayed(runnable, 10);
+                    handler.postDelayed(runnable, 10); // נשמח להסבר מה זה
                 }
                     else{ // check if the colors of the arrow and the button are the same
                         if (true /* for testing purposes - you can't lose.  here should be "if (color and shape is correct)"... else -> you lose*/)
@@ -346,7 +348,7 @@ public class BeginnerActivity extends AppCompatActivity {
         }
     }
 
-    private void updateHighScores()
+    private void updateHighScores() //דרוש הסבר
     {
         highScore newHighScore = new highScore(userName,Integer.toString(currentPoints)); // Create a new highscore with username and current points
         highScoreList.add(newHighScore); // Add it to the list
@@ -359,17 +361,19 @@ public class BeginnerActivity extends AppCompatActivity {
 
     public void setImageShapeAndColor()
     {
-        // This function is used to create the shape+color in the middle of the screen
+        // This function is used to create the shape+color in the middle of the screen (the main shape)
         chosenShape=r.nextInt(16); // random shape
         chosenColor=r.nextInt(4) + 1; // random color
+        // למה הוספת +1 למען השם ?
+        //בפונקציה הבאה יש גם קריאה לרנדום למה למען השם #2?
 
-                ShapeOutline.setImageResource(ShapesOutlineArray[chosenShape]); // Drawing the outline
-                ShapeFillerColor.setImageResource(ShapesFillerColorArray[chosenShape]); // Drawing the inside (default red)
-                colorTheShape(ShapeFillerColor); // Painting the inside (from default red to random color)
+        ShapeOutline.setImageResource(ShapesOutlineArray[chosenShape]); // Drawing the outline
+        ShapeFillerColor.setImageResource(ShapesFillerColorArray[chosenShape]); // Drawing the inside (default red)
+        colorTheShape(ShapeFillerColor); // Painting the inside (from default red to random color)
 
     }
 
-
+    //מה זה האנרואיד גרפיכ פורטרדאף ?
     public void colorTheShape(ImageView theImage)
     {
         chosenColor=r.nextInt(4) + 1; // generate random color
@@ -447,6 +451,7 @@ public class BeginnerActivity extends AppCompatActivity {
 
     }
 
+    // למה למען השם יש פה אריאיייליסט ולא מערך רגיל עם הרצה רגילה
     public void generateOtherThreeShapes()
     {
         ArrayList<Integer> list = new ArrayList<Integer>(); // This method sets 3 random WRONG answers at all the positions except the chosenShapePosition
@@ -455,11 +460,13 @@ public class BeginnerActivity extends AppCompatActivity {
         }
         Collections.shuffle(list); // Mix the list to get random order of the numbers in it
         for (int i = 0; i <= 3; i++) { // Pull all the unsorted numbers from the above list (list[0],list[1],list[2],list[3]) , these numbers will be used for the next position to draw to
-            if (list.get(i)!=chosenShapePositionInAnswers) // this if-statement is to avoid drawing a wrong answer on top of the correct answer
+            if (list.get(i)!=chosenShapePositionInAnswers) // this if-statement is to avoid choosing the same position as the correct shape
             {
                 otherThreeAnswers=r.nextInt(16);  // 0->15 This generates a random shape and saves the shape at "otherThreeAnswers'
                 while(chosenAnswers[otherThreeAnswers]==1)
                     otherThreeAnswers=r.nextInt(16); // Generate a new random shape until the random shape is unique and isn't a duplicate of an already existing answer)
+
+                //כפילות של קוד כמו בפונקציה למטה , למה למען השם #3?
 
                 chosenAnswers[otherThreeAnswers]=1; // Mark the recent answer as chosen (so it won't be chosen again in this turn)
                 generateAnswerAtPosition(list.get(i), otherThreeAnswers); // finally , we draw the random image (wrong answer) at a random (empty) position
