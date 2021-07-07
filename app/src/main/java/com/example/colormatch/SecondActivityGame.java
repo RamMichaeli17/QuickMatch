@@ -1,16 +1,12 @@
 package com.example.colormatch;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.graphics.Path;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
-import android.view.animation.PathInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,20 +16,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
 public class SecondActivityGame extends AppCompatActivity {
 
-    ImageView iv_button,iv_button2, ShapeFillerColor, ShapeOutline;
+    ImageView fourColorsImage, ShapeFillerColor, ShapeOutline,shape_top,shape_right,shape_bottom,shape_left;
     TextView tv_points,highestscoreTV,paused, difficuiltyAlertTV;
     ProgressBar progressBar;
     Button continueBTN,exitBTN;
     LinearLayout rotatingAnswersLL;
     boolean firstTimeOnResumeCalled, gameIsNotPaused;
+    ConstraintLayout fourShapesLayout;
     
 
     Handler handler;
@@ -48,12 +47,14 @@ public class SecondActivityGame extends AppCompatActivity {
     private final static int STATE_YELLOW = 4;
 
 
-    int buttonState = STATE_BLUE;
-    int buttonState2 = STATE_BLUE;
+    int buttonState = STATE_BLUE; // Left side (colors)
 
-    int arrowState = STATE_BLUE; // DELETE
-    int chosenShape = 1;
-    int chosenColor = 1;
+    int chosenShape;
+    int chosenColor;
+    int chosenShapePositionInAnswers;
+    int otherThreeAnswers;
+    int[] chosenAnswers = new int[16];
+
 
     int currentTime = 12000;
     int startTime = 12000;
@@ -64,8 +65,8 @@ public class SecondActivityGame extends AppCompatActivity {
 
     String userName;
 
-    int[] ShapesFillerColor = {R.drawable.ic_r_strangeshape_firstshape_color,R.drawable.ic_strangeshape_a_color,R.drawable.ic_strangeshape_b_color,R.drawable.ic_strangeshape_c_color,R.drawable.ic_strangeshape_d_color,R.drawable.ic_strangeshape_e_color,R.drawable.ic_strangeshape_f_color,R.drawable.ic_strangeshape_g_color,R.drawable.ic_strangeshape_h_color,R.drawable.ic_strangeshape_i_color,R.drawable.ic_strangeshape_j_color,R.drawable.ic_strangeshape_k_color,R.drawable.ic_strangeshape_l_color,R.drawable.ic_strangeshape_m_color,R.drawable.ic_strangeshape_n_color,R.drawable.ic_strangeshape_o_color};
-    int[] ShapesOutline = {R.drawable.ic_r_strangeshape_firstshape_outline,R.drawable.ic_strangeshape_a_outline,R.drawable.ic_strangeshape_b_outline,R.drawable.ic_strangeshape_c_outline,R.drawable.ic_strangeshape_d_outline,R.drawable.ic_strangeshape_e_outline,R.drawable.ic_strangeshape_f_outline,R.drawable.ic_strangeshape_g_outline,R.drawable.ic_strangeshape_h_outline,R.drawable.ic_strangeshape_i_outline,R.drawable.ic_strangeshape_j_outline,R.drawable.ic_strangeshape_k_outline,R.drawable.ic_strangeshape_l_outline,R.drawable.ic_strangeshape_m_outline,R.drawable.ic_strangeshape_n_outline,R.drawable.ic_strangeshape_o_outline};
+    int[] ShapesFillerColorArray = {R.drawable.ic_r_strangeshape_firstshape_color,R.drawable.ic_strangeshape_a_color,R.drawable.ic_strangeshape_b_color,R.drawable.ic_strangeshape_c_color,R.drawable.ic_strangeshape_d_color,R.drawable.ic_strangeshape_e_color,R.drawable.ic_strangeshape_f_color,R.drawable.ic_strangeshape_g_color,R.drawable.ic_strangeshape_h_color,R.drawable.ic_strangeshape_i_color,R.drawable.ic_strangeshape_j_color,R.drawable.ic_strangeshape_k_color,R.drawable.ic_strangeshape_l_color,R.drawable.ic_strangeshape_m_color,R.drawable.ic_strangeshape_n_color,R.drawable.ic_strangeshape_o_color};
+    int[] ShapesOutlineArray = {R.drawable.ic_r_strangeshape_firstshape_outline,R.drawable.ic_strangeshape_a_outline,R.drawable.ic_strangeshape_b_outline,R.drawable.ic_strangeshape_c_outline,R.drawable.ic_strangeshape_d_outline,R.drawable.ic_strangeshape_e_outline,R.drawable.ic_strangeshape_f_outline,R.drawable.ic_strangeshape_g_outline,R.drawable.ic_strangeshape_h_outline,R.drawable.ic_strangeshape_i_outline,R.drawable.ic_strangeshape_j_outline,R.drawable.ic_strangeshape_k_outline,R.drawable.ic_strangeshape_l_outline,R.drawable.ic_strangeshape_m_outline,R.drawable.ic_strangeshape_n_outline,R.drawable.ic_strangeshape_o_outline};
 
 
     private int currentApiVersion;
@@ -80,43 +81,41 @@ public class SecondActivityGame extends AppCompatActivity {
 
 
         //The next 32 lines of code is used to permanently hide & draw over the navigation bar at the right side of the screen
-        currentApiVersion = android.os.Build.VERSION.SDK_INT;
-
-        final int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-
-        // This work only for android 4.4+
-        if(currentApiVersion >= Build.VERSION_CODES.KITKAT)
         {
+            currentApiVersion = Build.VERSION.SDK_INT;
 
-            getWindow().getDecorView().setSystemUiVisibility(flags);
+            final int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
 
-            // Code below is to handle presses of Volume up or Volume down.
-            // Without this, after pressing volume buttons, the navigation bar will
-            // show up and won't hide
-            final View decorView = getWindow().getDecorView();
-            decorView
-                    .setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener()
-                    {
+            // This work only for android 4.4+
+            if(currentApiVersion >= Build.VERSION_CODES.KITKAT)
+            {
 
-                        @Override
-                        public void onSystemUiVisibilityChange(int visibility)
+                getWindow().getDecorView().setSystemUiVisibility(flags);
+
+                // Code below is to handle presses of Volume up or Volume down.
+                // Without this, after pressing volume buttons, the navigation bar will
+                // show up and won't hide
+                final View decorView = getWindow().getDecorView();
+                decorView
+                        .setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener()
                         {
-                            if((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0)
+
+                            @Override
+                            public void onSystemUiVisibilityChange(int visibility)
                             {
-                                decorView.setSystemUiVisibility(flags);
+                                if((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0)
+                                {
+                                    decorView.setSystemUiVisibility(flags);
+                                }
                             }
-                        }
-                    });
+                        });
+            }
         }
-
-
-
-
 
 
         Bundle extras = getIntent().getExtras(); // Get username from mainActivity (dialog that pops before game)
@@ -126,10 +125,9 @@ public class SecondActivityGame extends AppCompatActivity {
 
         firstTimeOnResumeCalled=true;
         gameIsNotPaused =true;
-        iv_button=findViewById(R.id.iv_button);
-       // iv_button2=findViewById(R.id.iv_button2a);
-        ShapeFillerColor =findViewById(R.id.iv_arrow);
-        ShapeOutline =findViewById(R.id.iv_arrow2stroke);
+        fourColorsImage =findViewById(R.id.fourColorsImage);
+        ShapeFillerColor =findViewById(R.id.mainshape_color);
+        ShapeOutline =findViewById(R.id.mainshape_outline);
         tv_points=findViewById(R.id.tv_points);
         progressBar=findViewById(R.id.progressbar);
         highestscoreTV=findViewById(R.id.highestscoreTV);
@@ -138,6 +136,12 @@ public class SecondActivityGame extends AppCompatActivity {
         exitBTN=findViewById(R.id.exit);
         rotatingAnswersLL=findViewById(R.id.rotatingAnswersLinearLayout);
         difficuiltyAlertTV =findViewById(R.id.movingShapeAlert);
+        fourShapesLayout=findViewById(R.id.fourShapes_layout);
+
+        shape_bottom=findViewById(R.id.shape_BOTTOM);
+        shape_left=findViewById(R.id.shape_LEFT);
+        shape_top=findViewById(R.id.shape_TOP);
+        shape_right=findViewById(R.id.shape_RIGHT);
 
 
         // Shared Preferences - get data
@@ -158,12 +162,37 @@ public class SecondActivityGame extends AppCompatActivity {
         //display the starting points
         tv_points.setText("Points: " + currentPoints);
 
-        //generate random arrow color at the start of the game
         //generate random shape and color at the start of the game
         r = new Random();
-        chosenShape= 0; // starts from 0 -> last for testing purposes
-        setImageShape(chosenShape);
-       // setImageColor(chosenColor);
+        setImageShapeAndColor(); // The function will use the above random
+
+        /*
+           in the next few lines of code we generate the chosenShape at a random position (logic is inside functions for reuse later in main-game loop)
+           then we generate 3 random shapes at the 3 remaining positions at random        (                             ^^                            )
+
+           Note:
+                 since in beginner we don't force similar shapes in the answers (only in harder difficulties) ,
+                 it's not important that the other 3 random shapes (the ones that aren't the answer)
+                 will be at a random position of the 3 remaining positions (after generateing chosenShape)
+
+                 but when we do want to force similar shapes (in harder difficulties) , we aren't choosing a random shape ,
+                 we are choosing a specific shape that looks like chosenShape , so we must put it in a random position
+                 (* since the shape isn't random, its placing needs to be random)
+
+                 So I just used random shape + random position to solve this problem (in beginner wont matter , in harder difficulties it will)
+
+                 Answers index will look like this:
+                                    1
+                                 4     2
+                                    3
+         */
+
+        chosenShapePositionInAnswers=r.nextInt(4)+1; // 4 possible options for answer to be in (1=top 2= right 3=bottom 4=left
+        generateAnswerAtPosition(chosenShapePositionInAnswers,chosenShape);
+
+        generateOtherThreeShapes();
+
+
 
         continueBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,21 +209,13 @@ public class SecondActivityGame extends AppCompatActivity {
             }
         });
 
-        iv_button.setOnClickListener(new View.OnClickListener() {
+        fourColorsImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //rotate the button with the colors
+                //rotate the colors
                 setButtonImage(setButtonPosition(buttonState));
             }
         });
-
-
-//        iv_button2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                setButtonImage2(setButtonPosition(buttonState2));
-//            }
-//        });
 
 
         //main game loop
@@ -211,12 +232,15 @@ public class SecondActivityGame extends AppCompatActivity {
                     handler.postDelayed(runnable, 10);
                 }
                     else{ // check if the colors of the arrow and the button are the same
-                        if (true /*buttonState == arrowState && buttonState2 == arrowState*/)
+                        if (true /* for testing purposes - you can't lose.  here should be "if (color and shape is correct)"... else -> you lose*/)
                         {
-                            //increase points and show time
+                            //increase points and show them
 
                             currentPoints = currentPoints +1;
                             tv_points.setText("Points: "+currentPoints);
+
+                            // reset the chosenAnswers array
+                            Arrays.fill(chosenAnswers,0 ); // java method to fill every index in the array with value 0 (best way to reset the array)
 
                             //make the speed higher after every turn / if the speed is 1 second make it again 2 seconds
                             startTime=startTime-100;
@@ -224,7 +248,7 @@ public class SecondActivityGame extends AppCompatActivity {
                                 startTime = 2000;
                             }
 
-                            // Adding difficulty
+                            // Adding difficulty to level / Alerting before difficulty level
                             if (currentPoints==1)
                                 alertUserToCustomDifficulty();
                             if (currentPoints==2)
@@ -236,28 +260,23 @@ public class SecondActivityGame extends AppCompatActivity {
                             currentTime=startTime;
                             progressBar.setProgress(currentTime);
 
-                            //generate new color of the arrow
-                               //arrowState=r.nextInt(4) +1;
-                               //  setArrowImage(arrowState);
 
+                            //generate random shape(and color) in the middle of the screen
+                            setImageShapeAndColor();
 
-                            //generate new color and shape
-                           // chosenShape=r.nextInt(4) + 1;
+                            //generate the above chosenShape in a random position in the answers
+                            //and then generate 3 other random answers in random locations
+                            chosenShapePositionInAnswers=r.nextInt(4)+1;
+                            generateAnswerAtPosition(chosenShapePositionInAnswers,chosenShape);
 
-                            // Show all shapes one after another - for testing purposes [0->15 = 16 shapes]
-                            chosenShape++;
-                           if(chosenShape==16)
-                                chosenShape=0;
+                            generateOtherThreeShapes();
 
-
-                            setImageShape(chosenShape);
-                            //setImageColor(chosenColor);
 
                             handler.postDelayed(runnable,20);
                         }
                         else {
-                            iv_button.setEnabled(false);
-                            iv_button2.setEnabled(false);
+                            fourColorsImage.setEnabled(false);
+                            fourShapesLayout.setEnabled(false);
                             Toast.makeText(SecondActivityGame.this, "Game Over", Toast.LENGTH_SHORT).show();
                             updateHighScores();
                         }
@@ -268,28 +287,6 @@ public class SecondActivityGame extends AppCompatActivity {
         //start the game loop
         handler.postDelayed(runnable,100);
 
-    }
-    //display the arrow color according to the generated number
-    private void setArrowImage(int state)
-    {
-        switch (state) {
-            case STATE_BLUE:
-                ShapeFillerColor.setImageResource(R.drawable.ic_blue);
-                arrowState = STATE_BLUE;
-                break;
-            case STATE_RED:
-                ShapeFillerColor.setImageResource(R.drawable.ic_red);
-                arrowState = STATE_RED;
-                break;
-            case STATE_YELLOW:
-                ShapeFillerColor.setImageResource(R.drawable.ic_yellow);
-                arrowState = STATE_YELLOW;
-                break;
-            case STATE_GREEN:
-                ShapeFillerColor.setImageResource(R.drawable.ic_green);
-                arrowState = STATE_GREEN;
-                break;
-        }
     }
 
     //rotate animation of the button when clicked
@@ -331,42 +328,20 @@ public class SecondActivityGame extends AppCompatActivity {
     private void setButtonImage(int state){
         switch (state) {
             case STATE_BLUE:
-                setRotation(iv_button,R.drawable.ic_button_blue);
+                setRotation(fourColorsImage,R.drawable.ic_button_blue);
                 buttonState = STATE_BLUE;
                 break;
             case STATE_RED:
-                setRotation(iv_button,R.drawable.ic_button_red);
+                setRotation(fourColorsImage,R.drawable.ic_button_red);
                 buttonState = STATE_RED;
                 break;
             case STATE_YELLOW:
-                setRotation(iv_button,R.drawable.ic_button_yellow);
+                setRotation(fourColorsImage,R.drawable.ic_button_yellow);
                 buttonState = STATE_YELLOW;
                 break;
             case STATE_GREEN:
-                setRotation(iv_button,R.drawable.ic_button_green);
+                setRotation(fourColorsImage,R.drawable.ic_button_green);
                 buttonState = STATE_GREEN;
-                break;
-        }
-    }
-
-    // Right side
-    private void setButtonImage2(int state){
-        switch (state) {
-            case STATE_BLUE:
-                setRotation(iv_button2,R.drawable.ic_button_blue);
-                buttonState2 = STATE_BLUE;
-                break;
-            case STATE_RED:
-                setRotation(iv_button2,R.drawable.ic_button_red);
-                buttonState2 = STATE_RED;
-                break;
-            case STATE_YELLOW:
-                setRotation(iv_button2,R.drawable.ic_button_yellow);
-                buttonState2 = STATE_YELLOW;
-                break;
-            case STATE_GREEN:
-                setRotation(iv_button2,R.drawable.ic_button_green);
-                buttonState2 = STATE_GREEN;
                 break;
         }
     }
@@ -375,26 +350,29 @@ public class SecondActivityGame extends AppCompatActivity {
     {
         highScore newHighScore = new highScore(userName,Integer.toString(currentPoints)); // Create a new highscore with username and current points
         highScoreList.add(newHighScore); // Add it to the list
-        Collections.sort(highScoreList); // Sort the list in descending order , so the highest score will be first
+        Collections.sort(highScoreList); // Sort the list in descending order so the highest score will be first
+                                         // (this only works because we implemented Comparable in highScore.java class and override compareTo function
+
         // Shared Preferences
-        PrefConfigGal.writeListInPref(getApplicationContext(), highScoreList); // Write list to shared preferences for other activities to use
+        PrefConfigGal.writeListInPref(getApplicationContext(), highScoreList); // Write list to shared preferences so it would be saved if we re-open the application
     }
 
-    public void setImageShape(int theShape)
+    public void setImageShapeAndColor()
     {
-        chosenShape = theShape;
-        chosenColor=r.nextInt(4) + 1;
+        // This function is used to create the shape+color in the middle of the screen
+        chosenShape=r.nextInt(16); // random shape
+        chosenColor=r.nextInt(4) + 1; // random color
 
-                ShapeOutline.setImageResource(ShapesOutline[theShape]);
-                ShapeFillerColor.setImageResource(ShapesFillerColor[theShape]);
-                colorTheShape(ShapeFillerColor);
+                ShapeOutline.setImageResource(ShapesOutlineArray[chosenShape]); // Drawing the outline
+                ShapeFillerColor.setImageResource(ShapesFillerColorArray[chosenShape]); // Drawing the inside (default red)
+                colorTheShape(ShapeFillerColor); // Painting the inside (from default red to random color)
 
     }
 
 
     public void colorTheShape(ImageView theImage)
     {
-        chosenColor=r.nextInt(4) + 1;
+        chosenColor=r.nextInt(4) + 1; // generate random color
         switch (chosenColor)
         {
             case 1:
@@ -412,30 +390,6 @@ public class SecondActivityGame extends AppCompatActivity {
         }
     }
 
-//    public void setImageColor(int theColor)
-//    {
-//        switch (theColor) {
-//            case STATE_BLUE:
-//                break;
-//            case STATE_GREEN:
-//                iv_arrow.setImageResource(R.drawable.ic_oie_6ppwctotng3q);
-//                iv_arrow.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.green), android.graphics.PorterDuff.Mode.SRC_IN);
-//                chosenColor = STATE_GREEN;
-//                break;
-//           case STATE_RED:
-//                iv_arrow.setImageResource(R.drawable.ic_oie_6ppwctotng3q);
-//                iv_arrow.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.red), android.graphics.PorterDuff.Mode.SRC_IN);
-//                chosenColor = STATE_RED;
-//                break;
-//            case STATE_YELLOW:
-//                 iv_arrow.setImageResource(R.drawable.ic_oie_6ppwctotng3q);
-//                 iv_arrow.setColorFilter(ContextCompat.getColor(iv_arrow.getContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN);
-//                 chosenColor = STATE_YELLOW;
-//                 break;
-//
-//        }
-//    }
-
     @Override
     public void onBackPressed() {
         System.out.println("onBackPressed()");
@@ -449,6 +403,13 @@ public class SecondActivityGame extends AppCompatActivity {
         super.onResume();
         System.out.println("OnResume()");
 
+        /*
+           If the user navigates away from our application (clicking home button for example) onPause() gets called which stops the game (without the visuals continueBTN/exitBTN/paused text)
+           we want the game to be in paused mode (visually) when the user returns to the app ( onResume() ).
+
+           But because onResume() gets called when the game ("SecondActivityGame.java") first loads , the game starts in paused mode ...
+           we don't want that to happen , so if it's the first time onResume has been called (if game just started) , we ignore it (we don't pause)
+         */
         if (firstTimeOnResumeCalled) {
             firstTimeOnResumeCalled = false;
         }
@@ -462,22 +423,22 @@ public class SecondActivityGame extends AppCompatActivity {
 
     public void alertUserToCustomDifficulty()
     {
+        // this function is used to alert the user 1 level before a difficult level comes (for example , moving shape! level)
         difficuiltyAlertTV.animate().alpha(0.6f).setDuration(800);
     }
     public void moveShape()
     {
-
         difficuiltyAlertTV.animate().alpha(0).setDuration(400);
-
-        ShapeOutline.animate().translationX(800).setDuration(350);
+        // Some animations on the shape in the middle (right to left to center), to increase level difficulty
+        ShapeOutline.animate().translationX(800).setDuration(350); // take shape to right side
         ShapeFillerColor.animate().translationX(800).setDuration(350).withEndAction(new Runnable() {
             @Override
             public void run() {
-                ShapeOutline.animate().translationX(-800).setDuration(700);
+                ShapeOutline.animate().translationX(-800).setDuration(700); // take to left side
                 ShapeFillerColor.animate().translationX(-800).setDuration(700).withEndAction(new Runnable() {
                     @Override
                     public void run() {
-                        ShapeOutline.animate().translationX(0).setDuration(400);
+                        ShapeOutline.animate().translationX(0).setDuration(400); // return to center
                         ShapeFillerColor.animate().translationX(0).setDuration(400);
                     }
                 });
@@ -486,34 +447,91 @@ public class SecondActivityGame extends AppCompatActivity {
 
     }
 
+    public void generateOtherThreeShapes()
+    {
+        ArrayList<Integer> list = new ArrayList<Integer>(); // This method sets 3 random WRONG answers at all the positions except the chosenShapePosition
+        for (int i = 1; i <= 4; i++) { // Make a list with 1,2,3,4
+            list.add(new Integer(i));
+        }
+        Collections.shuffle(list); // Mix the list to get random order of the numbers in it
+        for (int i = 0; i <= 3; i++) { // Pull all the unsorted numbers from the above list (list[0],list[1],list[2],list[3]) , these numbers will be used for the next position to draw to
+            if (list.get(i)!=chosenShapePositionInAnswers) // this if-statement is to avoid drawing a wrong answer on top of the correct answer
+            {
+                otherThreeAnswers=r.nextInt(16);  // 0->15 This generates a random shape and saves the shape at "otherThreeAnswers'
+                while(chosenAnswers[otherThreeAnswers]==1)
+                    otherThreeAnswers=r.nextInt(16); // Generate a new random shape until the random shape is unique and isn't a duplicate of an already existing answer)
+
+                chosenAnswers[otherThreeAnswers]=1; // Mark the recent answer as chosen (so it won't be chosen again in this turn)
+                generateAnswerAtPosition(list.get(i), otherThreeAnswers); // finally , we draw the random image (wrong answer) at a random (empty) position
+            }
+        }
+
+    }
+
+    public void generateAnswerAtPosition(int pos,int shapeOutline) // This method sets given image(shapeOutline) at given position(pos)
+    {
+        chosenAnswers[shapeOutline]=1; // Mark answer as used
+        switch(pos)
+        {
+            case 1:
+                shape_top.setImageResource(ShapesOutlineArray[shapeOutline]);
+                break;
+            case 2:
+                shape_right.setImageResource(ShapesOutlineArray[shapeOutline]);
+                break;
+            case 3:
+                shape_bottom.setImageResource(ShapesOutlineArray[shapeOutline]);
+                break;
+            case 4:
+                shape_left.setImageResource(ShapesOutlineArray[shapeOutline]);
+        }
+    }
+
     public void pauseTheGame()
     {
-        if(difficuiltyAlertTV.getAlpha()==0.6f)
-            difficuiltyAlertTV.setAlpha(0.1f);
-        gameIsNotPaused=false;
-        currentTime=startTime;
+        // This method takes care of pausing the game
+
+        if(difficuiltyAlertTV.getAlpha()==0.6f) // If a difficuilty alert (moving shape!) is on the screen
+            difficuiltyAlertTV.setAlpha(0.1f); // make it less noticeable
+        gameIsNotPaused=false; // used in many places that needs to know if the game is paused or running
+        currentTime=startTime; // reset the time left
         handler.removeCallbacks(runnable); // stop the handler - a way to pause the game
-        continueBTN.setVisibility(View.VISIBLE);
+        continueBTN.setVisibility(View.VISIBLE); // show the 'continue' and 'exit' buttons
         exitBTN.setVisibility(View.VISIBLE);
-        rotatingAnswersLL.setAlpha((float) 0.1);
-        iv_button.setClickable(false);
-        paused.setVisibility(View.VISIBLE);
-        ShapeFillerColor.setVisibility(View.INVISIBLE);
+
+        rotatingAnswersLL.setAlpha((float) 0.1); // make the bottom half of the screen (linear layout containing the answers) less noticeable
+        fourColorsImage.setClickable(false); // disable the ability to rotate the colors
+        fourShapesLayout.setClickable(false); // disable the ability to click on the 4 shape-answers
+        paused.setVisibility(View.VISIBLE); // show "Paused"
+        ShapeFillerColor.setVisibility(View.INVISIBLE); // remove shape in the middle of the screen
         ShapeOutline.setVisibility(View.INVISIBLE);
     }
 
     public void continueTheGame()
     {
-        if(difficuiltyAlertTV.getAlpha()==0.1f)
-            difficuiltyAlertTV.animate().alpha(0.6f).setDuration(1500);
-        continueBTN.setVisibility(View.GONE);
+        // This method takes care of pausing the game
+
+        handler.postDelayed(runnable,3000); // continue the game after 3 seconds
+
+        // these 4 lines of code is , again , to draw in the middle of the screen a new shape , and then 3 wrong answers and 1 correct answer
+        // ** we change the shapes to avoid pause-cheating
+        setImageShapeAndColor();
+        chosenShapePositionInAnswers=r.nextInt(4)+1;
+        generateAnswerAtPosition(chosenShapePositionInAnswers,chosenShape);
+        generateOtherThreeShapes();
+
+        if(difficuiltyAlertTV.getAlpha()==0.1f) // If a difficuilty alert (moving shape!) is on the screen
+            difficuiltyAlertTV.animate().alpha(0.6f).setDuration(1500); // return it to normal alpha
+
+        continueBTN.setVisibility(View.GONE); // remove continue/exit buttons
         exitBTN.setVisibility(View.GONE);
-        handler.postDelayed(runnable,3000);
+
+        rotatingAnswersLL.animate().alpha(1).setDuration(1500); // return the answers to normal alpha
+
+
+        paused.setAlpha(0); // This is used (with the animate() 2 rows later) to create the 3-2-1 fading effect
         paused.setText("3");
-        rotatingAnswersLL.animate().alpha(1).setDuration(1500);
-        paused.setAlpha(0);
-        if (!gameIsNotPaused) {
-            paused.animate().alpha(1).setDuration(1000).withEndAction(new Runnable() {
+        paused.animate().alpha(1).setDuration(1000).withEndAction(new Runnable() { // return the "3" alpha to 1 , makes fading effect
                 @Override
                 public void run() {
                     paused.setAlpha(0);
@@ -529,7 +547,11 @@ public class SecondActivityGame extends AppCompatActivity {
                                     paused.setVisibility(View.GONE);
                                     paused.setText("Paused");
 
-                                    iv_button.setClickable(true);
+                                    fourColorsImage.setClickable(true); // Make the game playable again (click = rotation)
+                                    fourShapesLayout.setClickable(true);
+
+                                    if (currentPoints==2) // If this wont be here (When game returns) we lose the "difficulty effect" (moving shape!) when we resume the game
+                                        moveShape();
 
                                     gameIsNotPaused = true;
 
@@ -543,46 +565,6 @@ public class SecondActivityGame extends AppCompatActivity {
 
                 }
             });
-        }
-
-
-        /*
-        Handler resumeGameHandler;
-
-
-
-        if (!gameIsNotPaused) {
-            resumeGameHandler = new Handler();
-            resumeGameHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    paused.setText("2");
-                }
-            }, 1000);
-
-            resumeGameHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    paused.setText("1");
-                }
-            }, 2000);
-
-            resumeGameHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    paused.setVisibility(View.GONE);
-                    paused.setText("Paused");
-
-                    iv_button.setClickable(true);
-
-                    gameIsNotPaused = true;
-
-                    ShapeFillerColor.setVisibility(View.VISIBLE);
-                    ShapeOutline.setVisibility(View.VISIBLE);
-
-                }
-            }, 3000);
-        }*/
 
     }
 

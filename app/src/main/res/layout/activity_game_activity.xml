@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Paused"
-        android:layout_alignBottom="@id/iv_arrow"
+        android:layout_alignBottom="@id/mainshape_color"
         android:layout_centerHorizontal="true"
         android:textSize="50dp"
         android:fontFamily="@font/noot_aj"
@@ -118,7 +118,7 @@
         android:layout_height="100dp"
         android:scaleType="centerInside"
         android:layout_below="@id/progressbar"
-        android:id="@+id/iv_arrow2stroke"
+        android:id="@+id/mainshape_outline"
         android:layout_centerHorizontal="true"
 
 
@@ -128,7 +128,7 @@
         android:layout_height="100dp"
         android:scaleType="centerInside"
         android:layout_below="@id/progressbar"
-        android:id="@+id/iv_arrow"
+        android:id="@+id/mainshape_color"
         android:layout_centerHorizontal="true"
 
 
@@ -137,7 +137,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/iv_arrow"
+        android:layout_below="@id/mainshape_color"
         android:layout_centerHorizontal="true"
         android:id="@+id/rotatingAnswersLinearLayout"
         >
@@ -149,7 +149,7 @@
         android:layout_height="wrap_content"
         android:scaleType="centerInside"
         android:layout_alignParentStart="true"
-        android:id="@+id/iv_button"
+        android:id="@+id/fourColorsImage"
         android:src="@drawable/ic_button_blue"
         />
 
@@ -157,45 +157,46 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/fourShapes_layout">
 
             <ImageView
-                android:id="@+id/iv_button2a"
+                android:id="@+id/shape_TOP"
                 android:layout_width="100dp"
                 android:layout_height="75dp"
                 android:layout_centerHorizontal="true"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_strangeshape_a_outline"
-                app:layout_constraintBottom_toTopOf="@+id/iv_button2b"
+                app:layout_constraintBottom_toTopOf="@+id/shape_RIGHT"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/iv_button2b"
+                android:id="@+id/shape_RIGHT"
                 android:layout_width="99dp"
                 android:layout_height="73dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_strangeshape_k_outline"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/iv_button2d"
+                app:layout_constraintStart_toEndOf="@+id/shape_BOTTOM"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/iv_button2c"
+                android:id="@+id/shape_LEFT"
                 android:layout_width="100dp"
                 android:layout_height="75dp"
                 android:layout_gravity="bottom"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_r_strangeshape_firstshape_outline"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/iv_button2a"
+                app:layout_constraintEnd_toStartOf="@+id/shape_TOP"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.503" />
 
             <ImageView
-                android:id="@+id/iv_button2d"
+                android:id="@+id/shape_BOTTOM"
                 android:layout_width="100dp"
                 android:layout_height="75dp"
                 android:layout_gravity="bottom"
@@ -204,7 +205,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_button2c" />
+                app:layout_constraintTop_toBottomOf="@+id/shape_LEFT" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
