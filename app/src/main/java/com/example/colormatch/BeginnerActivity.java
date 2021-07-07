@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
-public class SecondActivityGame extends AppCompatActivity {
+public class BeginnerActivity extends AppCompatActivity {
 
     ImageView fourColorsImage, ShapeFillerColor, ShapeOutline,shape_top,shape_right,shape_bottom,shape_left;
     TextView tv_points,highestscoreTV,paused, difficuiltyAlertTV;
@@ -65,8 +65,8 @@ public class SecondActivityGame extends AppCompatActivity {
 
     String userName;
 
-    int[] ShapesFillerColorArray = {R.drawable.ic_r_strangeshape_firstshape_color,R.drawable.ic_strangeshape_a_color,R.drawable.ic_strangeshape_b_color,R.drawable.ic_strangeshape_c_color,R.drawable.ic_strangeshape_d_color,R.drawable.ic_strangeshape_e_color,R.drawable.ic_strangeshape_f_color,R.drawable.ic_strangeshape_g_color,R.drawable.ic_strangeshape_h_color,R.drawable.ic_strangeshape_i_color,R.drawable.ic_strangeshape_j_color,R.drawable.ic_strangeshape_k_color,R.drawable.ic_strangeshape_l_color,R.drawable.ic_strangeshape_m_color,R.drawable.ic_strangeshape_n_color,R.drawable.ic_strangeshape_o_color};
-    int[] ShapesOutlineArray = {R.drawable.ic_r_strangeshape_firstshape_outline,R.drawable.ic_strangeshape_a_outline,R.drawable.ic_strangeshape_b_outline,R.drawable.ic_strangeshape_c_outline,R.drawable.ic_strangeshape_d_outline,R.drawable.ic_strangeshape_e_outline,R.drawable.ic_strangeshape_f_outline,R.drawable.ic_strangeshape_g_outline,R.drawable.ic_strangeshape_h_outline,R.drawable.ic_strangeshape_i_outline,R.drawable.ic_strangeshape_j_outline,R.drawable.ic_strangeshape_k_outline,R.drawable.ic_strangeshape_l_outline,R.drawable.ic_strangeshape_m_outline,R.drawable.ic_strangeshape_n_outline,R.drawable.ic_strangeshape_o_outline};
+    int[] ShapesFillerColorArray = {R.drawable.star_1_fill_color,R.drawable.noodles_1_fill_color,R.drawable.noodles_2_fill_color,R.drawable.circles_1_fill_color,R.drawable.three_shapes_1_fill_color,R.drawable.star_2_fill_color,R.drawable.three_shapes_2_fill_color,R.drawable.star_3_fill_color,R.drawable.circles_2_fill_color,R.drawable.noodles_3_fill_color,R.drawable.three_shapes_3_fill_color,R.drawable.noodles_4_fill_color,R.drawable.star_4_fill_color,R.drawable.circles_3_fill_color,R.drawable.three_shapes_4_fill_color,R.drawable.circles_4_fill_color};
+    int[] ShapesOutlineArray = {R.drawable.star_1_outline,R.drawable.noodles_1_outline,R.drawable.noodles_2_outline,R.drawable.circles_1_outline,R.drawable.three_shapes_1_outline,R.drawable.star_2_outline,R.drawable.three_shapes_2_outline,R.drawable.star_3_outline,R.drawable.circles_2_outline,R.drawable.noodles_3_outline,R.drawable.three_shapes_3_outline,R.drawable.noodles_4_outline,R.drawable.star_4_outline,R.drawable.circles_3_outline,R.drawable.three_shapes_4_outline,R.drawable.circles_4_outline};
 
 
     private int currentApiVersion;
@@ -77,7 +77,7 @@ public class SecondActivityGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
+        setContentView(R.layout.activity_beginner);
 
 
         //The next 32 lines of code is used to permanently hide & draw over the navigation bar at the right side of the screen
@@ -277,7 +277,7 @@ public class SecondActivityGame extends AppCompatActivity {
                         else {
                             fourColorsImage.setEnabled(false);
                             fourShapesLayout.setEnabled(false);
-                            Toast.makeText(SecondActivityGame.this, "Game Over", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BeginnerActivity.this, "Game Over", Toast.LENGTH_SHORT).show();
                             updateHighScores();
                         }
                 }
@@ -407,7 +407,7 @@ public class SecondActivityGame extends AppCompatActivity {
            If the user navigates away from our application (clicking home button for example) onPause() gets called which stops the game (without the visuals continueBTN/exitBTN/paused text)
            we want the game to be in paused mode (visually) when the user returns to the app ( onResume() ).
 
-           But because onResume() gets called when the game ("SecondActivityGame.java") first loads , the game starts in paused mode ...
+           But because onResume() gets called when the game ("BeginnerActivity.java") first loads , the game starts in paused mode ...
            we don't want that to happen , so if it's the first time onResume has been called (if game just started) , we ignore it (we don't pause)
          */
         if (firstTimeOnResumeCalled) {
