@@ -572,8 +572,6 @@ public class SecondActivityGame extends AppCompatActivity {
     protected void onPause() {
         System.out.println("OnPause()");
         handler.removeCallbacks(runnable);
-        if (gameIsNotPaused)
-            pauseTheGame();
         super.onPause();
     }
 
