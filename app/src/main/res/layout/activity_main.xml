@@ -5,12 +5,16 @@
     android:orientation="vertical"
     android:background="@drawable/background">
 
+
+<!--    "Color" topic-->
     <ImageView
         android:layout_width="400dp"
         android:layout_height="125dp"
         android:layout_gravity="center"
         android:src="@drawable/color"
         android:id="@+id/color_topic"/>
+
+<!--    "Shape" topic-->
     <ImageView
         android:layout_width="400dp"
         android:layout_height="125dp"
@@ -19,7 +23,7 @@
         android:id="@+id/match_topic"/>
 
 
-
+<!--Menu navigation buttons-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,7 +38,7 @@
             android:textColor="#5666C3"
             android:background="@drawable/shape_selector"
             android:text="@string/easy_btn"
-            android:fontFamily="@font/noot_aj"
+            android:fontFamily="@font/main_app_font"
             android:id="@+id/easy_btn"
             android:paddingTop="5dp"
             android:shadowColor="@color/white"
@@ -48,7 +52,7 @@
             android:textColor="#5666C3"
             android:background="@drawable/shape_selector"
             android:text="@string/medium_btn"
-            android:fontFamily="@font/noot_aj"
+            android:fontFamily="@font/main_app_font"
             android:layout_marginTop="25dp"
             android:id="@+id/medium_btn"
             android:paddingTop="5dp"
@@ -63,7 +67,7 @@
             android:textColor="#5666C3"
             android:background="@drawable/shape_selector"
             android:text="@string/hard_btn"
-            android:fontFamily="@font/noot_aj"
+            android:fontFamily="@font/main_app_font"
             android:layout_marginTop="25dp"
             android:id="@+id/hard_btn"
             android:paddingTop="5dp"
@@ -78,7 +82,7 @@
             android:textColor="#5666C3"
             android:background="@drawable/shape_selector"
             android:text="@string/dual_btn"
-            android:fontFamily="@font/noot_aj"
+            android:fontFamily="@font/main_app_font"
             android:layout_marginTop="25dp"
             android:id="@+id/dual_btn"
             android:paddingTop="5dp"
@@ -88,11 +92,7 @@
     </LinearLayout>
 
 
-
-
-
-
-
+<!--Settings menu-->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -157,7 +157,6 @@
             android:background="@null"
             android:layout_weight="1"
             android:visibility="invisible"/>
-<!--        maybe should fix it-->
 
 
     </LinearLayout>

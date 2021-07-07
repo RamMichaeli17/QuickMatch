@@ -77,7 +77,7 @@ public class SecondActivityGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_activity);
+        setContentView(R.layout.activity_game);
 
 
         //The next 32 lines of code is used to permanently hide & draw over the navigation bar at the right side of the screen
@@ -126,15 +126,15 @@ public class SecondActivityGame extends AppCompatActivity {
         firstTimeOnResumeCalled=true;
         gameIsNotPaused =true;
         fourColorsImage =findViewById(R.id.fourColorsImage);
-        ShapeFillerColor =findViewById(R.id.mainshape_color);
-        ShapeOutline =findViewById(R.id.mainshape_outline);
+        ShapeFillerColor =findViewById(R.id.main_shape_color);
+        ShapeOutline =findViewById(R.id.main_shape_outline);
         tv_points=findViewById(R.id.tv_points);
         progressBar=findViewById(R.id.progressbar);
-        highestscoreTV=findViewById(R.id.highestscoreTV);
+        highestscoreTV=findViewById(R.id.highest_score_tv);
         paused=findViewById(R.id.pause);
         continueBTN=findViewById(R.id.continueplay);
         exitBTN=findViewById(R.id.exit);
-        rotatingAnswersLL=findViewById(R.id.rotatingAnswersLinearLayout);
+        rotatingAnswersLL=findViewById(R.id.rotating_answers_linear_layout);
         difficuiltyAlertTV =findViewById(R.id.movingShapeAlert);
         fourShapesLayout=findViewById(R.id.fourShapes_layout);
 

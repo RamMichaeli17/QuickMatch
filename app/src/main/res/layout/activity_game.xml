@@ -6,6 +6,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layoutDirection="ltr">
 
+
+
+<!--**** צריך לחשוב על משהו אחר מהתזוזה של הצורה כמו שהצורות שבגלגל הימני יסתבבו סביב עצמן ויעלה אייקון על המסך-->
+<!--    במקום הכתב-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,8 +18,8 @@
         android:layout_marginBottom="10dp"
         android:text="Moving shape!"
         android:textStyle="bold"
-        android:fontFamily="@font/noot_aj"
-        android:textSize="30dp"
+        android:fontFamily="@font/main_app_font"
+        android:textSize="30sp"
         android:alpha="0"
         android:id="@+id/movingShapeAlert"
         />
@@ -23,13 +27,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Paused"
-        android:layout_alignBottom="@id/mainshape_color"
+        android:layout_alignBottom="@id/main_shape_color"
         android:layout_centerHorizontal="true"
-        android:textSize="50dp"
-        android:fontFamily="@font/noot_aj"
+        android:textSize="50sp"
+        android:fontFamily="@font/main_app_font"
         android:visibility="invisible"
         android:id="@+id/pause"
         />
+
+<!--    למה זה פה? צריך להיות במקום אחר ופשוט לטעון את הXML-->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,15 +48,14 @@
         android:layout_height="60dp"
         android:layout_marginEnd="25dp"
         android:background="@drawable/custom_button_2"
-        android:fontFamily="@font/noot_aj"
+        android:fontFamily="@font/main_app_font"
         android:text="Continue"
         android:textAllCaps="false"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:visibility="gone"
-        >
+        android:visibility="gone" />
 
-    </Button>
+
 
     <Button
         android:id="@+id/exit"
@@ -58,32 +63,34 @@
         android:layout_height="60dp"
         android:layout_centerHorizontal="true"
         android:textSize="20sp"
-        android:fontFamily="@font/noot_aj"
+        android:fontFamily="@font/main_app_font"
         android:text="Exit"
         android:textAllCaps="false"
         android:visibility="gone"
         android:background="@drawable/custom_button_2"/>
 
     </LinearLayout>
+
+
+
+<!--Trophy image-->
     <ImageView
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:src="@drawable/currenthighscoretrophy"
+        android:src="@drawable/current_high_score_trophy_pic"
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
-        android:id="@+id/currenthighscoretrophy"
-        />
+        android:id="@+id/current_high_score_trophy" />
+<!--   Highest record-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/noot_aj"
-        android:text="37"
-        android:layout_toRightOf="@id/currenthighscoretrophy"
+        android:fontFamily="@font/main_app_font"
+        android:layout_toRightOf="@id/current_high_score_trophy"
         android:layout_marginTop="4.5dp"
-        android:textSize="25dp"
-        android:id="@+id/highestscoreTV"
-        ></TextView>
-
+        android:textSize="25sp"
+        android:id="@+id/highest_score_tv" />
+<!--How many points scored?-->
     <TextView
         android:id="@+id/tv_points"
         android:layout_width="wrap_content"
@@ -92,12 +99,12 @@
         android:layout_centerHorizontal="true"
         android:text="Points: 0"
         android:textStyle="bold"
-        android:fontFamily="@font/noot_aj"
-        android:textSize="25dp"
+        android:fontFamily="@font/main_app_font"
+        android:textSize="25sp"
         android:layout_marginTop="3dp"
-        >
+        />
 
-    </TextView>
+
 
     <ProgressBar
         android:id="@+id/progressbar"
@@ -112,38 +119,36 @@
         android:paddingBottom="5dp"
         android:progressDrawable="@drawable/custom_progressbar"
         />
-
+<!--Main shape outline image-->
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:scaleType="centerInside"
         android:layout_below="@id/progressbar"
-        android:id="@+id/mainshape_outline"
-        android:layout_centerHorizontal="true"
-
-
-        />
+        android:id="@+id/main_shape_outline"
+        android:layout_centerHorizontal="true" />
+<!--    Main shape color fill-->
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:scaleType="centerInside"
         android:layout_below="@id/progressbar"
-        android:id="@+id/mainshape_color"
-        android:layout_centerHorizontal="true"
+        android:id="@+id/main_shape_color"
+        android:layout_centerHorizontal="true" />
 
-
-        />
-
+    <!--        lama lo android:orientation="horizontal" ?????-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/mainshape_color"
+        android:layout_below="@id/main_shape_color"
         android:layout_centerHorizontal="true"
-        android:id="@+id/rotatingAnswersLinearLayout"
-        >
+        android:id="@+id/rotating_answers_linear_layout">
+
+<!--        lama relativelayout stami caze ?-->
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
     <ImageView
         android:layout_width="365dp"
         android:layout_height="wrap_content"
@@ -154,6 +159,7 @@
         />
 
         </RelativeLayout>
+<!--        ****************-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -208,12 +214,5 @@
                 app:layout_constraintTop_toBottomOf="@+id/shape_LEFT" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
-
-
-
-
-
-
-
 
 </RelativeLayout>

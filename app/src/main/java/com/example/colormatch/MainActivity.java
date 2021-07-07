@@ -21,28 +21,27 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
 
-    //Topic Animations
-    ImageView colorIv, matchIv;
-    Animation tweenAnim1, tweenAnim2;
+
+    ImageView colorIv, matchIv; //Title
+    Animation tweenAnim1, tweenAnim2;  //Title animations
 
 
-    ImageButton about_us_bn, music_bn, sound_btn;
-    MediaPlayer song;
-    boolean musicButtonState = true;
-    boolean soundButtonState = true;
+    Button beginnerBtn, advancedBtn, professionalBtn, oneVsOneBtn; // Difficulty buttons
+    Animation scaleUp, scaleDown; // Buttons animations
 
 
-    Button easyBtn, mediumBtn, hardBtn, dualBtn;
-    Animation scaleUp, scaleDown;
+    ImageButton about_us_bn, music_bn, sound_btn, goToDB, settingsBtn; //Settings buttons
+    MediaPlayer song; //Background songs
+    boolean musicButtonState = true; //Music mode
+    boolean soundButtonState = true; //Sound mode
 
-    ImageButton goToDB;
 
-    //Pop Up Menu
+    //Settings menu
     Animation rotateOpen, rotateClose, fromBottom, toBottom;
-    ImageButton settingsBtn;
     boolean clicked = false;
 
-    private String inputUsername = "";
+
+    private String inputUsername = ""; //***GGGGALLLL****
 
 
 
@@ -55,10 +54,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Click Sound
-        final MediaPlayer clickSound = MediaPlayer.create(this,R.raw.click_sound);
 
-        //Topic Animations
+        //Topic animations
         colorIv = findViewById(R.id.color_topic);
         matchIv = findViewById(R.id.match_topic);
         tweenAnim1=AnimationUtils.loadAnimation(this,R.anim.tween_anim_1);
@@ -66,19 +63,25 @@ public class MainActivity extends AppCompatActivity {
         colorIv.startAnimation(tweenAnim1);
         matchIv.startAnimation(tweenAnim2);
 
-        //Pop Up Menu
+        //Difficulty buttons
+        beginnerBtn = findViewById(R.id.easy_btn);
+        advancedBtn = findViewById(R.id.medium_btn);
+        professionalBtn = findViewById(R.id.hard_btn);
+        oneVsOneBtn = findViewById(R.id.dual_btn);
+
+        //Settings menu
         rotateOpen= AnimationUtils.loadAnimation(this,R.anim.rotate_open_anim);
         rotateClose= AnimationUtils.loadAnimation(this,R.anim.rotate_close_anim);
         fromBottom= AnimationUtils.loadAnimation(this,R.anim.from_bottom_anim);
         toBottom= AnimationUtils.loadAnimation(this,R.anim.to_bottom_anim);
         settingsBtn= findViewById(R.id.settings_btn);
 
+        //Click Sound
+        final MediaPlayer clickSound = MediaPlayer.create(this,R.raw.click_sound);
 
 
-        easyBtn = findViewById(R.id.easy_btn);
-        mediumBtn = findViewById(R.id.medium_btn);
-        hardBtn = findViewById(R.id.hard_btn);
-        dualBtn = findViewById(R.id.dual_btn);
+
+
 
         scaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up);
         scaleDown = AnimationUtils.loadAnimation(this,R.anim.scale_down);
@@ -128,15 +131,15 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        easyBtn.setOnTouchListener(new View.OnTouchListener() {
+        beginnerBtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
                 if(event.getAction()== MotionEvent.ACTION_DOWN) {
-                    easyBtn.startAnimation(scaleUp);
+                    beginnerBtn.startAnimation(scaleUp);
                 }
                 else if (event.getAction()== MotionEvent.ACTION_UP) {
-                    easyBtn.startAnimation(scaleDown);
+                    beginnerBtn.startAnimation(scaleDown);
                 }
 
 
@@ -144,15 +147,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-                mediumBtn.setOnTouchListener(new View.OnTouchListener() {
+                advancedBtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
                 if(event.getAction()== MotionEvent.ACTION_DOWN) {
-                    mediumBtn.startAnimation(scaleUp);
+                    advancedBtn.startAnimation(scaleUp);
                 }
                 else if (event.getAction()== MotionEvent.ACTION_UP) {
-                    mediumBtn.startAnimation(scaleDown);
+                    advancedBtn.startAnimation(scaleDown);
                 }
 
 
@@ -160,15 +163,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-                hardBtn.setOnTouchListener(new View.OnTouchListener() {
+                professionalBtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
                 if(event.getAction()== MotionEvent.ACTION_DOWN) {
-                    hardBtn.startAnimation(scaleUp);
+                    professionalBtn.startAnimation(scaleUp);
                 }
                 else if (event.getAction()== MotionEvent.ACTION_UP) {
-                    hardBtn.startAnimation(scaleDown);
+                    professionalBtn.startAnimation(scaleDown);
                 }
 
 
@@ -176,15 +179,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-                dualBtn.setOnTouchListener(new View.OnTouchListener() {
+                oneVsOneBtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
                 if(event.getAction()== MotionEvent.ACTION_DOWN) {
-                    dualBtn.startAnimation(scaleUp);
+                    oneVsOneBtn.startAnimation(scaleUp);
                 }
                 else if (event.getAction()== MotionEvent.ACTION_UP) {
-                    dualBtn.startAnimation(scaleDown);
+                    oneVsOneBtn.startAnimation(scaleDown);
                 }
 
 
@@ -192,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-                easyBtn.setOnClickListener(new View.OnClickListener() {
+                beginnerBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
@@ -233,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                mediumBtn.setOnClickListener(new View.OnClickListener() {
+                advancedBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if(soundButtonState)
@@ -241,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                hardBtn.setOnClickListener(new View.OnClickListener() {
+                professionalBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if(soundButtonState)
@@ -249,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                dualBtn.setOnClickListener(new View.OnClickListener() {
+                oneVsOneBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if(soundButtonState)
