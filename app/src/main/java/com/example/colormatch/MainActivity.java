@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     ImageButton about_us_bn, music_bn, sound_btn, goToDB, settingsBtn; //Settings buttons
-    MediaPlayer song; //Background songs
+    MediaPlayer song;
     boolean musicButtonState = true; //Music mode
     boolean soundButtonState = true; //Sound mode
 
@@ -78,6 +78,9 @@ public class MainActivity extends AppCompatActivity {
 
         //Click Sound
         final MediaPlayer clickSound = MediaPlayer.create(this,R.raw.click_sound);
+        song = MediaPlayer.create(MainActivity.this, R.raw.mixaund_happy_day_);
+        song.setLooping(true);
+        song.start();
 
 
 
@@ -261,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
-        song = MediaPlayer.create(MainActivity.this, R.raw.mixaund_happy_day_);
+
         about_us_bn = (ImageButton) findViewById(R.id.about_us_button);
         music_bn = (ImageButton) findViewById(R.id.music_button);
         sound_btn = (ImageButton) findViewById(R.id.pink_sound_button);
@@ -337,24 +340,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-/*    @Override
-    protected void onPause() {
-        super.onPause();
-        *//*song.release();*//*
-        song.start();
-    }*/
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        song.pause();
+//    }
 
-  /*  @Override
-    protected void onStart() {
-        super.onStart();
-        song.setLooping(true);
+    @Override
+    protected void onResume() {
+        super.onResume();
         song.start();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        song.release();
+        song.pause();
     }
-   */
+
 }
