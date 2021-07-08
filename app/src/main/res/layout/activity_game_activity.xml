@@ -170,13 +170,12 @@
                 app:layout_constraintBottom_toTopOf="@+id/shape_RIGHT"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <ImageView
                 android:id="@+id/shape_RIGHT"
-                android:layout_width="99dp"
-                android:layout_height="73dp"
+                android:layout_width="100dp"
+                android:layout_height="75dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_strangeshape_k_outline"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -191,7 +190,7 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_r_strangeshape_firstshape_outline"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/shape_TOP"
+                app:layout_constraintEnd_toStartOf="@+id/shape_BOTTOM"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.503" />
 
@@ -199,11 +198,10 @@
                 android:id="@+id/shape_BOTTOM"
                 android:layout_width="100dp"
                 android:layout_height="75dp"
-                android:layout_gravity="bottom"
+                android:layout_centerHorizontal="true"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_strangeshape_e_outline"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/shape_LEFT" />
         </androidx.constraintlayout.widget.ConstraintLayout>

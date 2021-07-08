@@ -1,6 +1,9 @@
 package com.example.colormatch;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.graphics.Path;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,7 +29,8 @@ import java.util.Random;
 
 public class SecondActivityGame extends AppCompatActivity {
 
-    ImageView fourColorsImage, ShapeFillerColor, ShapeOutline,shape_top,shape_right,shape_bottom,shape_left;
+    ImageView fourColorsImage, ShapeFillerColor, ShapeOutline;
+    ImageView[] answerPositions= new ImageView[4];
     TextView tv_points,highestscoreTV,paused, difficuiltyAlertTV;
     ProgressBar progressBar;
     Button continueBTN,exitBTN;
@@ -54,12 +58,15 @@ public class SecondActivityGame extends AppCompatActivity {
     int chosenShapePositionInAnswers;
     int otherThreeAnswers;
     int[] chosenAnswers = new int[16];
+    int[] tempIndexArray = new int[4];
+    int[] rotation = {0,1,2,3};
 
-
-    int currentTime = 12000;
-    int startTime = 12000;
+    int currentTime = 120000;
+    int startTime = 120000;
 
     int currentPoints = 0;
+
+    int rotationCounter=0;
 
     ArrayList<highScore> highScoreList;
 
@@ -138,10 +145,12 @@ public class SecondActivityGame extends AppCompatActivity {
         difficuiltyAlertTV =findViewById(R.id.movingShapeAlert);
         fourShapesLayout=findViewById(R.id.fourShapes_layout);
 
-        shape_bottom=findViewById(R.id.shape_BOTTOM);
-        shape_left=findViewById(R.id.shape_LEFT);
-        shape_top=findViewById(R.id.shape_TOP);
-        shape_right=findViewById(R.id.shape_RIGHT);
+        answerPositions[0]=findViewById(R.id.shape_TOP);
+        answerPositions[1]=findViewById(R.id.shape_RIGHT);
+        answerPositions[2]=findViewById(R.id.shape_BOTTOM);
+        answerPositions[3]=findViewById(R.id.shape_LEFT);
+
+
 
 
         // Shared Preferences - get data
@@ -214,6 +223,14 @@ public class SecondActivityGame extends AppCompatActivity {
             public void onClick(View v) {
                 //rotate the colors
                 setButtonImage(setButtonPosition(buttonState));
+            }
+        });
+
+        fourShapesLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //rotate the shapes
+                rotateShapes();
             }
         });
 
@@ -346,6 +363,59 @@ public class SecondActivityGame extends AppCompatActivity {
         }
     }
 
+    public void rotateShapes() {
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Path path = new Path();
+            Path path2 = new Path();
+            Path path3 = new Path();
+            Path path4 = new Path();
+
+
+                            //              0
+                            //            3   1
+                            //              2
+            path.arcTo(answerPositions[3].getLeft(), answerPositions[0].getTop(), answerPositions[1].getLeft(),  answerPositions[2].getTop() , 270f, 90f, false);
+            path2.arcTo(answerPositions[3].getLeft(), answerPositions[0].getTop(), answerPositions[1].getLeft(),  answerPositions[2].getTop() , 360f, 90f, true);
+            path3.arcTo(answerPositions[3].getLeft(), answerPositions[0].getTop(), answerPositions[1].getLeft(),  answerPositions[2].getTop() , 90, 90f, true);
+            path4.arcTo(answerPositions[3].getLeft(), answerPositions[0].getTop(), answerPositions[1].getLeft(),  answerPositions[2].getTop(), 180, 90f, true);
+
+
+
+            ObjectAnimator animator1,animator2,animator3,animator4;
+
+                     animator1 = ObjectAnimator.ofFloat( answerPositions[(rotation[0])], View.X, View.Y, path);
+                     animator2 = ObjectAnimator.ofFloat( answerPositions[(rotation[1])] , View.X, View.Y, path2);
+                     animator3 = ObjectAnimator.ofFloat( answerPositions[(rotation[2])] , View.X, View.Y, path3);
+                     animator4 = ObjectAnimator.ofFloat( answerPositions[(rotation[3])] , View.X, View.Y, path4);
+
+            for(int i=0;i<=3;i++)
+            {
+                tempIndexArray[i]=rotation[i];
+            }
+            for(int i=0;i<=3;i++)
+            {
+                rotation[i]=tempIndexArray[(i+3)%4];
+            }
+
+            // 0 1 2 3
+            // 3 0 1 2
+            // 2 3 0 1
+            // 1 2 3 0
+            // 0 1 2 3
+
+            AnimatorSet set = new AnimatorSet();
+            set.play(animator1).with(animator2).with(animator3).with(animator4);
+            set.setDuration(100);
+            set.start();
+
+
+
+        }
+    }
+
+
     private void updateHighScores()
     {
         highScore newHighScore = new highScore(userName,Integer.toString(currentPoints)); // Create a new highscore with username and current points
@@ -474,16 +544,16 @@ public class SecondActivityGame extends AppCompatActivity {
         switch(pos)
         {
             case 1:
-                shape_top.setImageResource(ShapesOutlineArray[shapeOutline]);
+                answerPositions[0].setImageResource(ShapesOutlineArray[shapeOutline]);
                 break;
             case 2:
-                shape_right.setImageResource(ShapesOutlineArray[shapeOutline]);
+                answerPositions[1].setImageResource(ShapesOutlineArray[shapeOutline]);
                 break;
             case 3:
-                shape_bottom.setImageResource(ShapesOutlineArray[shapeOutline]);
+                answerPositions[2].setImageResource(ShapesOutlineArray[shapeOutline]);
                 break;
             case 4:
-                shape_left.setImageResource(ShapesOutlineArray[shapeOutline]);
+                answerPositions[3].setImageResource(ShapesOutlineArray[shapeOutline]);
         }
     }
 
