@@ -17,4 +17,9 @@
     <color name="green">#4CCF05</color>
     <color name="yellow">#FDEC54</color>
     <color name="backgroundGray">#f9f9f9</color>
+    <color name="logo_yellow">#fcda54</color>
+    <color name="logo_pink">#bc1b5f</color>
+    <color name="logo_green">#5dbb4b</color>
+    <color name="logo_blue">#4375b7</color>
+
 </resources>

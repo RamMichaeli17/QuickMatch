@@ -32,7 +32,7 @@
         android:alpha="0"
         android:id="@+id/movingShapeAlert"
         />
- <!--   <TextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Paused"
@@ -42,7 +42,7 @@
         android:fontFamily="@font/main_app_font"
         android:visibility="invisible"
         android:id="@+id/pause"
-        />-->
+        />
 
 <!--    למה זה פה? צריך להיות במקום אחר ופשוט לטעון את הXML-->
 <!--    <LinearLayout

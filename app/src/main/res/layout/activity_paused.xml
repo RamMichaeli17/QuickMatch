@@ -1,71 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_below="@id/pause"
-    android:orientation="vertical"
-    android:layout_marginTop="60dp">
+    android:orientation="vertical">
 
-    <TextView
+    <!-- android:layout_alignBottom="@id/main_shape_color"-->
+ <!--   <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:text="Paused"
-        android:layout_alignBottom="@id/main_shape_color"
         android:layout_centerHorizontal="true"
         android:textSize="50sp"
         android:fontFamily="@font/main_app_font"
         android:layout_gravity="center"
-        android:id="@+id/pauseTV"
-        android:layout_marginBottom="100dp" />
+        android:id="@+id/pause"
+        android:layout_marginTop="20dp" />-->
 
-    <Button
-        android:id="@+id/continueplay"
+  <ImageView
+      android:layout_width="250dp"
+      android:layout_height="80dp"
+      android:layout_alignParentTop="true"
+      android:layout_centerInParent="true"
+      android:src="@drawable/paused"
+      android:id="@+id/paused_logo"/>
+
+  <Button
+        android:id="@+id/reset_pauseBtn"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/paused_logo"
         android:layout_gravity="center"
-        android:background="@drawable/custom_button_2"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/custom_red_button"
         android:fontFamily="@font/main_app_font"
-        android:text="Continue"
+        android:text="@string/reset_btn"
         android:textAllCaps="false"
         android:textSize="20sp"
         android:textStyle="bold" />
 
 
     <Button
-        android:id="@+id/exit"
+        android:id="@+id/resume_pauseBtn"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center"
         android:textSize="20sp"
+        android:layout_below="@+id/reset_pauseBtn"
         android:fontFamily="@font/main_app_font"
-        android:text="Start New Game"
+        android:text="@string/resume_btn"
         android:textAllCaps="false"
-        android:background="@drawable/custom_button_2"/>
+        android:background="@drawable/custom_red_button"/>
 
     <Button
-        android:id="@+id/music_pauseBtn"
+        android:id="@+id/back_to_menu_pauseBtn"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center"
+        android:layout_below="@id/resume_pauseBtn"
         android:textSize="20sp"
         android:fontFamily="@font/main_app_font"
-        android:text="Turn ON/Off Music"
+        android:text="@string/back_to_menu_btn"
         android:textAllCaps="false"
-        android:background="@drawable/custom_button_2"/>
+        android:background="@drawable/custom_red_button"/>
 
-    <Button
-        android:id="@+id/sound_pauseBtn"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:layout_marginTop="20dp"
+      android:layout_below="@+id/back_to_menu_pauseBtn">
+
+    <ImageButton
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_gravity="center"
-        android:textSize="20sp"
-        android:fontFamily="@font/main_app_font"
-        android:text="Turn ON/Off Sound"
-        android:textAllCaps="false"
-        android:background="@drawable/custom_button_2"/>
+        android:scaleType="fitCenter"
+        android:id="@+id/pink_sound_button2"
+        android:layout_marginLeft="100dp"
+        android:background="@null"
+        android:src="@drawable/sound_on" />
 
-</LinearLayout>
+    <ImageButton
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_gravity="center"
+        android:id="@+id/music_button2"
+        android:scaleType="fitCenter"
+        android:layout_marginLeft="15dp"
+        android:background="@null"
+        android:src="@drawable/music_on" />
+
+
+
+
+  </LinearLayout>
+
+
+</RelativeLayout>

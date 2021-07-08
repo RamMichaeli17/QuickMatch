@@ -1,6 +1,8 @@
 package com.example.colormatch;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -133,8 +135,8 @@ public class BeginnerActivity extends AppCompatActivity {
         progressBar=findViewById(R.id.progressbar);
         highestscoreTV=findViewById(R.id.highest_score_tv);
         paused=findViewById(R.id.pause);
-        continueBTN=findViewById(R.id.continueplay);
-        exitBTN=findViewById(R.id.exit);
+       /* continueBTN=findViewById(R.id.continueplay);*/
+        /*exitBTN=findViewById(R.id.exit);*/
         rotatingAnswersLL=findViewById(R.id.rotating_answers_linear_layout);
         difficuiltyAlertTV =findViewById(R.id.movingShapeAlert);
         fourShapesLayout=findViewById(R.id.fourShapes_layout);
@@ -143,6 +145,9 @@ public class BeginnerActivity extends AppCompatActivity {
         shape_left=findViewById(R.id.shape_LEFT);
         shape_top=findViewById(R.id.shape_TOP);
         shape_right=findViewById(R.id.shape_RIGHT);
+
+        pauseBtn=findViewById(R.id.pauseBtn);
+
 
 
         // Shared Preferences - get data
@@ -196,8 +201,15 @@ public class BeginnerActivity extends AppCompatActivity {
         generateOtherThreeShapes();
 
 
+        pauseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pauseTheGame();
 
-        continueBTN.setOnClickListener(new View.OnClickListener() {
+            }
+        });
+
+      /*  continueBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 continueTheGame();
@@ -210,7 +222,7 @@ public class BeginnerActivity extends AppCompatActivity {
                 updateHighScores();
                 finish();
             }
-        });
+        });*/
 
         fourColorsImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -492,9 +504,8 @@ public class BeginnerActivity extends AppCompatActivity {
     public void pauseTheGame()
     {
         // This method takes care of pausing the game
-
-        if(difficuiltyAlertTV.getAlpha()==0.6f) // If a difficuilty alert (moving shape!) is on the screen
-            difficuiltyAlertTV.setAlpha(0.1f); // make it less noticeable
+/*        if(difficuiltyAlertTV.getAlpha()==0.6f) // If a difficuilty alert (moving shape!) is on the screen
+            difficuiltyAlertTV.setAlpha(0.1f); // make it less noticeable*/
         gameIsNotPaused=false; // used in many places that needs to know if the game is paused or running
         currentTime=startTime; // reset the time left
         handler.removeCallbacks(runnable); // stop the handler - a way to pause the game
@@ -507,13 +518,68 @@ public class BeginnerActivity extends AppCompatActivity {
         paused.setVisibility(View.VISIBLE); // show "Paused"
         ShapeFillerColor.setVisibility(View.INVISIBLE); // remove shape in the middle of the screen
         ShapeOutline.setVisibility(View.INVISIBLE);
-    }
+
+
+        Dialog dialog= new Dialog(BeginnerActivity.this);
+        dialog.setContentView(R.layout.activity_paused);
+
+        int width = (int)(getResources().getDisplayMetrics().widthPixels*0.50);
+        int height = (int)(getResources().getDisplayMetrics().heightPixels*1.00);
+        dialog.getWindow().setLayout(width, height);
+
+        final Button reset_paused=dialog.findViewById(R.id.reset_pauseBtn);
+        final Button resume_paused=dialog.findViewById(R.id.resume_pauseBtn);
+        final Button back_to_menu=dialog.findViewById(R.id.back_to_menu_pauseBtn);
+        final ImageButton music_on=dialog.findViewById(R.id.music_button2);
+        final ImageButton sound_on=dialog.findViewById(R.id.pink_sound_button2);
+
+        reset_paused.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                continueTheGame();
+                dialog.dismiss();
+            }
+        });
+
+        resume_paused.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        back_to_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BeginnerActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        music_on.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        sound_on.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        
+        dialog.show();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+    };
 
     public void continueTheGame()
     {
         // This method takes care of pausing the game
 
-        handler.postDelayed(runnable,3000); // continue the game after 3 seconds
+        handler.postDelayed(runnable,3000);// continue the game after 3 seconds
 
         // these 4 lines of code is , again , to draw in the middle of the screen a new shape , and then 3 wrong answers and 1 correct answer
         // ** we change the shapes to avoid pause-cheating
