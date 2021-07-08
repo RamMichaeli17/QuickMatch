@@ -283,7 +283,9 @@ public class BeginnerActivity extends AppCompatActivity {
                     else{ // check if the colors of the arrow and the button are the same
                         if (true /* for testing purposes - you can't lose.  here should be "if (color and shape is correct)"... else -> you lose*/)
                         {
+
                             //increase points and show them
+
 
                             currentPoints = currentPoints +1;
                             tv_points.setText("Points: "+currentPoints);
