@@ -6,7 +6,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layoutDirection="ltr">
 
-
+    <ImageButton
+        android:layout_width="25dp"
+        android:layout_height="35dp"
+        android:src="@drawable/pause_button"
+        android:scaleType="fitCenter"
+        android:background="@null"
+        android:id="@+id/pauseBtn"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"/>
 
 <!--**** צריך לחשוב על משהו אחר מהתזוזה של הצורה כמו שהצורות שבגלגל הימני יסתבבו סביב עצמן ויעלה אייקון על המסך-->
 <!--    במקום הכתב-->
@@ -23,7 +32,7 @@
         android:alpha="0"
         android:id="@+id/movingShapeAlert"
         />
-    <TextView
+ <!--   <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Paused"
@@ -33,10 +42,10 @@
         android:fontFamily="@font/main_app_font"
         android:visibility="invisible"
         android:id="@+id/pause"
-        />
+        />-->
 
 <!--    למה זה פה? צריך להיות במקום אחר ופשוט לטעון את הXML-->
-    <LinearLayout
+<!--    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/pause"
@@ -69,7 +78,7 @@
         android:visibility="gone"
         android:background="@drawable/custom_button_2"/>
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 
 

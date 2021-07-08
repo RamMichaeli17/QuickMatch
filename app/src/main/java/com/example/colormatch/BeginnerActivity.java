@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -33,6 +34,7 @@ public class BeginnerActivity extends AppCompatActivity {
     LinearLayout rotatingAnswersLL;
     boolean firstTimeOnResumeCalled, gameIsNotPaused;
     ConstraintLayout fourShapesLayout;
+    ImageButton pauseBtn;
     
 
     Handler handler;
@@ -496,8 +498,8 @@ public class BeginnerActivity extends AppCompatActivity {
         gameIsNotPaused=false; // used in many places that needs to know if the game is paused or running
         currentTime=startTime; // reset the time left
         handler.removeCallbacks(runnable); // stop the handler - a way to pause the game
-        continueBTN.setVisibility(View.VISIBLE); // show the 'continue' and 'exit' buttons
-        exitBTN.setVisibility(View.VISIBLE);
+     /*   continueBTN.setVisibility(View.VISIBLE); // show the 'continue' and 'exit' buttons
+        exitBTN.setVisibility(View.VISIBLE);*/
 
         rotatingAnswersLL.setAlpha((float) 0.1); // make the bottom half of the screen (linear layout containing the answers) less noticeable
         fourColorsImage.setClickable(false); // disable the ability to rotate the colors
@@ -523,8 +525,8 @@ public class BeginnerActivity extends AppCompatActivity {
         if(difficuiltyAlertTV.getAlpha()==0.1f) // If a difficuilty alert (moving shape!) is on the screen
             difficuiltyAlertTV.animate().alpha(0.6f).setDuration(1500); // return it to normal alpha
 
-        continueBTN.setVisibility(View.GONE); // remove continue/exit buttons
-        exitBTN.setVisibility(View.GONE);
+      /*  continueBTN.setVisibility(View.GONE); // remove continue/exit buttons
+        exitBTN.setVisibility(View.GONE);*/
 
         rotatingAnswersLL.animate().alpha(1).setDuration(1500); // return the answers to normal alpha
 

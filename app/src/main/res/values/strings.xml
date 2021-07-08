@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Color Match</string>
     <string name="about_us_title">About Us:</string>
-    <string name="about_us_des">© Ram Michaeli, Gal Israeli and Yulia Kuderko\n     First published: July 15th, 2021\n</string>
+    <string name="about_us_des">© Ram Michaeli, Gal Israeli and Yulia Kuderko\n     First published: July 13th, 2021\n</string>
     <string name="easy_btn">Beginner</string>
     <string name="medium_btn">Advanced</string>
     <string name="hard_btn">Professional</string>
