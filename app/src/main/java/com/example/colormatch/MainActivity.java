@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -263,6 +264,7 @@ public class MainActivity extends AppCompatActivity {
         music_bn = (ImageButton) findViewById(R.id.music_button);
         sound_btn = (ImageButton) findViewById(R.id.pink_sound_button);
 
+
         about_us_bn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -289,9 +291,6 @@ public class MainActivity extends AppCompatActivity {
                 if(soundButtonState)clickSound.start();
             }
 
-
-
-
         });
 
 
@@ -302,7 +301,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Gal_SharedPreferencesAttemptInsteadOfSQLITE.class);
-                /* intent.putExtra("selectedMp3",SELECTED_MP3_INT);*/
                 startActivity(intent);
                 if(soundButtonState)clickSound.start();
             }
@@ -323,9 +321,13 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, R.string.sound_on, Toast.LENGTH_SHORT).show();
                 soundButtonState = true;
                 if(soundButtonState)clickSound.start();
-                if(soundButtonState)clickSound.start();
             }
         });
+    }
+
+    public int onStartCommand (Intent intent, int flags, int startID) {
+        song.start();
+        return 1;
     }
     @Override
     public void onBackPressed() {
@@ -333,25 +335,29 @@ public class MainActivity extends AppCompatActivity {
         // super.onBackPressed();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.getBoolean(String.valueOf(musicButtonState));
+    }
 
-/*    @Override
+    /*        @Override
     protected void onPause() {
         super.onPause();
-        *//*song.release();*//*
+        song.release();
         song.start();
     }*/
 
-  /*  @Override
+   @Override
     protected void onStart() {
         super.onStart();
         song.setLooping(true);
         song.start();
     }
 
-    @Override
+/*    @Override
     protected void onStop() {
         super.onStop();
         song.release();
-    }
-   */
+    }*/
 }
