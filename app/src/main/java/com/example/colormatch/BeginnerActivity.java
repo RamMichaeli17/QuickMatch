@@ -1,9 +1,13 @@
 package com.example.colormatch;
 
+import android.animation.LayoutTransition;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -55,9 +59,9 @@ public class BeginnerActivity extends AppCompatActivity {
     int otherThreeAnswers;
     int[] chosenAnswers = new int[16];
 
-
-    int currentTime = 12000;
-    int startTime = 12000;
+// שיניתי מ12 ל24
+    int currentTime = 24000;
+    int startTime = 24000;
 
     int currentPoints = 0;
 
@@ -65,8 +69,10 @@ public class BeginnerActivity extends AppCompatActivity {
 
     String userName;
 
+
     int[] ShapesFillerColorArray = {R.drawable.star_1_fill_color,R.drawable.noodles_1_fill_color,R.drawable.noodles_2_fill_color,R.drawable.circles_1_fill_color,R.drawable.three_shapes_1_fill_color,R.drawable.star_2_fill_color,R.drawable.three_shapes_2_fill_color,R.drawable.star_3_fill_color,R.drawable.circles_2_fill_color,R.drawable.noodles_3_fill_color,R.drawable.three_shapes_3_fill_color,R.drawable.noodles_4_fill_color,R.drawable.star_4_fill_color,R.drawable.circles_3_fill_color,R.drawable.three_shapes_4_fill_color,R.drawable.circles_4_fill_color};
     int[] ShapesOutlineArray = {R.drawable.star_1_outline,R.drawable.noodles_1_outline,R.drawable.noodles_2_outline,R.drawable.circles_1_outline,R.drawable.three_shapes_1_outline,R.drawable.star_2_outline,R.drawable.three_shapes_2_outline,R.drawable.star_3_outline,R.drawable.circles_2_outline,R.drawable.noodles_3_outline,R.drawable.three_shapes_3_outline,R.drawable.noodles_4_outline,R.drawable.star_4_outline,R.drawable.circles_3_outline,R.drawable.three_shapes_4_outline,R.drawable.circles_4_outline};
+
 
 
     private int currentApiVersion;
@@ -74,10 +80,14 @@ public class BeginnerActivity extends AppCompatActivity {
 
 
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beginner);
+
 
 
         //The next 32 lines of code is used to permanently hide & draw over the navigation bar at the right side of the screen
@@ -124,6 +134,7 @@ public class BeginnerActivity extends AppCompatActivity {
 
         firstTimeOnResumeCalled=true;
         gameIsNotPaused =true;
+
         fourColorsImage =findViewById(R.id.fourColorsImage); //צריך להחליף לצבעים ולשנות בהתאם
         ShapeFillerColor =findViewById(R.id.main_shape_color);
         ShapeOutline =findViewById(R.id.main_shape_outline);
@@ -136,11 +147,19 @@ public class BeginnerActivity extends AppCompatActivity {
         rotatingAnswersLL=findViewById(R.id.rotating_answers_linear_layout);
         difficuiltyAlertTV =findViewById(R.id.movingShapeAlert);
         fourShapesLayout=findViewById(R.id.fourShapes_layout);
-
         shape_bottom=findViewById(R.id.shape_BOTTOM);
         shape_left=findViewById(R.id.shape_LEFT);
         shape_top=findViewById(R.id.shape_TOP);
         shape_right=findViewById(R.id.shape_RIGHT);
+
+
+
+
+
+
+
+
+
 
 
         // Shared Preferences - get data
@@ -195,6 +214,8 @@ public class BeginnerActivity extends AppCompatActivity {
 
 
 
+
+
         continueBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,6 +236,33 @@ public class BeginnerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //rotate the colors
                 setButtonImage(setButtonPosition(buttonState));
+            }
+        });
+
+
+
+        //Sets the animation for the 4 right shapes
+        fourShapesLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Shape Locations
+                float topX = shape_top.getX();
+                float topY = shape_top.getY();
+                float rightX = shape_right.getX();
+                float rightY = shape_right.getY();
+                float bottomX = shape_bottom.getX();
+                float bottomY = shape_bottom.getY();
+                float leftX = shape_left.getX();
+                float leftY = shape_left.getY();
+
+                shape_top.animate().x(rightX).setDuration(75);
+                shape_top.animate().y(rightY).setDuration(75);
+                shape_right.animate().x(bottomX).setDuration(75);
+                shape_right.animate().y(bottomY).setDuration(75);
+                shape_bottom.animate().x(leftX).setDuration(75);
+                shape_bottom.animate().y(leftY).setDuration(75);
+                shape_left.animate().x(topX).setDuration(75);
+                shape_left.animate().y(topY).setDuration(75);
             }
         });
 
@@ -288,7 +336,15 @@ public class BeginnerActivity extends AppCompatActivity {
         //start the game loop
         handler.postDelayed(runnable,100);
 
+
+
+
+
+
+
     }
+
+
 
     //rotate animation of the button when clicked
     private void setRotation(final ImageView image, final int drawable)
@@ -574,6 +630,8 @@ public class BeginnerActivity extends AppCompatActivity {
         handler.removeCallbacks(runnable);
         super.onPause();
     }
+
+
 
 
 
