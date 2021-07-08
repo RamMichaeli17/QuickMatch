@@ -11,7 +11,7 @@
         android:layout_width="400dp"
         android:layout_height="125dp"
         android:layout_gravity="center"
-        android:src="@drawable/color"
+        android:src="@drawable/quick"
         android:id="@+id/color_topic"/>
 
 <!--    "Shape" topic-->
