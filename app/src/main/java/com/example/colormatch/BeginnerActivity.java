@@ -6,9 +6,12 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
@@ -554,8 +557,9 @@ public class BeginnerActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.activity_paused);
 
         int width = (int)(getResources().getDisplayMetrics().widthPixels*0.50);
-        int height = (int)(getResources().getDisplayMetrics().heightPixels*1.00);
+        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.95);
         dialog.getWindow().setLayout(width, height);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         final Button reset_paused=dialog.findViewById(R.id.reset_pauseBtn);
         final Button resume_paused=dialog.findViewById(R.id.resume_pauseBtn);

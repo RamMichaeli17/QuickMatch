@@ -21,5 +21,9 @@
     <color name="logo_pink">#bc1b5f</color>
     <color name="logo_green">#5dbb4b</color>
     <color name="logo_blue">#4375b7</color>
+    <color name="translucent_white">#DCFFFFFF</color>
+    <color name="translucent_pink">#D5BC1B5F</color>
+    <color name="translucent_yellow">#D6FCDA54</color>
+    <color name="translucent_blue">#D64375B7</color>
 
 </resources>

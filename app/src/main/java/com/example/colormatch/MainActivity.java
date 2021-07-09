@@ -277,10 +277,9 @@ public class MainActivity extends AppCompatActivity {
         about_us_bn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*startActivity(new Intent(MainActivity.this,AboutUsPopup.class));*/
-    /*
                Dialog dialog= new Dialog(MainActivity.this);
                dialog.setContentView(R.layout.about_us_popup);
+               dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                final TextView infoTV = dialog.findViewById(R.id.info_aboutUS);
                final ImageView logoIV=dialog.findViewById(R.id.logo_in_info);
@@ -289,17 +288,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
                 if(soundButtonState)clickSound.start();
-        };
-        });*/
-                if(soundButtonState)clickSound.start();
+
+         /*       if(soundButtonState)clickSound.start();
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 View dialogView = getLayoutInflater().inflate(R.layout.about_us_popup, null);
+
                 final TextView infoTV = dialogView.findViewById(R.id.info_aboutUS);
                 final ImageView logoIV = dialogView.findViewById(R.id.logo_in_info);
+
                 builder.setView(dialogView);
                 builder.show();
             }
-        });
+        });*/
 
         music_bn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -318,9 +318,6 @@ public class MainActivity extends AppCompatActivity {
                 musicButtonState = true;
                 if(soundButtonState)clickSound.start();
             }
-
-
-
 
         });
 

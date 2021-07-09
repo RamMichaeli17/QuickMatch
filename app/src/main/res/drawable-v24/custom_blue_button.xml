@@ -7,8 +7,8 @@
 
             <gradient android:angle="90"
                 android:centerColor="@color/white"
-                android:endColor="@color/red"
-                android:startColor="@color/red"
+                android:endColor="@color/translucent_blue"
+                android:startColor="@color/blue"
                 android:type="linear"/>
 
             <corners android:bottomLeftRadius="20dp" android:bottomRightRadius="20dp"
@@ -27,8 +27,8 @@
 
             <gradient android:angle="270"
                 android:centerColor="@color/white"
-                android:endColor="@color/red"
-                android:startColor="@color/red"
+                android:endColor="@color/translucent_blue"
+                android:startColor="@color/blue"
                 android:type="linear"/>
 
             <corners android:bottomLeftRadius="20dp" android:bottomRightRadius="20dp"

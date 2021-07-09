@@ -15,14 +15,12 @@ public class AreYouSureYouWantToExit extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.areyousureyouwanttoexit);
 
-
-
         DisplayMetrics dm= new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getRealMetrics(dm);
 
         int width = dm.widthPixels;
         int height = dm.heightPixels;
-        getWindow().setLayout((int)(width*.9),(int)(height*.3));
+        getWindow().setLayout((int)(width*.9),(int)(height*.35));
 
         yesToQuitBTN=findViewById(R.id.btnyes);
         noToQuitBTN=findViewById(R.id.btnno);

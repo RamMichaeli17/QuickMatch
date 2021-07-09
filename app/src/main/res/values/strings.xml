@@ -14,4 +14,13 @@
     <string name="reset_btn">Resume</string>
     <string name="resume_btn">Restart</string>
     <string name="back_to_menu_btn">Back to main menu</string>
+    <string name="Yes_btn">Yes</string>
+    <string name="No_btn">No</string>
+    <string name="Username">Username</string>
+    <string name="Score">Score</string>
+    <string name="high_scores">High Scores</string>
+    <string name="clear_btn">Clear</string>
+    <string name="points_calculator">Points: 0</string>
+    <string name="moving_shape_alarm">Moving shape!</string>
+    <string name="disppearing_pause_notice">Paused</string>
 </resources>

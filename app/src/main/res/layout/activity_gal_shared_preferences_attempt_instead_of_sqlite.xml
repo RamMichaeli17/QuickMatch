@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layoutDirection="ltr">
-
 
     <ImageView
         android:layout_width="match_parent"
@@ -12,42 +12,36 @@
         android:layout_marginTop="25dp"
         android:alpha="0"
         android:id="@+id/backgroundStars"/>
+
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:src="@drawable/trophy"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/backgroundGray"
-
-
-        />
+        android:background="@color/backgroundGray" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/highscores_decoration_one"
-        android:layout_alignParentStart="true"
-        />
+        android:layout_alignParentStart="true" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/highscores_decoration_two"
-        android:layout_alignParentEnd="true"
-
-        />
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Highscores"
+        android:text="@string/high_scores"
         android:fontFamily="@font/main_app_font"
         android:textSize="25dp"
         android:layout_marginTop="3dp"
-        android:id="@+id/HighscoresTV"
-        />
+        android:id="@+id/HighscoresTV" />
 
 
 <!-- This was used to manually enter scores. scores will now be generated from playing the game
@@ -111,14 +105,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/HighscoresTV"
         android:layout_marginTop="20dp"
-        android:id="@+id/listView"
-        />
+        android:id="@+id/listView" />
 
     <Button
         android:id="@+id/clearBTN"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:text="Clear"
+        android:text="@string/clear_btn"
         android:textAllCaps="false"
         android:textSize="15sp"
         android:background="@null"
@@ -126,12 +119,5 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="10dp"/>
-
-
-        />
-
-
-
-
 
 </RelativeLayout>

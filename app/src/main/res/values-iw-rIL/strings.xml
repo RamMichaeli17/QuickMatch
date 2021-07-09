@@ -15,4 +15,13 @@
     <string name="reset_btn">המשך משחק</string>
     <string name="resume_btn">התחל משחק חדש</string>
     <string name="back_to_menu_btn">חזור לתפריט הראשי</string>
+    <string name="Yes_btn">כן</string>
+    <string name="No_btn">לא</string>
+    <string name="Username">שם משתמש</string>
+    <string name="Score">ניקוד</string>
+    <string name="high_scores">טבלת שיאים</string>
+    <string name="clear_btn">נקה</string>
+    <string name="points_calculator">נקודות: 0</string>
+    <string name="moving_shape_alarm">צורה בתנועה!</string>
+    <string name="disppearing_pause_notice">עצור</string>
 </resources>
