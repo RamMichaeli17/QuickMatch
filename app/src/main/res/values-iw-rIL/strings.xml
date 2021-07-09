@@ -12,8 +12,8 @@
     <string name="music_on">מוזיקה דלוקה 🔔</string>
     <string name="sound_on">צליל דלוק 🔇</string>
     <string name="areYouSureYouWannaQuit">האם אתה בטוח שברצונך לצאת?</string>
-    <string name="reset_btn">המשך משחק</string>
-    <string name="resume_btn">התחל משחק חדש</string>
+    <string name="restart_btn">משחק חדש</string>
+    <string name="resume_btn">המשך משחק</string>
     <string name="back_to_menu_btn">חזור לתפריט הראשי</string>
     <string name="about_us_pop_up">אודותינו</string>
     <string name="creators">יוצרים</string>
