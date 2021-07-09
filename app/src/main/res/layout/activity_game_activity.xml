@@ -6,6 +6,64 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layoutDirection="ltr">
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="-390dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fantastic"
+        android:layout_marginTop="55dp"
+        android:fontFamily="@font/noot_aj"
+        android:textSize="50sp"
+        android:shadowColor="@color/blue"
+        android:shadowDx="10"
+        android:shadowDy="50"
+        android:shadowRadius="15"
+        android:id="@+id/fantasticWithAirplaneTV"/>
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="175dp"
+        android:layout_height="200dp"
+        app:lottie_rawRes="@raw/airplaneflyinganimation"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:id="@+id/airplaneAnimation"
+        />
+</LinearLayout>
+
+<RelativeLayout
+    android:layout_width="700dp"
+    android:layout_height="300dp"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:id="@+id/welldoneAnimationRelativeLayout"
+    android:visibility="invisible">
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:lottie_rawRes="@raw/welldone"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="false"
+            app:lottie_speed="1"
+            android:id="@+id/welldoneConfetiAnimation"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Well done!"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:textSize="30sp"
+        android:fontFamily="@font/noot_aj"
+        android:alpha="0"
+        android:id="@+id/welldoneTV"
+        />
+</RelativeLayout>
+
+
+
 <RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="180dp"
