@@ -15,12 +15,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+
+import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieDrawable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,6 +41,8 @@ public class SecondActivityGame extends AppCompatActivity {
     LinearLayout rotatingAnswersLL;
     boolean firstTimeOnResumeCalled, gameIsNotPaused;
     ConstraintLayout fourShapesLayout;
+    LottieAnimationView fireworks1,fireworks2;
+    RelativeLayout newHighScoreLayout;
     
 
     Handler handler;
@@ -61,12 +67,14 @@ public class SecondActivityGame extends AppCompatActivity {
     int[] tempIndexArray = new int[4];
     int[] rotation = {0,1,2,3};
 
-    int currentTime = 120000;
-    int startTime = 120000;
+    int currentTime = 12000;
+    int startTime = 12000;
 
     int currentPoints = 0;
 
     int rotationCounter=0;
+
+    int highScore;
 
     ArrayList<highScore> highScoreList;
 
@@ -144,6 +152,11 @@ public class SecondActivityGame extends AppCompatActivity {
         rotatingAnswersLL=findViewById(R.id.rotatingAnswersLinearLayout);
         difficuiltyAlertTV =findViewById(R.id.movingShapeAlert);
         fourShapesLayout=findViewById(R.id.fourShapes_layout);
+        fireworks1=findViewById(R.id.fireworks1);
+        fireworks2=findViewById(R.id.fireworks2);
+        newHighScoreLayout=findViewById(R.id.newHighScoreRelativeLayout);
+
+
 
         answerPositions[0]=findViewById(R.id.shape_TOP);
         answerPositions[1]=findViewById(R.id.shape_RIGHT);
@@ -162,6 +175,7 @@ public class SecondActivityGame extends AppCompatActivity {
         else
             highestscoreTV.setText(highScoreList.get(0).getScore());
 
+        highScore = Integer.parseInt(highestscoreTV.getText().toString()); // save highScore to an int to avoid calling parseInt/getText/toString multiple times during runtime
 
 
         //set the initial progressbar time to 4 seconds
@@ -271,6 +285,11 @@ public class SecondActivityGame extends AppCompatActivity {
                             if (currentPoints==2)
                                 moveShape();
 
+                            // Checking if new highscore
+                                if (highScore!=0 && currentPoints == highScore + 1 ) {
+                                    playNewHighScoreAnimation();
+                                }
+
 
 
                             progressBar.setMax(startTime);
@@ -374,21 +393,22 @@ public class SecondActivityGame extends AppCompatActivity {
 
 
                             //              0
-                            //            3   1
+                            //            3   1   <---
                             //              2
-            path.arcTo(answerPositions[3].getLeft(), answerPositions[0].getTop(), answerPositions[1].getLeft(),  answerPositions[2].getTop() , 270f, 90f, false);
+            path.arcTo(answerPositions[3].getLeft(), answerPositions[0].getTop(), answerPositions[1].getLeft(),  answerPositions[2].getTop() , 270f, 90f, true);
             path2.arcTo(answerPositions[3].getLeft(), answerPositions[0].getTop(), answerPositions[1].getLeft(),  answerPositions[2].getTop() , 360f, 90f, true);
             path3.arcTo(answerPositions[3].getLeft(), answerPositions[0].getTop(), answerPositions[1].getLeft(),  answerPositions[2].getTop() , 90, 90f, true);
             path4.arcTo(answerPositions[3].getLeft(), answerPositions[0].getTop(), answerPositions[1].getLeft(),  answerPositions[2].getTop(), 180, 90f, true);
 
 
 
+
             ObjectAnimator animator1,animator2,animator3,animator4;
 
-                     animator1 = ObjectAnimator.ofFloat( answerPositions[(rotation[0])], View.X, View.Y, path);
-                     animator2 = ObjectAnimator.ofFloat( answerPositions[(rotation[1])] , View.X, View.Y, path2);
-                     animator3 = ObjectAnimator.ofFloat( answerPositions[(rotation[2])] , View.X, View.Y, path3);
-                     animator4 = ObjectAnimator.ofFloat( answerPositions[(rotation[3])] , View.X, View.Y, path4);
+            animator1 = ObjectAnimator.ofFloat( answerPositions[(rotation[0])], View.X, View.Y, path);
+            animator2 = ObjectAnimator.ofFloat( answerPositions[(rotation[1])] , View.X, View.Y, path2);
+            animator3 = ObjectAnimator.ofFloat( answerPositions[(rotation[2])] , View.X, View.Y, path3);
+            animator4 = ObjectAnimator.ofFloat( answerPositions[(rotation[3])] , View.X, View.Y, path4);
 
             for(int i=0;i<=3;i++)
             {
@@ -636,6 +656,23 @@ public class SecondActivityGame extends AppCompatActivity {
                 }
             });
 
+    }
+
+    public void playNewHighScoreAnimation()
+    {
+        fireworks1.setRepeatCount(1); // 1 *repeat* = 2 in total
+        fireworks1.setRepeatMode(LottieDrawable.RESTART);
+        fireworks1.setSpeed(0.5f);
+        fireworks2.setRepeatCount(1);
+        fireworks2.setRepeatMode(LottieDrawable.RESTART);
+        fireworks1.playAnimation();
+        fireworks2.playAnimation();
+        newHighScoreLayout.animate().translationX(620).setDuration(600).alpha(1).withEndAction(new Runnable() {
+            @Override
+            public void run() {
+                newHighScoreLayout.animate().translationX(0).alpha(0).setStartDelay(1500);
+            }
+        });
     }
 
     @Override
