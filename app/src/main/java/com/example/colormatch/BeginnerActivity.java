@@ -3,13 +3,19 @@ package com.example.colormatch;
 import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Path;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -19,12 +25,17 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+
+import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieDrawable;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,14 +44,18 @@ import java.util.Random;
 
 public class BeginnerActivity extends AppCompatActivity {
 
-    ImageView fourColorsImage, ShapeFillerColor, ShapeOutline,shape_top,shape_right,shape_bottom,shape_left;
-    TextView tv_points,highestscoreTV,paused, difficuiltyAlertTV;
+    ImageView fourColorsImage, ShapeFillerColor, ShapeOutline;
+    ImageView[] answerPositions= new ImageView[4];
+    TextView tv_points,highestscoreTV,paused, difficuiltyAlertTV,welldoneTV,fantasticTV;
     ProgressBar progressBar;
     Button continueBTN,exitBTN;
     LinearLayout rotatingAnswersLL;
-    boolean firstTimeOnResumeCalled, gameIsNotPaused;
+    boolean firstTimeOnResumeCalled, gameIsNotPaused,airplanepause;
     ConstraintLayout fourShapesLayout;
     ImageButton pauseBtn;
+
+    LottieAnimationView fireworks1,fireworks2,welldoneConfeti,airplane;
+    RelativeLayout newHighScoreLayout,wellDoneLayout;
 
 
     Handler handler;
@@ -62,12 +77,20 @@ public class BeginnerActivity extends AppCompatActivity {
     int chosenShapePositionInAnswers;
     int otherThreeAnswers;
     int[] chosenAnswers = new int[16];
+    int[] tempIndexArray = new int[4];
+    int[] rotation = {0,1,2,3};
 
 // שיניתי מ12 ל24
     int currentTime = 24000;
     int startTime = 24000;
 
     int currentPoints = 0;
+
+    int rotationCounter=0;
+
+    int highScore;
+
+    int screenWidth;
 
     ArrayList<highScore> highScoreList;
 
@@ -125,6 +148,7 @@ public class BeginnerActivity extends AppCompatActivity {
             }
         }
 
+
         Bundle extras = getIntent().getExtras(); // Get username from mainActivity (dialog that pops before game)
         if(extras !=null) {
              userName = extras.getString("userName");
@@ -145,10 +169,32 @@ public class BeginnerActivity extends AppCompatActivity {
         difficuiltyAlertTV =findViewById(R.id.movingShapeAlert);
         fourShapesLayout=findViewById(R.id.fourShapes_layout);
 
-        shape_bottom=findViewById(R.id.shape_BOTTOM);
-        shape_left=findViewById(R.id.shape_LEFT);
-        shape_top=findViewById(R.id.shape_TOP);
-        shape_right=findViewById(R.id.shape_RIGHT);
+        fireworks1=findViewById(R.id.fireworks1);
+        fireworks2=findViewById(R.id.fireworks2);
+        welldoneConfeti=findViewById(R.id.welldoneConfetiAnimation);
+        wellDoneLayout=findViewById(R.id.welldoneAnimationRelativeLayout);
+        welldoneTV=findViewById(R.id.welldoneTV);
+        airplane=findViewById(R.id.airplaneAnimation);
+        fantasticTV=findViewById(R.id.fantasticWithAirplaneTV);
+
+        newHighScoreLayout=findViewById(R.id.newHighScoreRelativeLayout);
+
+        // These 4 lines of code are used in airplane animation
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+       //int height = displayMetrics.heightPixels;
+         screenWidth = displayMetrics.widthPixels;
+
+
+
+
+
+        answerPositions[0]=findViewById(R.id.shape_TOP);
+        answerPositions[1]=findViewById(R.id.shape_RIGHT);
+        answerPositions[2]=findViewById(R.id.shape_BOTTOM);
+        answerPositions[3]=findViewById(R.id.shape_LEFT);
+
+
 
         pauseBtn=findViewById(R.id.pauseBtn);
 
@@ -163,6 +209,7 @@ public class BeginnerActivity extends AppCompatActivity {
         else
             highestscoreTV.setText(highScoreList.get(0).getScore());
 
+        highScore = Integer.parseInt(highestscoreTV.getText().toString()); // save highScore to an int to avoid calling parseInt/getText/toString multiple times during runtime
 
         // איך 4 שניות אם למעלה רשום 12 ?
         //set the initial progressbar time to 4 seconds
@@ -198,8 +245,7 @@ public class BeginnerActivity extends AppCompatActivity {
                                     3
          */
 
-
-        chosenShapePositionInAnswers=r.nextInt(4)+1; // 4 possible options for answer to be in (1=top 2= right 3=bottom 4=left)
+        chosenShapePositionInAnswers=r.nextInt(4)+1; // 4 possible options for answer to be in (1=top 2= right 3=bottom 4=left
         generateAnswerAtPosition(chosenShapePositionInAnswers,chosenShape);
 
         generateOtherThreeShapes();
@@ -236,29 +282,11 @@ public class BeginnerActivity extends AppCompatActivity {
             }
         });
 
-
-        //Sets the animation for the 4 right shapes
         fourShapesLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Shape Locations
-                float topX = shape_top.getX();
-                float topY = shape_top.getY();
-                float rightX = shape_right.getX();
-                float rightY = shape_right.getY();
-                float bottomX = shape_bottom.getX();
-                float bottomY = shape_bottom.getY();
-                float leftX = shape_left.getX();
-                float leftY = shape_left.getY();
-
-                shape_top.animate().x(rightX).setDuration(75);
-                shape_top.animate().y(rightY).setDuration(75);
-                shape_right.animate().x(bottomX).setDuration(75);
-                shape_right.animate().y(bottomY).setDuration(75);
-                shape_bottom.animate().x(leftX).setDuration(75);
-                shape_bottom.animate().y(leftY).setDuration(75);
-                shape_left.animate().x(topX).setDuration(75);
-                shape_left.animate().y(topY).setDuration(75);
+                //rotate the shapes
+                rotateShapes();
             }
         });
 
@@ -274,7 +302,7 @@ public class BeginnerActivity extends AppCompatActivity {
 
                 //check if there is still some time left in the progressBar
                 if (currentTime>0) {
-                    handler.postDelayed(runnable, 10); // נשמח להסבר מה זה
+                    handler.postDelayed(runnable, 10);
                 }
                     else{ // check if the colors of the arrow and the button are the same
                         if (true /* for testing purposes - you can't lose.  here should be "if (color and shape is correct)"... else -> you lose*/)
@@ -299,6 +327,19 @@ public class BeginnerActivity extends AppCompatActivity {
                             if (currentPoints==2)
                                 moveShape();
 
+                            // Checking if new highscore
+                                if (highScore!=0 && currentPoints == highScore + 1 ) {
+                                    playIngameAnimation("newhighscore");
+                                }
+
+                            // When to say welldone
+                            if(currentPoints==3)
+                                playIngameAnimation("welldone");
+
+                            if(currentPoints==5) {
+                                playIngameAnimation("airplane");
+                            }
+
 
 
                             progressBar.setMax(startTime);
@@ -317,6 +358,7 @@ public class BeginnerActivity extends AppCompatActivity {
                             generateOtherThreeShapes();
 
 
+                            if (!airplanepause)
                             handler.postDelayed(runnable,20);
                         }
                         else {
@@ -390,6 +432,58 @@ public class BeginnerActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    public void rotateShapes() {
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Path path = new Path();
+            Path path2 = new Path();
+            Path path3 = new Path();
+            Path path4 = new Path();
+
+            //              0
+            //            3   1   <---
+            //              2
+            path.arcTo(answerPositions[3].getLeft(), answerPositions[0].getTop(), answerPositions[1].getLeft(),  answerPositions[2].getTop() , 270f, 90f, true);
+            path2.arcTo(answerPositions[3].getLeft(), answerPositions[0].getTop(), answerPositions[1].getLeft(),  answerPositions[2].getTop() , 360f, 90f, true);
+            path3.arcTo(answerPositions[3].getLeft(), answerPositions[0].getTop(), answerPositions[1].getLeft(),  answerPositions[2].getTop() , 90, 90f, true);
+            path4.arcTo(answerPositions[3].getLeft(), answerPositions[0].getTop(), answerPositions[1].getLeft(),  answerPositions[2].getTop(), 180, 90f, true);
+
+
+            ObjectAnimator animator1,animator2,animator3,animator4;
+
+            animator1 = ObjectAnimator.ofFloat( answerPositions[(rotation[0])], View.X, View.Y, path);
+            animator2 = ObjectAnimator.ofFloat( answerPositions[(rotation[1])] , View.X, View.Y, path2);
+            animator3 = ObjectAnimator.ofFloat( answerPositions[(rotation[2])] , View.X, View.Y, path3);
+            animator4 = ObjectAnimator.ofFloat( answerPositions[(rotation[3])] , View.X, View.Y, path4);
+
+            for(int i=0;i<=3;i++)
+            {
+                tempIndexArray[i]=rotation[i];
+            }
+            for(int i=0;i<=3;i++)
+            {
+                rotation[i]=tempIndexArray[(i+3)%4];
+            }
+
+            // 0 1 2 3
+            // 3 0 1 2
+            // 2 3 0 1
+            // 1 2 3 0
+            // 0 1 2 3
+
+            AnimatorSet set = new AnimatorSet();
+            set.play(animator1).with(animator2).with(animator3).with(animator4);
+            set.setDuration(100);
+            set.start();
+
+
+
+        }
+    }
+
+
 
     private void updateHighScores() //דרוש הסבר
     {
@@ -518,16 +612,16 @@ public class BeginnerActivity extends AppCompatActivity {
         switch(pos)
         {
             case 1:
-                shape_top.setImageResource(ShapesOutlineArray[shapeOutline]);
+                answerPositions[0].setImageResource(ShapesOutlineArray[shapeOutline]);
                 break;
             case 2:
-                shape_right.setImageResource(ShapesOutlineArray[shapeOutline]);
+                answerPositions[1].setImageResource(ShapesOutlineArray[shapeOutline]);
                 break;
             case 3:
-                shape_bottom.setImageResource(ShapesOutlineArray[shapeOutline]);
+                answerPositions[2].setImageResource(ShapesOutlineArray[shapeOutline]);
                 break;
             case 4:
-                shape_left.setImageResource(ShapesOutlineArray[shapeOutline]);
+                answerPositions[3].setImageResource(ShapesOutlineArray[shapeOutline]);
         }
     }
 
@@ -665,6 +759,73 @@ public class BeginnerActivity extends AppCompatActivity {
             });
 
     }
+
+    public void playIngameAnimation(String animName)
+    {
+        switch(animName) {
+            case "newhighscore":
+                fireworks1.setRepeatCount(1); // 1 *repeat* = 2 in total
+                fireworks1.setRepeatMode(LottieDrawable.RESTART);
+                fireworks1.setSpeed(0.5f);
+                fireworks2.setRepeatCount(1);
+                fireworks2.setRepeatMode(LottieDrawable.RESTART);
+                fireworks1.playAnimation();
+                fireworks2.playAnimation();
+                newHighScoreLayout.animate().translationX(620).setDuration(600).alpha(1).withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        newHighScoreLayout.animate().translationX(0).alpha(0).setStartDelay(1500);
+                    }
+                });
+                break;
+
+            case "welldone":
+                wellDoneLayout.setVisibility(View.VISIBLE);
+                welldoneTV.animate().alpha(1).setDuration(400).withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        welldoneTV.animate().alpha(0).setDuration(400).setStartDelay(300);
+                    }
+                });
+                welldoneConfeti.setRepeatMode(LottieDrawable.RESTART);
+                welldoneConfeti.setRepeatCount(0);
+                welldoneConfeti.playAnimation();
+                break;
+
+            case "airplane":
+                /*
+                   We need the fantasticTV to "fly" the screenwidth + 390 device pixels + some extra
+                   in order to "fly" it out of the screen
+                   the airplane animation is covered by that since its to the right of fantasticTV - it's guaranteed to fly out of the screen
+                */
+                ShapeFillerColor.setVisibility(View.INVISIBLE); // Hide center shape
+                ShapeOutline.setVisibility(View.INVISIBLE);
+                airplanepause=true; // Disable game loop
+                Resources reso = getResources();
+                float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 450f, reso.getDisplayMetrics() ); // Get 185 in device independent pixels
+
+                fantasticTV.animate().translationX(screenWidth+px).setDuration(3500).start();
+                fantasticTV.animate().translationY(40).rotationX(-10).setDuration(1250).withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        fantasticTV.animate().translationY(-30).rotationX(10).setDuration(1900).start();
+                    }
+                });
+                airplane.animate().translationX(screenWidth+px).setDuration(3500).withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        ShapeFillerColor.setVisibility(View.VISIBLE);
+                        ShapeOutline.setVisibility(View.VISIBLE);
+                        airplane.cancelAnimation();
+                        airplanepause=false; // Enable game loop
+                        handler.postDelayed(runnable,20); // Resume
+                    }
+                });
+
+                break;
+        }
+    }
+
 
     @Override
     protected void onPause() {

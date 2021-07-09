@@ -37,6 +37,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.google.code.gson:gson:2.8.6' //Gal shared preferences [list]
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta3' // Gal motion layout
+    def lottieVersion = "3.7.1"  // Gal lottie animations
+    implementation "com.airbnb.android:lottie:$lottieVersion"// Gal lottie animations
 
 }
