@@ -1,17 +1,13 @@
 package com.example.colormatch;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -37,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     ImageButton about_us_bn, music_bn, sound_btn, goToDB, settingsBtn; //Settings buttons
     MediaPlayer song; //Background songs
+    MediaPlayer clickSound;
     boolean musicButtonState = true; //Music mode
     boolean soundButtonState = true; //Sound mode
 
@@ -82,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         settingsBtn= findViewById(R.id.settings_btn);
 
         //Click Sound
-        final MediaPlayer clickSound = MediaPlayer.create(this,R.raw.click_sound);
+        clickSound = MediaPlayer.create(this,R.raw.click_sound);
         song = MediaPlayer.create(MainActivity.this, R.raw.mixaund_happy_day_);
         song.setLooping(true);
         song.start();
@@ -206,57 +203,21 @@ public class MainActivity extends AppCompatActivity {
                 beginnerBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        if(soundButtonState)clickSound.start();
-
-                        // Asking for username dialog (before entering game)
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setTitle("Enter username");
-
-
-                        final EditText input = new EditText(MainActivity.this);
-
-                        input.setInputType(InputType.TYPE_CLASS_TEXT);
-                        builder.setView(input);
-
-                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                inputUsername = input.getText().toString();
-                                Intent myIntent = new Intent(MainActivity.this, BeginnerActivity.class);
-                                if (inputUsername.isEmpty())
-                                    inputUsername = "Unknown";
-                                myIntent.putExtra("userName",inputUsername);
-                                startActivity(myIntent);
-                            }
-                        });
-                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-
-                        builder.show();
-
-
+                        startGame(1); // 1 = difficulty (1 confusing shapes)
                     }
                 });
 
                 advancedBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(soundButtonState)
-                        clickSound.start();
+                        startGame(2); // 1 = difficulty (1 confusing shapes)
                     }
                 });
 
                 professionalBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(soundButtonState)
-                        clickSound.start();
+                        startGame(3); // 1 = difficulty (1 confusing shapes)
                     }
                 });
 
@@ -357,6 +318,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
     public void onBackPressed() {
         startActivity(new Intent(MainActivity.this,AreYouSureYouWantToExit.class));
@@ -385,4 +347,42 @@ public class MainActivity extends AppCompatActivity {
         song.pause();
     }
 
+    public void startGame(int difficulty)
+    {
+        if(soundButtonState)
+            clickSound.start();
+
+        // Asking for username dialog (before entering game)
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Enter username");
+
+
+        final EditText input = new EditText(MainActivity.this);
+
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                inputUsername = input.getText().toString();
+                Intent myIntent = new Intent(MainActivity.this, GameActivity.class);
+                if (inputUsername.isEmpty())
+                    inputUsername = "Unknown";
+                myIntent.putExtra("userName",inputUsername);
+                myIntent.putExtra("difficulty",difficulty);
+                startActivity(myIntent);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+
+    }
 }
