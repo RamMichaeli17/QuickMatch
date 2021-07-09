@@ -373,7 +373,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        song.start();
+        if (!musicButtonState)
+            song.pause();
+        else
+            song.start();
     }
 
     @Override
