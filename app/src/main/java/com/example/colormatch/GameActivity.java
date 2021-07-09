@@ -37,7 +37,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
-public class BeginnerActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity {
 
     ImageView fourColorsImage, ShapeFillerColor, ShapeOutline;
     ImageView[] answerPositions= new ImageView[4];
@@ -365,7 +365,7 @@ public class BeginnerActivity extends AppCompatActivity {
                         else {
                             fourColorsImage.setEnabled(false);
                             fourShapesLayout.setEnabled(false);
-                            Toast.makeText(BeginnerActivity.this, "Game Over", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(GameActivity.this, "Game Over", Toast.LENGTH_SHORT).show();
                             updateHighScores();
                         }
                 }
@@ -548,7 +548,7 @@ public class BeginnerActivity extends AppCompatActivity {
            If the user navigates away from our application (clicking home button for example) onPause() gets called which stops the game (without the visuals continueBTN/exitBTN/paused text)
            we want the game to be in paused mode (visually) when the user returns to the app ( onResume() ).
 
-           But because onResume() gets called when the game ("BeginnerActivity.java") first loads , the game starts in paused mode ...
+           But because onResume() gets called when the game ("GameActivity.java") first loads , the game starts in paused mode ...
            we don't want that to happen , so if it's the first time onResume has been called (if game just started) , we ignore it (we don't pause)
          */
         if (firstTimeOnResumeCalled || restart==true) {
@@ -674,7 +674,7 @@ public class BeginnerActivity extends AppCompatActivity {
         ShapeOutline.setVisibility(View.INVISIBLE);
 
 
-        Dialog dialog= new Dialog(BeginnerActivity.this);
+        Dialog dialog= new Dialog(GameActivity.this);
         dialog.setContentView(R.layout.activity_paused);
 
 
@@ -690,7 +690,7 @@ public class BeginnerActivity extends AppCompatActivity {
         restart_paused.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BeginnerActivity.this, BeginnerActivity.class);
+                Intent intent = new Intent(GameActivity.this, GameActivity.class);
                 intent.putExtra("restart",true);
                 intent.putExtra("difficulty",difficulty);
                 startActivity(intent);
@@ -710,7 +710,7 @@ public class BeginnerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 updateHighScores();
-                Intent intent = new Intent(BeginnerActivity.this, MainActivity.class);
+                Intent intent = new Intent(GameActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });

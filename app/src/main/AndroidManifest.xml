@@ -16,7 +16,7 @@
 
         </activity>
 
-        <activity android:name=".BeginnerActivity"
+        <activity android:name=".GameActivity"
             android:screenOrientation="landscape">
 
         </activity>
@@ -38,11 +38,7 @@
 
 
         </activity>
-        <activity
-            android:name=".AboutUsPopup"
-            android:theme="@style/Theme.AppCompat.CustomTheme"
-            android:screenOrientation="portrait">
-        </activity>
+
         <activity
             android:name=".AreYouSureYouWantToExit"
             android:theme="@style/Theme.Transparent"

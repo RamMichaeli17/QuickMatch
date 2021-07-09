@@ -367,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 inputUsername = input.getText().toString();
-                Intent myIntent = new Intent(MainActivity.this, BeginnerActivity.class);
+                Intent myIntent = new Intent(MainActivity.this, GameActivity.class);
                 if (inputUsername.isEmpty())
                     inputUsername = "Unknown";
                 myIntent.putExtra("userName",inputUsername);
