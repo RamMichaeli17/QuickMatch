@@ -1,10 +1,7 @@
 package com.example.colormatch;
 
-import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
@@ -13,7 +10,6 @@ import android.graphics.Path;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Gravity;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
@@ -35,7 +31,6 @@ import androidx.core.content.ContextCompat;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
-import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,7 +45,7 @@ public class BeginnerActivity extends AppCompatActivity {
     ProgressBar progressBar;
     Button continueBTN,exitBTN;
     LinearLayout rotatingAnswersLL;
-    boolean firstTimeOnResumeCalled, gameIsNotPaused,airplanepause;
+    boolean firstTimeOnResumeCalled, gameIsNotPaused,airplanepause, restart=false;
     ConstraintLayout fourShapesLayout;
     ImageButton pauseBtn;
 
@@ -80,9 +75,9 @@ public class BeginnerActivity extends AppCompatActivity {
     int[] tempIndexArray = new int[4];
     int[] rotation = {0,1,2,3};
 
-// שיניתי מ12 ל24
-    int currentTime = 24000;
-    int startTime = 24000;
+    // שיניתי מ12 ל24
+    int currentTime = 8000;
+    int startTime = 8000;
 
     int currentPoints = 0;
 
@@ -90,16 +85,16 @@ public class BeginnerActivity extends AppCompatActivity {
 
     int highScore;
 
+    int difficulty;
+
     int screenWidth;
 
     ArrayList<highScore> highScoreList;
 
     String userName;
 
-    int[] ShapesFillerColorArray = {R.drawable.star_1_fill_color,R.drawable.noodles_1_fill_color,R.drawable.noodles_2_fill_color,R.drawable.circles_1_fill_color,R.drawable.three_shapes_1_fill_color,R.drawable.star_2_fill_color,R.drawable.three_shapes_2_fill_color,R.drawable.star_3_fill_color,R.drawable.circles_2_fill_color,R.drawable.noodles_3_fill_color,R.drawable.three_shapes_3_fill_color,R.drawable.noodles_4_fill_color,R.drawable.star_4_fill_color,R.drawable.circles_3_fill_color,R.drawable.three_shapes_4_fill_color,R.drawable.circles_4_fill_color};
-    int[] ShapesOutlineArray = {R.drawable.star_1_outline,R.drawable.noodles_1_outline,R.drawable.noodles_2_outline,R.drawable.circles_1_outline,R.drawable.three_shapes_1_outline,R.drawable.star_2_outline,R.drawable.three_shapes_2_outline,R.drawable.star_3_outline,R.drawable.circles_2_outline,R.drawable.noodles_3_outline,R.drawable.three_shapes_3_outline,R.drawable.noodles_4_outline,R.drawable.star_4_outline,R.drawable.circles_3_outline,R.drawable.three_shapes_4_outline,R.drawable.circles_4_outline};
-
-
+    int[] ShapesFillerColorArray= {R.drawable.star_1_fill_color,R.drawable.star_2_fill_color,R.drawable.star_3_fill_color,R.drawable.star_4_fill_color,R.drawable.circles_1_fill_color,R.drawable.circles_2_fill_color,R.drawable.circles_3_fill_color,R.drawable.circles_4_fill_color,R.drawable.three_shapes_1_fill_color,R.drawable.three_shapes_2_fill_color,R.drawable.three_shapes_3_fill_color,R.drawable.three_shapes_4_fill_color,R.drawable.noodles_1_fill_color,R.drawable.noodles_2_fill_color,R.drawable.noodles_3_fill_color,R.drawable.noodles_4_fill_color};
+    int[] ShapesOutlineArray= {R.drawable.star_1_outline,R.drawable.star_2_outline,R.drawable.star_3_outline,R.drawable.star_4_outline,R.drawable.circles_1_outline,R.drawable.circles_2_outline,R.drawable.circles_3_outline,R.drawable.circles_4_outline,R.drawable.three_shapes_1_outline,R.drawable.three_shapes_2_outline,R.drawable.three_shapes_3_outline,R.drawable.three_shapes_4_outline,R.drawable.noodles_1_outline,R.drawable.noodles_2_outline,R.drawable.noodles_3_outline,R.drawable.noodles_4_outline};
     private int currentApiVersion;
     @SuppressLint("NewApi")
 
@@ -151,7 +146,9 @@ public class BeginnerActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras(); // Get username from mainActivity (dialog that pops before game)
         if(extras !=null) {
-             userName = extras.getString("userName");
+            userName = extras.getString("userName","Unknown");
+            restart=extras.getBoolean("restart",false);
+            difficulty=extras.getInt("difficulty",1); // 1 Beginner , 2 Adv , 3 Pro
         }
 
         firstTimeOnResumeCalled=true;
@@ -163,11 +160,12 @@ public class BeginnerActivity extends AppCompatActivity {
         progressBar=findViewById(R.id.progressbar);
         highestscoreTV=findViewById(R.id.highest_score_tv);
         paused=findViewById(R.id.pause);
-       /* continueBTN=findViewById(R.id.continueplay);*/
+        /* continueBTN=findViewById(R.id.continueplay);*/
         /*exitBTN=findViewById(R.id.exit);*/
         rotatingAnswersLL=findViewById(R.id.rotating_answers_linear_layout);
         difficuiltyAlertTV =findViewById(R.id.movingShapeAlert);
         fourShapesLayout=findViewById(R.id.fourShapes_layout);
+
 
         fireworks1=findViewById(R.id.fireworks1);
         fireworks2=findViewById(R.id.fireworks2);
@@ -179,11 +177,13 @@ public class BeginnerActivity extends AppCompatActivity {
 
         newHighScoreLayout=findViewById(R.id.newHighScoreRelativeLayout);
 
+        pauseBtn=findViewById(R.id.pauseBtn);
+
         // These 4 lines of code are used in airplane animation
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-       //int height = displayMetrics.heightPixels;
-         screenWidth = displayMetrics.widthPixels;
+        //int height = displayMetrics.heightPixels;
+        screenWidth = displayMetrics.widthPixels;
 
 
 
@@ -196,7 +196,7 @@ public class BeginnerActivity extends AppCompatActivity {
 
 
 
-        pauseBtn=findViewById(R.id.pauseBtn);
+
 
 
 
@@ -254,7 +254,8 @@ public class BeginnerActivity extends AppCompatActivity {
         pauseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pauseTheGame();
+                if (gameIsNotPaused)
+                    pauseTheGame();
 
             }
         });
@@ -304,61 +305,61 @@ public class BeginnerActivity extends AppCompatActivity {
                 if (currentTime>0) {
                     handler.postDelayed(runnable, 10);
                 }
-                    else{ // check if the colors of the arrow and the button are the same
-                        if (true /* for testing purposes - you can't lose.  here should be "if (color and shape is correct)"... else -> you lose*/)
-                        {
-                            //increase points and show them
+                else{ // check if the colors of the arrow and the button are the same
+                    if (true /* for testing purposes - you can't lose.  here should be "if (color and shape is correct)"... else -> you lose*/)
+                    {
+                        //increase points and show them
 
-                            currentPoints = currentPoints +1;
-                            tv_points.setText("Points: "+currentPoints);
+                        currentPoints = currentPoints +1;
+                        tv_points.setText("Points: "+currentPoints);
 
-                            // reset the chosenAnswers array
-                            Arrays.fill(chosenAnswers,0 ); // java method to fill every index in the array with value 0 (best way to reset the array)
+                        // reset the chosenAnswers array
+                        Arrays.fill(chosenAnswers,0 ); // java method to fill every index in the array with value 0 (best way to reset the array)
 
-                            //make the speed higher after every turn / if the speed is 1 second make it again 2 seconds
-                            startTime=startTime-100;
-                            if (startTime < 1000){
-                                startTime = 2000;
-                            }
+                        //make the speed higher after every turn / if the speed is 1 second make it again 2 seconds
+                        startTime=startTime-100;
+                        if (startTime < 1000){
+                            startTime = 2000;
+                        }
 
-                            // Adding difficulty to level / Alerting before difficulty level
-                            if (currentPoints==1)
-                                alertUserToCustomDifficulty();
-                            if (currentPoints==2)
-                                moveShape();
+                        // Adding difficulty to level / Alerting before difficulty level
+                        if (currentPoints==1)
+                            alertUserToCustomDifficulty();
+                        if (currentPoints==2)
+                            moveShape();
 
-                            // Checking if new highscore
-                                if (highScore!=0 && currentPoints == highScore + 1 ) {
-                                    playIngameAnimation("newhighscore");
-                                }
+                        // Checking if new highscore
+                        if (highScore!=0 && currentPoints == highScore + 1 ) {
+                            playIngameAnimation("newhighscore");
+                        }
 
-                            // When to say welldone
-                            if(currentPoints==3)
-                                playIngameAnimation("welldone");
+                        // When to say welldone
+                        if(currentPoints==3)
+                            playIngameAnimation("welldone");
 
-                            if(currentPoints==5) {
-                                playIngameAnimation("airplane");
-                            }
-
-
-
-                            progressBar.setMax(startTime);
-                            currentTime=startTime;
-                            progressBar.setProgress(currentTime);
+                        if(currentPoints==5) {
+                            playIngameAnimation("airplane");
+                        }
 
 
-                            //generate random shape(and color) in the middle of the screen
-                            setImageShapeAndColor();
 
-                            //generate the above chosenShape in a random position in the answers
-                            //and then generate 3 other random answers in random locations
-                            chosenShapePositionInAnswers=r.nextInt(4)+1;
-                            generateAnswerAtPosition(chosenShapePositionInAnswers,chosenShape);
-
-                            generateOtherThreeShapes();
+                        progressBar.setMax(startTime);
+                        currentTime=startTime;
+                        progressBar.setProgress(currentTime);
 
 
-                            if (!airplanepause)
+                        //generate random shape(and color) in the middle of the screen
+                        setImageShapeAndColor();
+
+                        //generate the above chosenShape in a random position in the answers
+                        //and then generate 3 other random answers in random locations
+                        chosenShapePositionInAnswers=r.nextInt(4)+1;
+                        generateAnswerAtPosition(chosenShapePositionInAnswers,chosenShape);
+
+                        generateOtherThreeShapes();
+
+
+                        if (!airplanepause)
                             handler.postDelayed(runnable,20);
                         }
                         else {
@@ -372,8 +373,11 @@ public class BeginnerActivity extends AppCompatActivity {
         };
 
         //start the game loop
-        handler.postDelayed(runnable,100);
 
+        if(!restart)
+            handler.postDelayed(runnable,100);
+        else
+            continueTheGame();
     }
 
     //rotate animation of the button when clicked
@@ -381,7 +385,7 @@ public class BeginnerActivity extends AppCompatActivity {
     {
         //rotate 90 degrees
         RotateAnimation rotateAnimation = new RotateAnimation(0,90, Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
-        rotateAnimation.setDuration(100);
+        rotateAnimation.setDuration(75);
         rotateAnimation.setInterpolator(new LinearInterpolator());
         rotateAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -475,7 +479,7 @@ public class BeginnerActivity extends AppCompatActivity {
 
             AnimatorSet set = new AnimatorSet();
             set.play(animator1).with(animator2).with(animator3).with(animator4);
-            set.setDuration(100);
+            set.setDuration(75);
             set.start();
 
 
@@ -532,14 +536,13 @@ public class BeginnerActivity extends AppCompatActivity {
     public void onBackPressed() {
         System.out.println("onBackPressed()");
         if(gameIsNotPaused)
-        pauseTheGame();
+            pauseTheGame();
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        System.out.println("OnResume()");
 
         /*
            If the user navigates away from our application (clicking home button for example) onPause() gets called which stops the game (without the visuals continueBTN/exitBTN/paused text)
@@ -548,12 +551,12 @@ public class BeginnerActivity extends AppCompatActivity {
            But because onResume() gets called when the game ("BeginnerActivity.java") first loads , the game starts in paused mode ...
            we don't want that to happen , so if it's the first time onResume has been called (if game just started) , we ignore it (we don't pause)
          */
-        if (firstTimeOnResumeCalled) {
+        if (firstTimeOnResumeCalled || restart==true) {
             firstTimeOnResumeCalled = false;
         }
         else {
             if(gameIsNotPaused)
-             pauseTheGame();
+                pauseTheGame();
         }
 
 
@@ -588,6 +591,13 @@ public class BeginnerActivity extends AppCompatActivity {
 
     public void generateOtherThreeShapes() // This method sets 3 random WRONG answers at all the positions except the chosenShapePosition
     {
+        Arrays.fill(chosenAnswers,0 );
+        chosenAnswers[chosenShapePositionInAnswers]=1;
+        int firstIndexOfChosenShape=chosenShape,confusingShapes=difficulty; // beginner = 1 confusing shape , advanced =2 , pro =3
+        while (firstIndexOfChosenShape%4!=0) {
+            System.out.println(" Gal 1 ");
+            firstIndexOfChosenShape--;
+        }
         ArrayList<Integer> list = new ArrayList<Integer>();
         for (int i = 1; i <= 4; i++) { // Make a list with 1,2,3,4
             list.add(new Integer(i));
@@ -596,11 +606,31 @@ public class BeginnerActivity extends AppCompatActivity {
         for (int i = 0; i <= 3; i++) { // Pull all the unsorted numbers from the above list (list[0],list[1],list[2],list[3]) , these numbers will be used for the next position to draw to
             if (list.get(i)!=chosenShapePositionInAnswers) // this if-statement is to avoid choosing the same position as the correct shape
             {
-                otherThreeAnswers=r.nextInt(16);  // 0->15 This generates a random shape and saves the shape at "otherThreeAnswers'
-                while(chosenAnswers[otherThreeAnswers]==1)
-                    otherThreeAnswers=r.nextInt(16); // Generate a new random shape until the random shape is unique and isn't a duplicate of an already existing answer)
 
-                generateAnswerAtPosition(list.get(i), otherThreeAnswers); // finally , we draw the random image (wrong answer) at a random (empty) position
+                if (confusingShapes!=0) { // One confusing shape
+                    otherThreeAnswers = r.nextInt(4) + firstIndexOfChosenShape;  // 0->15 This generates a random shape and saves the shape at "otherThreeAnswers'
+                    while (chosenAnswers[otherThreeAnswers] == 1) {
+                        System.out.println(" Gal 2");
+                        for(int j=0;j<16;j++)
+                            System.out.println(" ["+j+"] ="+chosenAnswers[j]);
+
+                        otherThreeAnswers = r.nextInt(4) + firstIndexOfChosenShape; // Generate a new random shape until the random shape is unique and isn't a duplicate of an already existing answer)
+                    }
+                    generateAnswerAtPosition(list.get(i), otherThreeAnswers); // finally , we draw the random image (wrong answer) at a random (empty) position
+                    confusingShapes--;
+                }
+                else
+                { // Generate random wrong answer that hasn't been generated before and isn't confusing shape
+                    otherThreeAnswers=r.nextInt(16);
+                    while (chosenAnswers[otherThreeAnswers] == 1 || (otherThreeAnswers >=firstIndexOfChosenShape && otherThreeAnswers<=firstIndexOfChosenShape+3 )) {
+                        System.out.println(" Gal 3 ");
+                        otherThreeAnswers = r.nextInt(16);
+                    }
+
+                    generateAnswerAtPosition(list.get(i), otherThreeAnswers); // finally , we draw the random image (wrong answer) at a random (empty) position
+
+
+                }
             }
         }
 
@@ -647,27 +677,31 @@ public class BeginnerActivity extends AppCompatActivity {
         Dialog dialog= new Dialog(BeginnerActivity.this);
         dialog.setContentView(R.layout.activity_paused);
 
+
         int width = (int)(getResources().getDisplayMetrics().widthPixels*0.50);
         int height = (int)(getResources().getDisplayMetrics().heightPixels*1.00);
         dialog.getWindow().setLayout(width, height);
 
-        final Button reset_paused=dialog.findViewById(R.id.restart_pauseBtn);
-        final Button resume_paused=dialog.findViewById(R.id.resume_pauseBtn);
-        final Button back_to_menu=dialog.findViewById(R.id.back_to_menu_pauseBtn);
-        final ImageButton music_on=dialog.findViewById(R.id.music_button2);
-        final ImageButton sound_on=dialog.findViewById(R.id.pink_sound_button2);
-
-        reset_paused.setOnClickListener(new View.OnClickListener() {
+        Button restart_paused=dialog.findViewById(R.id.restart_pauseBtn);
+        Button resume_paused=dialog.findViewById(R.id.resume_pauseBtn);
+        Button back_to_menu=dialog.findViewById(R.id.back_to_menu_pauseBtn);
+        ImageButton music_on=dialog.findViewById(R.id.music_button2);
+        ImageButton sound_on=dialog.findViewById(R.id.pink_sound_button2);
+        restart_paused.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                continueTheGame();
-                dialog.dismiss();
+                Intent intent = new Intent(BeginnerActivity.this, BeginnerActivity.class);
+                intent.putExtra("restart",true);
+                intent.putExtra("difficulty",difficulty);
+                startActivity(intent);
             }
         });
 
         resume_paused.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
+                continueTheGame();
 
             }
         });
@@ -675,6 +709,7 @@ public class BeginnerActivity extends AppCompatActivity {
         back_to_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                updateHighScores();
                 Intent intent = new Intent(BeginnerActivity.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -699,66 +734,72 @@ public class BeginnerActivity extends AppCompatActivity {
         dialog.setCancelable(false);
     };
 
-    public void continueTheGame()
-    {
+    public void continueTheGame() {
         // This method takes care of pausing the game
-
-        handler.postDelayed(runnable,3000); // continue the game after 3 seconds
-
+        if(restart)
+        {
+            gameIsNotPaused=false;
+            paused.setVisibility(View.VISIBLE);
+            ShapeFillerColor.setVisibility(View.INVISIBLE);
+            ShapeOutline.setVisibility(View.INVISIBLE);
+        }
+        handler.postDelayed(runnable, 3000); // continue the game after 3 seconds
         // these 4 lines of code is , again , to draw in the middle of the screen a new shape , and then 3 wrong answers and 1 correct answer
         // ** we change the shapes to avoid pause-cheating
         setImageShapeAndColor();
-        chosenShapePositionInAnswers=r.nextInt(4)+1;
-        generateAnswerAtPosition(chosenShapePositionInAnswers,chosenShape);
+        chosenShapePositionInAnswers = r.nextInt(4) + 1;
+        generateAnswerAtPosition(chosenShapePositionInAnswers, chosenShape);
         generateOtherThreeShapes();
-
-        if(difficuiltyAlertTV.getAlpha()==0.1f) // If a difficuilty alert (moving shape!) is on the screen
+        if (difficuiltyAlertTV.getAlpha() == 0.1f) // If a difficuilty alert (moving shape!) is on the screen
             difficuiltyAlertTV.animate().alpha(0.6f).setDuration(1500); // return it to normal alpha
+
+
 
       /*  continueBTN.setVisibility(View.GONE); // remove continue/exit buttons
         exitBTN.setVisibility(View.GONE);*/
 
         rotatingAnswersLL.animate().alpha(1).setDuration(1500); // return the answers to normal alpha
-
-
         paused.setAlpha(0); // This is used (with the animate() 2 rows later) to create the 3-2-1 fading effect
         paused.setText("3");
         paused.animate().alpha(1).setDuration(1000).withEndAction(new Runnable() { // return the "3" alpha to 1 , makes fading effect
-                @Override
-                public void run() {
-                    paused.setAlpha(0);
-                    paused.setText("2");
-                    paused.animate().alpha(1).setDuration(1000).withEndAction(new Runnable() {
-                        @Override
-                        public void run() {
-                            paused.setAlpha(0);
-                            paused.setText("1");
-                            paused.animate().alpha(1).setDuration(1000).withEndAction(new Runnable() {
-                                @Override
-                                public void run() {
-                                    paused.setVisibility(View.GONE);
-                                    paused.setText("Paused");
+            @Override
+            public void run() {
+                paused.setAlpha(0);
+                paused.setText("2");
+                paused.animate().alpha(1).setDuration(1000).withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        paused.setAlpha(0);
+                        paused.setText("1");
+                        paused.animate().alpha(1).setDuration(1000).withEndAction(new Runnable() {
+                            @Override
+                            public void run() {
 
-                                    fourColorsImage.setClickable(true); // Make the game playable again (click = rotation)
-                                    fourShapesLayout.setClickable(true);
 
-                                    if (currentPoints==2) // If this wont be here (When game returns) we lose the "difficulty effect" (moving shape!) when we resume the game
-                                        moveShape();
+                                paused.setVisibility(View.GONE);
+                                paused.setText("Paused");
 
-                                    gameIsNotPaused = true;
+                                fourColorsImage.setClickable(true); // Make the game playable again (click = rotation)
+                                fourShapesLayout.setClickable(true);
 
-                                    ShapeFillerColor.setVisibility(View.VISIBLE);
-                                    ShapeOutline.setVisibility(View.VISIBLE);
+                                if (currentPoints == 2) // If this wont be here (When game returns) we lose the "difficulty effect" (moving shape!) when we resume the game
+                                    moveShape();
 
-                                }
-                            });
-                        }
-                    });
+                                gameIsNotPaused = true;
 
-                }
-            });
+                                ShapeFillerColor.setVisibility(View.VISIBLE);
+                                ShapeOutline.setVisibility(View.VISIBLE);
+
+                            }
+                        });
+                    }
+                });
+
+            }
+        });
 
     }
+
 
     public void playIngameAnimation(String animName)
     {
@@ -798,6 +839,7 @@ public class BeginnerActivity extends AppCompatActivity {
                    in order to "fly" it out of the screen
                    the airplane animation is covered by that since its to the right of fantasticTV - it's guaranteed to fly out of the screen
                 */
+                gameIsNotPaused=false;
                 ShapeFillerColor.setVisibility(View.INVISIBLE); // Hide center shape
                 ShapeOutline.setVisibility(View.INVISIBLE);
                 airplanepause=true; // Disable game loop
@@ -817,6 +859,7 @@ public class BeginnerActivity extends AppCompatActivity {
                         ShapeFillerColor.setVisibility(View.VISIBLE);
                         ShapeOutline.setVisibility(View.VISIBLE);
                         airplane.cancelAnimation();
+                        gameIsNotPaused=true;
                         airplanepause=false; // Enable game loop
                         handler.postDelayed(runnable,20); // Resume
                     }
