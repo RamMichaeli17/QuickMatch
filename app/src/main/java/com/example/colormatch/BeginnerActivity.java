@@ -651,7 +651,7 @@ public class BeginnerActivity extends AppCompatActivity {
         int height = (int)(getResources().getDisplayMetrics().heightPixels*1.00);
         dialog.getWindow().setLayout(width, height);
 
-        final Button reset_paused=dialog.findViewById(R.id.reset_pauseBtn);
+        final Button reset_paused=dialog.findViewById(R.id.restart_pauseBtn);
         final Button resume_paused=dialog.findViewById(R.id.resume_pauseBtn);
         final Button back_to_menu=dialog.findViewById(R.id.back_to_menu_pauseBtn);
         final ImageButton music_on=dialog.findViewById(R.id.music_button2);
