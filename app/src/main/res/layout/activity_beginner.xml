@@ -241,8 +241,8 @@
             android:layout_width="175dp"
             android:layout_height="200dp"
             app:lottie_rawRes="@raw/airplaneflyinganimation"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="false"
             android:id="@+id/airplaneAnimation"
             />
     </LinearLayout>
