@@ -11,7 +11,7 @@
     <string name="music_on">Music is on 🔈</string>
     <string name="sound_on">Sound is on 🔔</string>
     <string name="areYouSureYouWannaQuit">Are you sure you want to quit?</string>
-    <string name="reset_btn">Reset</string>
-    <string name="resume_btn">Resume</string>
+    <string name="reset_btn">Resume</string>
+    <string name="resume_btn">Restart</string>
     <string name="back_to_menu_btn">Back to main menu</string>
 </resources>

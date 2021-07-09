@@ -269,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
-        song = MediaPlayer.create(MainActivity.this, R.raw.mixaund_happy_day_);
+
         about_us_bn = (ImageButton) findViewById(R.id.about_us_button);
         music_bn = (ImageButton) findViewById(R.id.music_button);
         sound_btn = (ImageButton) findViewById(R.id.pink_sound_button);

@@ -74,8 +74,9 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:orientation="horizontal"
-      android:layout_marginTop="20dp"
-      android:layout_below="@+id/back_to_menu_pauseBtn">
+      android:layout_marginTop="10dp"
+      android:layout_below="@+id/back_to_menu_pauseBtn"
+      android:layout_centerHorizontal="true">
 
     <ImageButton
         android:layout_width="65dp"
@@ -83,9 +84,9 @@
         android:layout_gravity="center"
         android:scaleType="fitCenter"
         android:id="@+id/pink_sound_button2"
-        android:layout_marginLeft="100dp"
         android:background="@null"
-        android:src="@drawable/sound_on" />
+        android:src="@drawable/sound_on"
+        android:layout_margin="10dp"/>
 
     <ImageButton
         android:layout_width="65dp"
@@ -93,8 +94,8 @@
         android:layout_gravity="center"
         android:id="@+id/music_button2"
         android:scaleType="fitCenter"
-        android:layout_marginLeft="15dp"
         android:background="@null"
+        android:layout_margin="10dp"
         android:src="@drawable/music_on" />
 
 
