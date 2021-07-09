@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ColorMatch">
 
-        <activity android:name=".Gal_SharedPreferencesAttemptInsteadOfSQLITE"
+        <activity android:name=".HighScore"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
 

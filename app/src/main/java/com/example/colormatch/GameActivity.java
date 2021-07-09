@@ -89,7 +89,7 @@ public class GameActivity extends AppCompatActivity {
 
     int screenWidth;
 
-    ArrayList<highScore> highScoreList;
+    ArrayList<HighScoreObject> highScoreList;
 
     String userName;
 
@@ -209,7 +209,7 @@ public class GameActivity extends AppCompatActivity {
         else
             highestscoreTV.setText(highScoreList.get(0).getScore());
 
-        highScore = Integer.parseInt(highestscoreTV.getText().toString()); // save highScore to an int to avoid calling parseInt/getText/toString multiple times during runtime
+        highScore = Integer.parseInt(highestscoreTV.getText().toString()); // save HighScoreObject to an int to avoid calling parseInt/getText/toString multiple times during runtime
 
         // איך 4 שניות אם למעלה רשום 12 ?
         //set the initial progressbar time to 4 seconds
@@ -491,10 +491,10 @@ public class GameActivity extends AppCompatActivity {
 
     private void updateHighScores() //דרוש הסבר
     {
-        highScore newHighScore = new highScore(userName,Integer.toString(currentPoints)); // Create a new highscore with username and current points
+        HighScoreObject newHighScore = new HighScoreObject(userName,Integer.toString(currentPoints)); // Create a new highscore with username and current points
         highScoreList.add(newHighScore); // Add it to the list
         Collections.sort(highScoreList); // Sort the list in descending order so the highest score will be first
-                                         // (this only works because we implemented Comparable in highScore.java class and override compareTo function
+                                         // (this only works because we implemented Comparable in HighScoreObject.java class and override compareTo function
 
         // Shared Preferences
         PrefConfigGal.writeListInPref(getApplicationContext(), highScoreList); // Write list to shared preferences so it would be saved if we re-open the application

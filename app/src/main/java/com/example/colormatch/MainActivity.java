@@ -292,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
         goToDB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Gal_SharedPreferencesAttemptInsteadOfSQLITE.class);
+                Intent intent = new Intent(MainActivity.this, HighScore.class);
                 /* intent.putExtra("selectedMp3",SELECTED_MP3_INT);*/
                 startActivity(intent);
                 if(soundButtonState)clickSound.start();

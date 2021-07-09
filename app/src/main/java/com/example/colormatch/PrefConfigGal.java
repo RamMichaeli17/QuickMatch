@@ -22,7 +22,7 @@ public class PrefConfigGal {
 
     private static final String LIST_KEY = "list_key";
 
-    public static void writeListInPref(Context context, ArrayList<highScore> list) {
+    public static void writeListInPref(Context context, ArrayList<HighScoreObject> list) {
         Gson gson = new Gson();
         String jsonString = gson.toJson(list); // Convert our highscore list (ArrayList) to Json and saving the resulted string in variable 'jsonString'
 
@@ -32,13 +32,13 @@ public class PrefConfigGal {
         editor.apply();
     }
 
-    public static ArrayList<highScore> readListFromPref(Context context) {
+    public static ArrayList<HighScoreObject> readListFromPref(Context context) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context); // Get shared preferences
         String jsonString = pref.getString(LIST_KEY,""); // Get the highscore list (still in Json format)
 
         Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<highScore>>(){}.getType(); // Set the conversion to be from Json to ArrayList (using getType on our list)
-        ArrayList<highScore> list = gson.fromJson(jsonString,type); // Convert the extracted data from shared preferences to the above type (ArrayList) and store it in variable 'list'
+        Type type = new TypeToken<ArrayList<HighScoreObject>>(){}.getType(); // Set the conversion to be from Json to ArrayList (using getType on our list)
+        ArrayList<HighScoreObject> list = gson.fromJson(jsonString,type); // Convert the extracted data from shared preferences to the above type (ArrayList) and store it in variable 'list'
         return list;
     }
 }
