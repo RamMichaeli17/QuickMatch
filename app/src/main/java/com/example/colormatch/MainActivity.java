@@ -1,19 +1,24 @@
 package com.example.colormatch;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     ImageButton about_us_bn, music_bn, sound_btn, goToDB, settingsBtn; //Settings buttons
-    MediaPlayer song;
+    MediaPlayer song; //Background songs
     boolean musicButtonState = true; //Music mode
     boolean soundButtonState = true; //Sound mode
 
@@ -264,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
-
+        song = MediaPlayer.create(MainActivity.this, R.raw.mixaund_happy_day_);
         about_us_bn = (ImageButton) findViewById(R.id.about_us_button);
         music_bn = (ImageButton) findViewById(R.id.music_button);
         sound_btn = (ImageButton) findViewById(R.id.pink_sound_button);
@@ -272,8 +277,27 @@ public class MainActivity extends AppCompatActivity {
         about_us_bn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,AboutUsPopup.class));
+                /*startActivity(new Intent(MainActivity.this,AboutUsPopup.class));*/
+    /*
+               Dialog dialog= new Dialog(MainActivity.this);
+               dialog.setContentView(R.layout.about_us_popup);
+
+               final TextView infoTV = dialog.findViewById(R.id.info_aboutUS);
+               final ImageView logoIV=dialog.findViewById(R.id.logo_in_info);
+
+                dialog.show();
+                }
+            });
                 if(soundButtonState)clickSound.start();
+        };
+        });*/
+                if(soundButtonState)clickSound.start();
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                View dialogView = getLayoutInflater().inflate(R.layout.about_us_popup, null);
+                final TextView infoTV = dialogView.findViewById(R.id.info_aboutUS);
+                final ImageView logoIV = dialogView.findViewById(R.id.logo_in_info);
+                builder.setView(dialogView);
+                builder.show();
             }
         });
 
@@ -329,10 +353,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, R.string.sound_on, Toast.LENGTH_SHORT).show();
                 soundButtonState = true;
                 if(soundButtonState)clickSound.start();
-                if(soundButtonState)clickSound.start();
             }
         });
     }
+
     @Override
     public void onBackPressed() {
         startActivity(new Intent(MainActivity.this,AreYouSureYouWantToExit.class));

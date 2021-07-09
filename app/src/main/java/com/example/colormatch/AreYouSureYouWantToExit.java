@@ -27,9 +27,6 @@ public class AreYouSureYouWantToExit extends Activity {
         yesToQuitBTN=findViewById(R.id.btnyes);
         noToQuitBTN=findViewById(R.id.btnno);
 
-
-
-
         yesToQuitBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

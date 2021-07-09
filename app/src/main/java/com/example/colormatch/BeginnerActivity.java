@@ -4,6 +4,8 @@ import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +15,7 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -37,7 +40,8 @@ public class BeginnerActivity extends AppCompatActivity {
     LinearLayout rotatingAnswersLL;
     boolean firstTimeOnResumeCalled, gameIsNotPaused;
     ConstraintLayout fourShapesLayout;
-    
+    ImageButton pauseBtn;
+
 
     Handler handler;
     Runnable runnable;
@@ -69,10 +73,8 @@ public class BeginnerActivity extends AppCompatActivity {
 
     String userName;
 
-
     int[] ShapesFillerColorArray = {R.drawable.star_1_fill_color,R.drawable.noodles_1_fill_color,R.drawable.noodles_2_fill_color,R.drawable.circles_1_fill_color,R.drawable.three_shapes_1_fill_color,R.drawable.star_2_fill_color,R.drawable.three_shapes_2_fill_color,R.drawable.star_3_fill_color,R.drawable.circles_2_fill_color,R.drawable.noodles_3_fill_color,R.drawable.three_shapes_3_fill_color,R.drawable.noodles_4_fill_color,R.drawable.star_4_fill_color,R.drawable.circles_3_fill_color,R.drawable.three_shapes_4_fill_color,R.drawable.circles_4_fill_color};
     int[] ShapesOutlineArray = {R.drawable.star_1_outline,R.drawable.noodles_1_outline,R.drawable.noodles_2_outline,R.drawable.circles_1_outline,R.drawable.three_shapes_1_outline,R.drawable.star_2_outline,R.drawable.three_shapes_2_outline,R.drawable.star_3_outline,R.drawable.circles_2_outline,R.drawable.noodles_3_outline,R.drawable.three_shapes_3_outline,R.drawable.noodles_4_outline,R.drawable.star_4_outline,R.drawable.circles_3_outline,R.drawable.three_shapes_4_outline,R.drawable.circles_4_outline};
-
 
 
     private int currentApiVersion;
@@ -80,14 +82,10 @@ public class BeginnerActivity extends AppCompatActivity {
 
 
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beginner);
-
 
 
         //The next 32 lines of code is used to permanently hide & draw over the navigation bar at the right side of the screen
@@ -134,7 +132,6 @@ public class BeginnerActivity extends AppCompatActivity {
 
         firstTimeOnResumeCalled=true;
         gameIsNotPaused =true;
-
         fourColorsImage =findViewById(R.id.fourColorsImage); //צריך להחליף לצבעים ולשנות בהתאם
         ShapeFillerColor =findViewById(R.id.main_shape_color);
         ShapeOutline =findViewById(R.id.main_shape_outline);
@@ -142,23 +139,18 @@ public class BeginnerActivity extends AppCompatActivity {
         progressBar=findViewById(R.id.progressbar);
         highestscoreTV=findViewById(R.id.highest_score_tv);
         paused=findViewById(R.id.pause);
-        continueBTN=findViewById(R.id.continueplay);
-        exitBTN=findViewById(R.id.exit);
+       /* continueBTN=findViewById(R.id.continueplay);*/
+        /*exitBTN=findViewById(R.id.exit);*/
         rotatingAnswersLL=findViewById(R.id.rotating_answers_linear_layout);
         difficuiltyAlertTV =findViewById(R.id.movingShapeAlert);
         fourShapesLayout=findViewById(R.id.fourShapes_layout);
+
         shape_bottom=findViewById(R.id.shape_BOTTOM);
         shape_left=findViewById(R.id.shape_LEFT);
         shape_top=findViewById(R.id.shape_TOP);
         shape_right=findViewById(R.id.shape_RIGHT);
 
-
-
-
-
-
-
-
+        pauseBtn=findViewById(R.id.pauseBtn);
 
 
 
@@ -213,10 +205,15 @@ public class BeginnerActivity extends AppCompatActivity {
         generateOtherThreeShapes();
 
 
+        pauseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pauseTheGame();
 
+            }
+        });
 
-
-        continueBTN.setOnClickListener(new View.OnClickListener() {
+      /*  continueBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 continueTheGame();
@@ -229,7 +226,7 @@ public class BeginnerActivity extends AppCompatActivity {
                 updateHighScores();
                 finish();
             }
-        });
+        });*/
 
         fourColorsImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -238,7 +235,6 @@ public class BeginnerActivity extends AppCompatActivity {
                 setButtonImage(setButtonPosition(buttonState));
             }
         });
-
 
 
         //Sets the animation for the 4 right shapes
@@ -283,9 +279,7 @@ public class BeginnerActivity extends AppCompatActivity {
                     else{ // check if the colors of the arrow and the button are the same
                         if (true /* for testing purposes - you can't lose.  here should be "if (color and shape is correct)"... else -> you lose*/)
                         {
-
                             //increase points and show them
-
 
                             currentPoints = currentPoints +1;
                             tv_points.setText("Points: "+currentPoints);
@@ -338,15 +332,7 @@ public class BeginnerActivity extends AppCompatActivity {
         //start the game loop
         handler.postDelayed(runnable,100);
 
-
-
-
-
-
-
     }
-
-
 
     //rotate animation of the button when clicked
     private void setRotation(final ImageView image, final int drawable)
@@ -548,14 +534,13 @@ public class BeginnerActivity extends AppCompatActivity {
     public void pauseTheGame()
     {
         // This method takes care of pausing the game
-
-        if(difficuiltyAlertTV.getAlpha()==0.6f) // If a difficuilty alert (moving shape!) is on the screen
-            difficuiltyAlertTV.setAlpha(0.1f); // make it less noticeable
+/*        if(difficuiltyAlertTV.getAlpha()==0.6f) // If a difficuilty alert (moving shape!) is on the screen
+            difficuiltyAlertTV.setAlpha(0.1f); // make it less noticeable*/
         gameIsNotPaused=false; // used in many places that needs to know if the game is paused or running
         currentTime=startTime; // reset the time left
         handler.removeCallbacks(runnable); // stop the handler - a way to pause the game
-        continueBTN.setVisibility(View.VISIBLE); // show the 'continue' and 'exit' buttons
-        exitBTN.setVisibility(View.VISIBLE);
+     /*   continueBTN.setVisibility(View.VISIBLE); // show the 'continue' and 'exit' buttons
+        exitBTN.setVisibility(View.VISIBLE);*/
 
         rotatingAnswersLL.setAlpha((float) 0.1); // make the bottom half of the screen (linear layout containing the answers) less noticeable
         fourColorsImage.setClickable(false); // disable the ability to rotate the colors
@@ -563,7 +548,62 @@ public class BeginnerActivity extends AppCompatActivity {
         paused.setVisibility(View.VISIBLE); // show "Paused"
         ShapeFillerColor.setVisibility(View.INVISIBLE); // remove shape in the middle of the screen
         ShapeOutline.setVisibility(View.INVISIBLE);
-    }
+
+
+        Dialog dialog= new Dialog(BeginnerActivity.this);
+        dialog.setContentView(R.layout.activity_paused);
+
+        int width = (int)(getResources().getDisplayMetrics().widthPixels*0.50);
+        int height = (int)(getResources().getDisplayMetrics().heightPixels*1.00);
+        dialog.getWindow().setLayout(width, height);
+
+        final Button reset_paused=dialog.findViewById(R.id.reset_pauseBtn);
+        final Button resume_paused=dialog.findViewById(R.id.resume_pauseBtn);
+        final Button back_to_menu=dialog.findViewById(R.id.back_to_menu_pauseBtn);
+        final ImageButton music_on=dialog.findViewById(R.id.music_button2);
+        final ImageButton sound_on=dialog.findViewById(R.id.pink_sound_button2);
+
+        reset_paused.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                continueTheGame();
+                dialog.dismiss();
+            }
+        });
+
+        resume_paused.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        back_to_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BeginnerActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        music_on.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        sound_on.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        dialog.show();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+    };
 
     public void continueTheGame()
     {
@@ -581,8 +621,8 @@ public class BeginnerActivity extends AppCompatActivity {
         if(difficuiltyAlertTV.getAlpha()==0.1f) // If a difficuilty alert (moving shape!) is on the screen
             difficuiltyAlertTV.animate().alpha(0.6f).setDuration(1500); // return it to normal alpha
 
-        continueBTN.setVisibility(View.GONE); // remove continue/exit buttons
-        exitBTN.setVisibility(View.GONE);
+      /*  continueBTN.setVisibility(View.GONE); // remove continue/exit buttons
+        exitBTN.setVisibility(View.GONE);*/
 
         rotatingAnswersLL.animate().alpha(1).setDuration(1500); // return the answers to normal alpha
 
@@ -632,8 +672,6 @@ public class BeginnerActivity extends AppCompatActivity {
         handler.removeCallbacks(runnable);
         super.onPause();
     }
-
-
 
 
 

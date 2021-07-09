@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Quick Match</string>
     <string name="about_us_title">About Us:</string>
-    <string name="about_us_des">© Ram Michaeli, Gal Israeli and Yulia Kuderko\n     First published: July 15th, 2021\n</string>
+    <string name="about_us_des">© Ram Michaeli, Gal Israeli and Yulia Kuderko\n     First published: July 13th, 2021\n     APK File size: \n</string>
     <string name="easy_btn">Beginner</string>
     <string name="medium_btn">Advanced</string>
     <string name="hard_btn">Professional</string>
@@ -11,4 +11,7 @@
     <string name="music_on">Music is on 🔈</string>
     <string name="sound_on">Sound is on 🔔</string>
     <string name="areYouSureYouWannaQuit">Are you sure you want to quit?</string>
+    <string name="reset_btn">Reset</string>
+    <string name="resume_btn">Resume</string>
+    <string name="back_to_menu_btn">Back to main menu</string>
 </resources>
