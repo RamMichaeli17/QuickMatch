@@ -127,6 +127,15 @@
 
     <!--Layout of Wheels-->
 
+    <ImageView
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/newcolorsblack"
+        android:scaleY="0.75"
+        android:scaleX="0.75"
+        android:layout_alignBottom="@id/rotating_answers_linear_layout"
+        android:layout_marginBottom="120dp"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -138,13 +147,17 @@
 
         <!--Shapes Wheel-->
 
+
+
         <ImageView
             android:id="@+id/fourColorsImage"
-            android:layout_width="365dp"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_button_blue"
+            android:src="@drawable/newcolors"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

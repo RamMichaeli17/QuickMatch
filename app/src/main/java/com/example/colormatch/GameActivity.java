@@ -89,8 +89,8 @@ public class GameActivity extends AppCompatActivity {
     int[] rotation = {0,3,2,1};
 
     // שיניתי מ12 ל24
-    int currentTime = 8000;
-    int startTime = 8000;
+    int currentTime = 18000;
+    int startTime = 18000;
 
     int currentPoints = 0;
 
@@ -343,7 +343,7 @@ public class GameActivity extends AppCompatActivity {
                 }
                 else{ // check if the colors of the arrow and the button are the same
                     System.out.println("rotationCounter= "+rotationCounter+"    chosenShapePositionInAnswers="+chosenShapePositionInAnswers);
-                    if ((chosenColor==selectedColor && chosenShapePositionInAnswers==rotationCounter) || true)
+                    if ((chosenColor==selectedColor && chosenShapePositionInAnswers==rotationCounter))
                     {
                         //increase points and show them
 
