@@ -24,7 +24,7 @@ public class HighScore extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gal_shared_preferences_attempt_instead_of_sqlite);
+        setContentView(R.layout.activity_highscores);
 
 
         scorelistview=findViewById(R.id.listView);
@@ -86,7 +86,7 @@ public class HighScore extends AppCompatActivity {
 
     public void refreshScreen()
     {
-        listview_adapter adapter = new listview_adapter(HighScore.this, R.layout.adapter_view_layout_sharedpreferences_gal, highScoreObjectArrayList);
+        listview_adapter adapter = new listview_adapter(HighScore.this, R.layout.adapter_listview_item, highScoreObjectArrayList);
         scorelistview.setAdapter(adapter);
     }
 }
