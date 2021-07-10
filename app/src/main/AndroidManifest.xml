@@ -35,18 +35,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
-        </activity>
-        <activity
-            android:name=".AboutUsPopup"
-            android:theme="@style/Theme.AppCompat.CustomTheme"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".AreYouSureYouWantToExit"
-            android:theme="@style/Theme.Transparent"
-            android:screenOrientation="portrait">
         </activity>
     </application>
 

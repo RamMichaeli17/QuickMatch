@@ -48,10 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String inputUsername = ""; //***GGGGALLLL****
 
-
-
-
-
+    Button yesToQuitBTN, noToQuitBTN; //Exit pop up
 
 
     @Override
@@ -88,15 +85,11 @@ public class MainActivity extends AppCompatActivity {
         song.start();
 
 
-
-
-
         scaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up);
         scaleDown = AnimationUtils.loadAnimation(this,R.anim.scale_down);
 
 
         //Pop Up Menu
-
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,8 +129,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
 
         beginnerBtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -203,71 +194,67 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-                beginnerBtn.setOnClickListener(new View.OnClickListener() {
+        beginnerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(soundButtonState)clickSound.start();
+
+                // Asking for username dialog (before entering game)
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Enter username");
+
+                final EditText input = new EditText(MainActivity.this);
+
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
-
-                        if(soundButtonState)clickSound.start();
-
-                        // Asking for username dialog (before entering game)
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setTitle("Enter username");
-
-
-                        final EditText input = new EditText(MainActivity.this);
-
-                        input.setInputType(InputType.TYPE_CLASS_TEXT);
-                        builder.setView(input);
-
-                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                inputUsername = input.getText().toString();
-                                Intent myIntent = new Intent(MainActivity.this, BeginnerActivity.class);
-                                if (inputUsername.isEmpty())
-                                    inputUsername = "Unknown";
-                                myIntent.putExtra("userName",inputUsername);
-                                startActivity(myIntent);
-                            }
-                        });
-                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-
-                        builder.show();
-
-
+                    public void onClick(DialogInterface dialog, int which) {
+                        inputUsername = input.getText().toString();
+                        Intent myIntent = new Intent(MainActivity.this, BeginnerActivity.class);
+                        if (inputUsername.isEmpty())
+                            inputUsername = "Unknown";
+                        myIntent.putExtra("userName",inputUsername);
+                        startActivity(myIntent);
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
                     }
                 });
 
-                advancedBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(soundButtonState)
-                        clickSound.start();
-                    }
-                });
+                builder.show();
+            }
+        });
 
-                professionalBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(soundButtonState)
-                        clickSound.start();
-                    }
-                });
+        advancedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(soundButtonState)
+                    clickSound.start();
+            }
+        });
 
-                oneVsOneBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(soundButtonState)
-                        clickSound.start();
-                    }
-                });
+        professionalBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(soundButtonState)
+                    clickSound.start();
+            }
+        });
 
+        oneVsOneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(soundButtonState)
+                    clickSound.start();
+            }
+        });
 
 
         about_us_bn = (ImageButton) findViewById(R.id.about_us_button);
@@ -277,6 +264,7 @@ public class MainActivity extends AppCompatActivity {
         about_us_bn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(soundButtonState)clickSound.start();
                Dialog dialog= new Dialog(MainActivity.this);
                dialog.setContentView(R.layout.about_us_popup);
                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -287,19 +275,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog.show();
                 }
             });
-                if(soundButtonState)clickSound.start();
 
-         /*       if(soundButtonState)clickSound.start();
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                View dialogView = getLayoutInflater().inflate(R.layout.about_us_popup, null);
-
-                final TextView infoTV = dialogView.findViewById(R.id.info_aboutUS);
-                final ImageView logoIV = dialogView.findViewById(R.id.logo_in_info);
-
-                builder.setView(dialogView);
-                builder.show();
-            }
-        });*/
 
         music_bn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -318,7 +294,6 @@ public class MainActivity extends AppCompatActivity {
                 musicButtonState = true;
                 if(soundButtonState)clickSound.start();
             }
-
         });
 
 
@@ -356,9 +331,36 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(MainActivity.this,AreYouSureYouWantToExit.class));
-        // super.onBackPressed();
+    /*    startActivity(new Intent(MainActivity.this,AreYouSureYouWantToExit.class));
+        // super.onBackPressed();*/
+        Dialog dialog= new Dialog(MainActivity.this);
+        dialog.setContentView(R.layout.areyousureyouwanttoexit);
+
+        int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
+        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.35);
+        dialog.getWindow().setLayout(width, height);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        yesToQuitBTN=dialog.findViewById(R.id.btnyes);
+        noToQuitBTN=dialog.findViewById(R.id.btnno);
+
+        yesToQuitBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishAffinity();
+            }
+        });
+
+        noToQuitBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
+
 
 
 //    @Override

@@ -12,7 +12,7 @@
 
             <stroke
                 android:color="#FFB6A8"
-                android:width="3dp"
+                android:width="5dp"
                />
         </shape>
     </item>

@@ -26,6 +26,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:shadowColor="@color/white"
+        android:shadowRadius="20"
         android:textStyle="italic"
         android:textSize="17sp"
         android:textColor="@color/black"

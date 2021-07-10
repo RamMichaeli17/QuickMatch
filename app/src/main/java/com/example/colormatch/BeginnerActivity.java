@@ -677,6 +677,4 @@ public class BeginnerActivity extends AppCompatActivity {
         super.onPause();
     }
 
-
-
 }
