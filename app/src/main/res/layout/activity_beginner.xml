@@ -127,15 +127,7 @@
 
     <!--Layout of Wheels-->
 
-    <ImageView
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/newcolorsblack"
-        android:scaleY="0.75"
-        android:scaleX="0.75"
-        android:layout_alignBottom="@id/rotating_answers_linear_layout"
-        android:layout_marginBottom="120dp"
-        />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -156,6 +148,7 @@
             android:layout_alignParentStart="true"
             android:scaleX="0.75"
             android:scaleY="0.75"
+            android:paddingEnd="-4dp"
             android:scaleType="centerInside"
             android:src="@drawable/newcolors"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -212,7 +205,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/shape_LEFT" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
+    <ImageView
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/newcolorsblack"
+        android:scaleY="0.4"
+        android:scaleX="0.4"
+        android:layout_alignBottom="@id/rotating_answers_linear_layout"
+        android:layout_marginBottom="115.7dp"
 
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
