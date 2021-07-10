@@ -16,6 +16,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
@@ -54,6 +55,8 @@ public class GameActivity extends AppCompatActivity {
 
     LottieAnimationView fireworks1,fireworks2,welldoneConfeti,airplane;
     RelativeLayout newHighScoreLayout,wellDoneLayout;
+    Animation tweenAnim3;
+    Animation tweenAnim4;
 
 
     Handler handler;
@@ -184,6 +187,8 @@ public class GameActivity extends AppCompatActivity {
         pauseBtn=findViewById(R.id.pauseBtn);
 
         trapArrows = findViewById(R.id.trap_arrows_iv);
+        tweenAnim3= AnimationUtils.loadAnimation(this,R.anim.tween_anim_3);
+        tweenAnim4= AnimationUtils.loadAnimation(this,R.anim.tween_anim_4);
 
 
 
@@ -878,20 +883,30 @@ public class GameActivity extends AppCompatActivity {
 
             case "trap_rotate":
                 trapArrows.setVisibility(View.VISIBLE);
-                ObjectAnimator animator0 = ObjectAnimator.ofFloat(answerPositions[0],"rotation",360).setDuration(750);
-                animator0.setRepeatCount(1);
-                animator0.start();
-                ObjectAnimator animator1 = ObjectAnimator.ofFloat(answerPositions[1],"rotation",360).setDuration(750);
-                animator1.setRepeatCount(1);
-                animator1.start();
-                ObjectAnimator animator2 = ObjectAnimator.ofFloat(answerPositions[2],"rotation",360).setDuration(750);
-                animator2.setRepeatCount(1);
-                animator2.start();
-                ObjectAnimator animator3 = ObjectAnimator.ofFloat(answerPositions[3],"rotation",360).setDuration(750);
-                animator3.setRepeatCount(1);
-                animator3.start();
-                ObjectAnimator animator4 = ObjectAnimator.ofFloat(trapArrows,"alpha",0).setDuration(750);
-                animator4.start();
+                trapArrows.startAnimation(tweenAnim3);
+                trapArrows.setVisibility(View.INVISIBLE);
+                answerPositions[0].startAnimation(tweenAnim4);
+                answerPositions[1].startAnimation(tweenAnim4);
+                answerPositions[2].startAnimation(tweenAnim4);
+                answerPositions[3].startAnimation(tweenAnim4);
+//                ObjectAnimator animator0 = ObjectAnimator.ofFloat(answerPositions[0],"rotation",360).setDuration(750);
+//                animator0.setRepeatCount(1);
+//                animator0.start();
+//                ObjectAnimator animator1 = ObjectAnimator.ofFloat(answerPositions[1],"rotation",360).setDuration(750);
+//                animator1.setRepeatCount(1);
+//                animator1.start();
+//                ObjectAnimator animator2 = ObjectAnimator.ofFloat(answerPositions[2],"rotation",360).setDuration(750);
+//                animator2.setRepeatCount(1);
+//                animator2.start();
+//                ObjectAnimator animator3 = ObjectAnimator.ofFloat(answerPositions[3],"rotation",360).setDuration(750);
+//                animator3.setRepeatCount(1);
+//                animator3.start();
+//                ObjectAnimator animator4 = ObjectAnimator.ofFloat(trapArrows,"alpha",0).setDuration(750);
+//                animator4.start();
+
+                //Topic animations
+                break;
+
 
 
 
