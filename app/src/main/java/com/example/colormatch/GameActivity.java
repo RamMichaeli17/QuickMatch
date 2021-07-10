@@ -57,7 +57,8 @@ public class GameActivity extends AppCompatActivity {
     ImageView trapArrows;
 
     ObjectAnimator animator0,animator1,animator2,animator3,animator4;
-    AnimatorSet settest = new AnimatorSet();;
+    AnimatorSet settest = new AnimatorSet();
+
 
 
 
@@ -88,8 +89,8 @@ public class GameActivity extends AppCompatActivity {
     int[] rotation = {0,3,2,1};
 
     // שיניתי מ12 ל24
-    int currentTime = 18000;
-    int startTime = 18000;
+    int currentTime = 8000;
+    int startTime = 8000;
 
     int currentPoints = 0;
 
