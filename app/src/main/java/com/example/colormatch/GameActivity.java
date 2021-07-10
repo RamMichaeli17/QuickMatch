@@ -900,8 +900,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-import android.util.DisplayMetrics;
-import android.view.Gravity;
+
 
     @Override
     protected void onPause() {
