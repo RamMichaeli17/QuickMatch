@@ -10,7 +10,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class PrefConfigGal {
+public class ConfigSharedPreferences {
     /*
     בגלל שאי אפשר לשמור arraylist כמו שהוא בSharedPreferences, יש צורך להמיר אותו לסוג מידע שכן אפשר לשמור בSP
     לכן בחרנו להמיר את הטבלה לסטרינג ג'יסון, דבר  שכן אפשר לשמור בSP ושום מידע לא הולך לאיבוד.

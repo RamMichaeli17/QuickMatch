@@ -2,7 +2,6 @@ package com.example.colormatch;
 
 import android.animation.ObjectAnimator;
 import android.animation.AnimatorSet;
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
@@ -210,7 +209,7 @@ public class GameActivity extends AppCompatActivity {
 
 
         // Shared Preferences - get data
-        highScoreList = PrefConfigGal.readListFromPref(this);
+        highScoreList = ConfigSharedPreferences.readListFromPref(this);
         if ( highScoreList ==null || highScoreList.isEmpty()) {
             highestscoreTV.setText("0");
             highScoreList = new ArrayList<>();
@@ -509,7 +508,7 @@ public class GameActivity extends AppCompatActivity {
         // (this only works because we implemented Comparable in HighScoreObject.java class and override compareTo function
 
         // Shared Preferences
-        PrefConfigGal.writeListInPref(getApplicationContext(), highScoreList); // Write list to shared preferences so it would be saved if we re-open the application
+        ConfigSharedPreferences.writeListInPref(getApplicationContext(), highScoreList); // Write list to shared preferences so it would be saved if we re-open the application
     }
 
     public void setImageShapeAndColor()

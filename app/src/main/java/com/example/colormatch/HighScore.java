@@ -42,7 +42,7 @@ public class HighScore extends AppCompatActivity {
 
 
         // Shared Preferences - get data
-        highScoreObjectArrayList = PrefConfigGal.readListFromPref(this);
+        highScoreObjectArrayList = ConfigSharedPreferences.readListFromPref(this);
         if ( highScoreObjectArrayList ==null)
             highScoreObjectArrayList = new ArrayList<>();
 
@@ -63,7 +63,7 @@ public class HighScore extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         highScoreObjectArrayList.clear();
-                        PrefConfigGal.writeListInPref(getApplicationContext(), highScoreObjectArrayList); // This line ensures that both lists (from game and from highscores) reset
+                        ConfigSharedPreferences.writeListInPref(getApplicationContext(), highScoreObjectArrayList); // This line ensures that both lists (from game and from highscores) reset
                         refreshScreen();
 
                     }
