@@ -2,6 +2,7 @@ package com.example.colormatch;
 
 import android.animation.ObjectAnimator;
 import android.animation.AnimatorSet;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
@@ -48,6 +49,7 @@ public class GameActivity extends AppCompatActivity {
     boolean firstTimeOnResumeCalled, gameIsNotPaused,airplanepause, restart=false;
     ConstraintLayout fourShapesLayout;
     ImageButton pauseBtn;
+    ImageView trapArrows;
 
     LottieAnimationView fireworks1,fireworks2,welldoneConfeti,airplane;
     RelativeLayout newHighScoreLayout,wellDoneLayout;
@@ -178,6 +180,8 @@ public class GameActivity extends AppCompatActivity {
         newHighScoreLayout=findViewById(R.id.newHighScoreRelativeLayout);
 
         pauseBtn=findViewById(R.id.pauseBtn);
+
+        trapArrows = findViewById(R.id.trap_arrows_iv);
 
         // These 4 lines of code are used in airplane animation
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -332,6 +336,9 @@ public class GameActivity extends AppCompatActivity {
                         if (highScore!=0 && currentPoints == highScore + 1 ) {
                             playIngameAnimation("newhighscore");
                         }
+
+                        if (currentPoints%4==0)
+                            playIngameAnimation("trap_rotate");
 
                         // When to say welldone
                         if(currentPoints==3)
@@ -866,6 +873,27 @@ public class GameActivity extends AppCompatActivity {
                 });
 
                 break;
+
+            case "trap_rotate":
+                trapArrows.setVisibility(View.VISIBLE);
+                ObjectAnimator animator0 = ObjectAnimator.ofFloat(answerPositions[0],"rotation",360).setDuration(750);
+                animator0.setRepeatCount(1);
+                animator0.start();
+                ObjectAnimator animator1 = ObjectAnimator.ofFloat(answerPositions[1],"rotation",360).setDuration(750);
+                animator1.setRepeatCount(1);
+                animator1.start();
+                ObjectAnimator animator2 = ObjectAnimator.ofFloat(answerPositions[2],"rotation",360).setDuration(750);
+                animator2.setRepeatCount(1);
+                animator2.start();
+                ObjectAnimator animator3 = ObjectAnimator.ofFloat(answerPositions[3],"rotation",360).setDuration(750);
+                animator3.setRepeatCount(1);
+                animator3.start();
+                ObjectAnimator animator4 = ObjectAnimator.ofFloat(trapArrows,"alpha",0).setDuration(750);
+                animator4.start();
+
+
+
+
         }
     }
 
