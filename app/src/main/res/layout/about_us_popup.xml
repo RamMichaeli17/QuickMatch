@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/lightGrey">
+    android:background="@drawable/info_selector">
 
     <TextView
         android:layout_width="wrap_content"
@@ -15,6 +15,7 @@
         android:src="@drawable/quick_match_logo"
         android:layout_gravity="center"
         android:id="@+id/logo_in_info"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,6 +49,7 @@
         android:layout_gravity="center"
         android:textAlignment="center"
         android:shadowColor="@color/white"
+        android:shadowRadius="20"
         android:textStyle="italic"
         android:textSize="17sp"
         android:textColor="@color/black"

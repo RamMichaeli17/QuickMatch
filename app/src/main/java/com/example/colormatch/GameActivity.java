@@ -7,7 +7,9 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Path;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -368,13 +370,13 @@ public class GameActivity extends AppCompatActivity {
 
                         if (!airplanepause)
                             handler.postDelayed(runnable,20);
-                        }
-                        else {
-                            fourColorsImage.setEnabled(false);
-                            fourShapesLayout.setEnabled(false);
-                            Toast.makeText(GameActivity.this, "Game Over", Toast.LENGTH_SHORT).show();
-                            updateHighScores();
-                        }
+                    }
+                    else {
+                        fourColorsImage.setEnabled(false);
+                        fourShapesLayout.setEnabled(false);
+                        Toast.makeText(GameActivity.this, "Game Over", Toast.LENGTH_SHORT).show();
+                        updateHighScores();
+                    }
                 }
             }
         };
@@ -501,7 +503,7 @@ public class GameActivity extends AppCompatActivity {
         HighScoreObject newHighScore = new HighScoreObject(userName,Integer.toString(currentPoints)); // Create a new highscore with username and current points
         highScoreList.add(newHighScore); // Add it to the list
         Collections.sort(highScoreList); // Sort the list in descending order so the highest score will be first
-                                         // (this only works because we implemented Comparable in HighScoreObject.java class and override compareTo function
+        // (this only works because we implemented Comparable in HighScoreObject.java class and override compareTo function
 
         // Shared Preferences
         PrefConfigGal.writeListInPref(getApplicationContext(), highScoreList); // Write list to shared preferences so it would be saved if we re-open the application
@@ -686,8 +688,9 @@ public class GameActivity extends AppCompatActivity {
 
 
         int width = (int)(getResources().getDisplayMetrics().widthPixels*0.50);
-        int height = (int)(getResources().getDisplayMetrics().heightPixels*1.00);
+        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.95);
         dialog.getWindow().setLayout(width, height);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         Button restart_paused=dialog.findViewById(R.id.restart_pauseBtn);
         Button resume_paused=dialog.findViewById(R.id.resume_pauseBtn);
@@ -897,6 +900,8 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 
     @Override
     protected void onPause() {

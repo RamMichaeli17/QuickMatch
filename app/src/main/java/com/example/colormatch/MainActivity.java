@@ -45,10 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String inputUsername = ""; //***GGGGALLLL****
 
-
-
-
-
+    Button yesToQuitBTN, noToQuitBTN; //Exit pop up
 
 
     @Override
@@ -85,15 +82,11 @@ public class MainActivity extends AppCompatActivity {
         song.start();
 
 
-
-
-
         scaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up);
         scaleDown = AnimationUtils.loadAnimation(this,R.anim.scale_down);
 
 
         //Pop Up Menu
-
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,8 +126,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
 
         beginnerBtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -238,10 +229,10 @@ public class MainActivity extends AppCompatActivity {
         about_us_bn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*startActivity(new Intent(MainActivity.this,AboutUsPopup.class));*/
-    /*
+                if(soundButtonState)clickSound.start();
                Dialog dialog= new Dialog(MainActivity.this);
                dialog.setContentView(R.layout.about_us_popup);
+               dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                final TextView infoTV = dialog.findViewById(R.id.info_aboutUS);
                final ImageView logoIV=dialog.findViewById(R.id.logo_in_info);
@@ -249,18 +240,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog.show();
                 }
             });
-                if(soundButtonState)clickSound.start();
-        };
-        });*/
-                if(soundButtonState)clickSound.start();
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                View dialogView = getLayoutInflater().inflate(R.layout.about_us_popup, null);
-                final TextView infoTV = dialogView.findViewById(R.id.info_aboutUS);
-                final ImageView logoIV = dialogView.findViewById(R.id.logo_in_info);
-                builder.setView(dialogView);
-                builder.show();
-            }
-        });
+
 
         music_bn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -318,12 +298,38 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(MainActivity.this,AreYouSureYouWantToExit.class));
-        // super.onBackPressed();
+    /*    startActivity(new Intent(MainActivity.this,AreYouSureYouWantToExit.class));
+        // super.onBackPressed();*/
+        Dialog dialog= new Dialog(MainActivity.this);
+        dialog.setContentView(R.layout.areyousureyouwanttoexit);
+
+        int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
+        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.35);
+        dialog.getWindow().setLayout(width, height);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        yesToQuitBTN=dialog.findViewById(R.id.btnyes);
+        noToQuitBTN=dialog.findViewById(R.id.btnno);
+
+        yesToQuitBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishAffinity();
+            }
+        });
+
+        noToQuitBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
+
 
 
 //    @Override
