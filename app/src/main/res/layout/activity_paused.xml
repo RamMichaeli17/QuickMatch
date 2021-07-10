@@ -20,7 +20,7 @@
         android:textSize="50sp"
         android:fontFamily="@font/main_app_font"
         android:layout_gravity="center"
-        android:id="@+id/pause"
+        android:id="@+id/paused_logo"
         android:layout_marginTop="20dp" />
 
 

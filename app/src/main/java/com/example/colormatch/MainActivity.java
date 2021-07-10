@@ -235,6 +235,9 @@ public class MainActivity extends AppCompatActivity {
                 if(soundButtonState)clickSound.start();
                Dialog dialog= new Dialog(MainActivity.this);
                dialog.setContentView(R.layout.about_us_popup);
+                int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
+                int height = (int)(getResources().getDisplayMetrics().heightPixels*0.5);
+                dialog.getWindow().setLayout(width, height);
                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                final TextView infoTV = dialog.findViewById(R.id.info_aboutUS);
