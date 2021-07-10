@@ -171,6 +171,7 @@ public class GameActivity extends AppCompatActivity {
         fourShapesLayout=findViewById(R.id.fourShapes_layout);
 
 
+
         fireworks1=findViewById(R.id.fireworks1);
         fireworks2=findViewById(R.id.fireworks2);
         welldoneConfeti=findViewById(R.id.welldoneConfetiAnimation);
@@ -184,6 +185,8 @@ public class GameActivity extends AppCompatActivity {
         pauseBtn=findViewById(R.id.pauseBtn);
 
         trapArrows = findViewById(R.id.trap_arrows_iv);
+
+
 
         // These 4 lines of code are used in airplane animation
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -601,10 +604,9 @@ public class GameActivity extends AppCompatActivity {
     public void generateOtherThreeShapes() // This method sets 3 random WRONG answers at all the positions except the chosenShapePosition
     {
         Arrays.fill(chosenAnswers,0 );
-        chosenAnswers[chosenShapePositionInAnswers]=1;
+        chosenAnswers[chosenShape]=1;
         int firstIndexOfChosenShape=chosenShape,confusingShapes=difficulty; // beginner = 1 confusing shape , advanced =2 , pro =3
         while (firstIndexOfChosenShape%4!=0) {
-            System.out.println(" Gal 1 ");
             firstIndexOfChosenShape--;
         }
         ArrayList<Integer> list = new ArrayList<Integer>();
@@ -618,23 +620,18 @@ public class GameActivity extends AppCompatActivity {
 
                 if (confusingShapes!=0) { // One confusing shape
                     otherThreeAnswers = r.nextInt(4) + firstIndexOfChosenShape;  // 0->15 This generates a random shape and saves the shape at "otherThreeAnswers'
-                    while (chosenAnswers[otherThreeAnswers] == 1) {
-                        System.out.println(" Gal 2");
-                        for(int j=0;j<16;j++)
-                            System.out.println(" ["+j+"] ="+chosenAnswers[j]);
-
+                    while (chosenAnswers[otherThreeAnswers] == 1)
                         otherThreeAnswers = r.nextInt(4) + firstIndexOfChosenShape; // Generate a new random shape until the random shape is unique and isn't a duplicate of an already existing answer)
-                    }
+
                     generateAnswerAtPosition(list.get(i), otherThreeAnswers); // finally , we draw the random image (wrong answer) at a random (empty) position
                     confusingShapes--;
                 }
                 else
                 { // Generate random wrong answer that hasn't been generated before and isn't confusing shape
                     otherThreeAnswers=r.nextInt(16);
-                    while (chosenAnswers[otherThreeAnswers] == 1 || (otherThreeAnswers >=firstIndexOfChosenShape && otherThreeAnswers<=firstIndexOfChosenShape+3 )) {
-                        System.out.println(" Gal 3 ");
+                    while (chosenAnswers[otherThreeAnswers] == 1 || (otherThreeAnswers >=firstIndexOfChosenShape && otherThreeAnswers<=firstIndexOfChosenShape+3 ))
                         otherThreeAnswers = r.nextInt(16);
-                    }
+
 
                     generateAnswerAtPosition(list.get(i), otherThreeAnswers); // finally , we draw the random image (wrong answer) at a random (empty) position
 
@@ -681,7 +678,6 @@ public class GameActivity extends AppCompatActivity {
         paused.setVisibility(View.VISIBLE); // show "Paused"
         ShapeFillerColor.setVisibility(View.INVISIBLE); // remove shape in the middle of the screen
         ShapeOutline.setVisibility(View.INVISIBLE);
-
 
         Dialog dialog= new Dialog(GameActivity.this);
         dialog.setContentView(R.layout.activity_paused);
@@ -746,13 +742,15 @@ public class GameActivity extends AppCompatActivity {
 
     public void continueTheGame() {
         // This method takes care of pausing the game
-        if(restart)
-        {
-            gameIsNotPaused=false;
-            paused.setVisibility(View.VISIBLE);
-            ShapeFillerColor.setVisibility(View.INVISIBLE);
-            ShapeOutline.setVisibility(View.INVISIBLE);
-        }
+        gameIsNotPaused=false;
+        paused.setVisibility(View.VISIBLE);
+        ShapeFillerColor.setVisibility(View.INVISIBLE);
+        ShapeOutline.setVisibility(View.INVISIBLE);
+        fourShapesLayout.setVisibility(View.INVISIBLE);
+
+
+
+
         handler.postDelayed(runnable, 3000); // continue the game after 3 seconds
         // these 4 lines of code is , again , to draw in the middle of the screen a new shape , and then 3 wrong answers and 1 correct answer
         // ** we change the shapes to avoid pause-cheating
@@ -781,6 +779,7 @@ public class GameActivity extends AppCompatActivity {
                     public void run() {
                         paused.setAlpha(0);
                         paused.setText("1");
+
                         paused.animate().alpha(1).setDuration(1000).withEndAction(new Runnable() {
                             @Override
                             public void run() {
@@ -789,6 +788,7 @@ public class GameActivity extends AppCompatActivity {
                                 paused.setVisibility(View.GONE);
                                 paused.setText("Paused");
 
+                                fourShapesLayout.setVisibility(View.VISIBLE);
                                 fourColorsImage.setClickable(true); // Make the game playable again (click = rotation)
                                 fourShapesLayout.setClickable(true);
 

@@ -14,12 +14,12 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 
-public class listAdapter_gal extends ArrayAdapter<HighScoreObject> {
+public class listview_adapter extends ArrayAdapter<HighScoreObject> {
 
     private Context mContext;
     int mResource;
 
-    public listAdapter_gal(Context context, int resource, ArrayList<HighScoreObject> objects)
+    public listview_adapter(Context context, int resource, ArrayList<HighScoreObject> objects)
     {
         super(context,resource,objects);
         mContext=context;

@@ -1,5 +1,6 @@
 package com.example.colormatch;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -7,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.MotionEvent;
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     boolean soundButtonState = true; //Sound mode
 
 
+
+
     //Settings menu
     Animation rotateOpen, rotateClose, fromBottom, toBottom;
     boolean clicked = false;
@@ -55,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
 
         //Topic animations
@@ -397,4 +403,7 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
 
     }
+
+
+
 }

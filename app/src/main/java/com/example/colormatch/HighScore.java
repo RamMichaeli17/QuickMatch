@@ -86,7 +86,7 @@ public class HighScore extends AppCompatActivity {
 
     public void refreshScreen()
     {
-        listAdapter_gal adapter = new listAdapter_gal(HighScore.this, R.layout.adapter_view_layout_sharedpreferences_gal, highScoreObjectArrayList);
+        listview_adapter adapter = new listview_adapter(HighScore.this, R.layout.adapter_view_layout_sharedpreferences_gal, highScoreObjectArrayList);
         scorelistview.setAdapter(adapter);
     }
 }
