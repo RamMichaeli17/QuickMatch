@@ -32,7 +32,7 @@
       android:layout_centerInParent="true"
       android:layout_marginTop="10dp"
       android:layout_gravity="center"
-      android:shadowRadius="30"
+      android:shadowRadius="10"
       android:shadowColor="@color/logo_pink"
       android:textColor="@color/white"
       android:textSize="28sp"
@@ -58,7 +58,7 @@
         android:textAllCaps="false"
         android:textSize="28sp"
         android:textStyle="bold"
-        android:shadowRadius="30"
+        android:shadowRadius="10"
         android:textColor="@color/white"
         android:shadowColor="@color/logo_pink" />
 
@@ -79,7 +79,7 @@
         android:background="@drawable/custom_pink_button"
         android:textSize="28sp"
         android:textStyle="bold"
-        android:shadowRadius="30"
+        android:shadowRadius="10"
         android:textColor="@color/white"
         android:shadowColor="@color/logo_pink"
         android:padding="5dp"/>

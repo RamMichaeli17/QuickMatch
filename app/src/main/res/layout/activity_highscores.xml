@@ -3,7 +3,8 @@
 <RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layoutDirection="ltr">
+    android:layoutDirection="ltr"
+    android:background="@drawable/highscore_background">
 
     <ImageView
         android:layout_width="match_parent"
@@ -19,9 +20,9 @@
         android:src="@drawable/trophy"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/backgroundGray" />
+        android:background="@null" />
 
-    <ImageView
+<!--    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/highscores_decoration_one"
@@ -31,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/highscores_decoration_two"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true" />-->
 
     <TextView
         android:layout_width="wrap_content"
@@ -39,7 +40,7 @@
         android:layout_centerHorizontal="true"
         android:text="@string/high_scores"
         android:fontFamily="@font/main_app_font"
-        android:textSize="25dp"
+        android:textSize="28dp"
         android:layout_marginTop="3dp"
         android:id="@+id/HighscoresTV" />
 

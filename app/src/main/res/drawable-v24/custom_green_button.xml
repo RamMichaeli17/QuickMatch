@@ -19,7 +19,8 @@
                 android:topLeftRadius="20dp"
                 android:topRightRadius="20dp" />
 
-            <stroke android:width="2dp"
+            <stroke
+                android:width="2dp"
                 android:color="@color/black"/>
 
         </shape>
@@ -32,9 +33,9 @@
 
             <gradient
                 android:angle="270"
-                android:centerColor="@color/white"
-                android:endColor="@color/logo_green"
-                android:startColor="@color/logo_green"
+                android:centerColor="@color/lightGrey"
+                android:endColor="@color/Grey"
+                android:startColor="@color/Grey"
                 android:type="linear"/>
 
             <corners
