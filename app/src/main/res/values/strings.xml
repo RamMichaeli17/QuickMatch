@@ -25,4 +25,15 @@
     <string name="points_calculator">Points: 0</string>
     <string name="moving_shape_alarm">Moving shape!</string>
     <string name="disppearing_pause_notice">Paused</string>
+    <string name="cancel_btn">Cancel</string>
+    <string name="areYouSureYouWannaClear">Are you sure you want to clear all scores?</string>
+    <string name="game">Game</string>
+    <string name="nickname_et">Enter your nickname</string>
+    <string name="submit_btn">Submit</string>
+    <string name="main_menu_btn">Main Menu</string>
+    <string name="replay_btn">Replay</string>
+    <string name="over">Over !</string>
+    <string name="levels_played">Levels played:</string>
+    <string name="time_played">Time played:</string>
+    <string name="final_score">Final score:</string>
 </resources>
