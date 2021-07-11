@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String inputUsername = ""; //***GGGGALLLL****
 
-    Button yesToQuitBTN, noToQuitBTN; //Exit pop up
+    Button yesToQuitBTN, noToQuitBTN;//Exit game pop up
     private int currentApiVersion;
     @SuppressLint("NewApi")
 
@@ -60,12 +60,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
-
-
-
 
         //Topic animations
         colorIv = findViewById(R.id.color_topic);
@@ -98,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         scaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up);
         scaleDown = AnimationUtils.loadAnimation(this,R.anim.scale_down);
 
+        goToDB=findViewById(R.id.trophy_button);
 
         //Pop Up Menu
         settingsBtn.setOnClickListener(new View.OnClickListener() {
@@ -214,14 +209,14 @@ public class MainActivity extends AppCompatActivity {
                 advancedBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startGame(2); // 1 = difficulty (1 confusing shapes)
+                        startGame(2); // 2 = difficulty (2 confusing shapes)
                     }
                 });
 
                 professionalBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startGame(3); // 1 = difficulty (1 confusing shapes)
+                        startGame(3); // 3 = difficulty (3 confusing shapes)
                     }
                 });
 
@@ -275,15 +270,8 @@ public class MainActivity extends AppCompatActivity {
                 musicButtonState = true;
                 if(soundButtonState)clickSound.start();
             }
-
-
-
-
         });
 
-
-
-        goToDB=findViewById(R.id.trophy_button);
 
         goToDB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -375,7 +363,6 @@ public class MainActivity extends AppCompatActivity {
             clickSound.start();
 
         // Asking for username dialog (before entering game)
-
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Enter username");
 
@@ -391,7 +378,7 @@ public class MainActivity extends AppCompatActivity {
                 inputUsername = input.getText().toString();
                 Intent myIntent = new Intent(MainActivity.this, GameActivity.class);
                 if (inputUsername.isEmpty())
-                    inputUsername = "Unknown";
+                    inputUsername = getString(R.string.unknown_user);
                 myIntent.putExtra("userName",inputUsername);
                 myIntent.putExtra("difficulty",difficulty);
                 myIntent.putExtra("musicButtonState",musicButtonState);
