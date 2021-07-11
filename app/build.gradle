@@ -36,8 +36,8 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    implementation 'com.google.code.gson:gson:2.8.6' //Gal shared preferences [list]
-    def lottieVersion = "3.7.1"  // Gal lottie animations
-    implementation "com.airbnb.android:lottie:$lottieVersion"// Gal lottie animations
+    implementation 'com.google.code.gson:gson:2.8.6' //shared preferences [list]
+    def lottieVersion = "3.7.1"  //lottie animations
+    implementation "com.airbnb.android:lottie:$lottieVersion"//lottie animations
 
 }
