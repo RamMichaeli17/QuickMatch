@@ -2,7 +2,6 @@ package com.example.colormatch;
 
 import android.animation.ObjectAnimator;
 import android.animation.AnimatorSet;
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
@@ -14,12 +13,10 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
@@ -108,6 +105,7 @@ public class GameActivity extends AppCompatActivity {
     String userName;
 
     MediaPlayer song; //Background songs
+    MediaPlayer swipeSound;
     MediaPlayer clickSound;
     boolean musicButtonState; //Music mode
     boolean soundButtonState = true; //Sound mode
@@ -207,7 +205,8 @@ public class GameActivity extends AppCompatActivity {
         trapArrows = findViewById(R.id.trap_arrows_iv);
 
         //Click Sound
-        clickSound = MediaPlayer.create(this,R.raw.press_game);
+        swipeSound = MediaPlayer.create(this,R.raw.press_game);
+        clickSound = MediaPlayer.create(this,R.raw.click_sound);
         song = MediaPlayer.create(GameActivity.this, R.raw.during_game_music);
         song.setLooping(true);
         song.start();
@@ -292,6 +291,7 @@ public class GameActivity extends AppCompatActivity {
         pauseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(soundButtonState)clickSound.start();
                 if (gameIsNotPaused)
                     pauseTheGame();
 
@@ -317,7 +317,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //rotate the colors
-                if(soundButtonState)clickSound.start();
+                if(soundButtonState) swipeSound.start();
 
                 selectedColor=(selectedColor+1)%5; // 1->2->3->4 -->  0(1)->2->3->4 -->  0(1)->2....
                 if (selectedColor == 0)
@@ -331,7 +331,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //rotate the shapes
-                if(soundButtonState)clickSound.start();
+                if(soundButtonState) swipeSound.start();
 
                 rotationCounter++;      // 0->1->2->3 --> 0->3->2->1
                 if (rotationCounter==4)
@@ -748,6 +748,7 @@ public class GameActivity extends AppCompatActivity {
         restart_paused.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(soundButtonState)clickSound.start();
                 Intent intent = new Intent(GameActivity.this, GameActivity.class);
                 intent.putExtra("restart",true);
                 intent.putExtra("difficulty",difficulty);
@@ -758,6 +759,7 @@ public class GameActivity extends AppCompatActivity {
         resume_paused.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(soundButtonState)clickSound.start();
                 dialog.dismiss();
                 continueTheGame();
 
@@ -767,6 +769,7 @@ public class GameActivity extends AppCompatActivity {
         back_to_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(soundButtonState)clickSound.start();
                 updateHighScores();
                 Intent intent = new Intent(GameActivity.this, MainActivity.class);
                 startActivity(intent);
@@ -778,6 +781,7 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (musicButtonState) {
+                    if(soundButtonState)clickSound.start();
                     song.pause();
                     musicButtonState = false;
                     music_bn.setImageResource(R.drawable.music_off);
@@ -798,6 +802,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (soundButtonState) {
+                    swipeSound.pause();
                     clickSound.pause();
                     soundButtonState = false;
                     sound_btn.setImageResource(R.drawable.sound_off);
@@ -809,7 +814,6 @@ public class GameActivity extends AppCompatActivity {
                 Toast.makeText(GameActivity.this, R.string.sound_on, Toast.LENGTH_SHORT).show();
                 soundButtonState = true;
                 if(soundButtonState)clickSound.start();
-
 
             }
         });
