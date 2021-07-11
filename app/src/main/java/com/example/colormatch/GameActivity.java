@@ -420,16 +420,16 @@ public class GameActivity extends AppCompatActivity {
                         fourColorsImage.setEnabled(false);
                         fourShapesLayout.setEnabled(false);
 
-                        Dialog dialog= new Dialog(GameActivity.this);
-                        dialog.setContentView(R.layout.activity_game_over);
-                        int width = (int)(getResources().getDisplayMetrics().widthPixels*0.50);
-                        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.95);
-                        dialog.getWindow().setLayout(width, height);
-                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                        dialog.show();
-                        dialog.setCanceledOnTouchOutside(false);
-                        dialog.setCancelable(false);
+//                        Dialog dialog= new Dialog(GameActivity.this);
+//                        dialog.setContentView(R.layout.activity_game_over);
+//                        int width = (int)(getResources().getDisplayMetrics().widthPixels*0.50);
+//                        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.95);
+//                        dialog.getWindow().setLayout(width, height);
+//                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//
+//                        dialog.show();
+//                        dialog.setCanceledOnTouchOutside(false);
+//                        dialog.setCancelable(false);
 
                         updateHighScores();
                     }
