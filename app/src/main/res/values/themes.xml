@@ -33,12 +33,12 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.AppCompat.CustomTheme">
+<!--    <style name="Theme.AppCompat.CustomTheme">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:backgroundDimEnabled"> false </item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
-    </style>
+    </style>-->
 
 
     <!--    Gal theme for leaving popup window-->

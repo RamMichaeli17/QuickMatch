@@ -11,8 +11,8 @@
         android:layout_width="400dp"
         android:layout_height="125dp"
         android:layout_gravity="center"
-        android:padding="3dp"
-        android:src="@drawable/quick1"
+        android:padding="6dp"
+        android:src="@drawable/quick"
         android:id="@+id/color_topic"/>
 
 <!--    "Match" title-->
@@ -20,8 +20,8 @@
         android:layout_width="400dp"
         android:layout_height="125dp"
         android:layout_gravity="center"
-        android:padding="5dp"
-        android:src="@drawable/match1"
+        android:padding="10dp"
+        android:src="@drawable/match"
         android:id="@+id/match_topic"/>
 
 
@@ -168,7 +168,7 @@
             android:id="@+id/about_us_button"
             android:layout_marginLeft="10dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/blue_info"
+            android:src="@drawable/info_icon"
             android:background="@null"
             android:layout_weight="1"
             android:visibility="invisible"/>

@@ -23,23 +23,26 @@
         android:textAlignment="center"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
-        android:shadowColor="@color/white"
+        android:shadowColor="@color/black"
         android:textStyle="bold"
-        android:textSize="30sp"
+        android:shadowRadius="4"
+        android:fontFamily="@font/aboutus_popup_font"
+        android:textSize="35sp"
         android:textColor="@color/black"
         android:text="@string/about_us_pop_up"/>
-    <TextView
+
+<!--    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textAlignment="center"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/aboutus_popup_font"
         android:shadowColor="@color/white"
         android:textStyle="bold"
         android:textSize="22sp"
         android:textColor="@color/black"
-        android:text="@string/creators"/>
+        android:text="@string/creators"/>-->
 
 
     <TextView
@@ -47,10 +50,13 @@
         android:layout_height="wrap_content"
         android:text="@string/about_us_des"
         android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:textAlignment="center"
+        android:fontFamily="@font/aboutus_popup_font"
         android:shadowColor="@color/white"
         android:shadowRadius="20"
         android:textStyle="italic"
+        android:padding="5dp"
         android:textSize="17sp"
         android:textColor="@color/black"
         android:id="@+id/info_aboutUS"

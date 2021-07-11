@@ -25,5 +25,7 @@
     <color name="translucent_pink">#D5BC1B5F</color>
     <color name="translucent_yellow">#D6FCDA54</color>
     <color name="translucent_blue">#D64375B7</color>
+    <color name="Grey">#EE9F9F9F</color>
+
 
 </resources>
