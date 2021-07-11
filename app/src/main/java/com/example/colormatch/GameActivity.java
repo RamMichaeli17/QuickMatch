@@ -2,6 +2,7 @@ package com.example.colormatch;
 
 import android.animation.ObjectAnimator;
 import android.animation.AnimatorSet;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
@@ -12,11 +13,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.animation.AnimationSet;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
@@ -28,6 +30,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -53,14 +56,18 @@ public class GameActivity extends AppCompatActivity {
     ImageButton pauseBtn;
     ImageView trapArrows;
 
+    ObjectAnimator animator0,animator1,animator2,animator3,animator4;
+    AnimatorSet settest = new AnimatorSet();
+
+
+
+
     LottieAnimationView fireworks1,fireworks2,welldoneConfeti,airplane;
     RelativeLayout newHighScoreLayout,wellDoneLayout;
-    Animation tweenAnim3;
-    Animation tweenAnim4;
 
 
-    Handler handler;
-    Runnable runnable;
+    Handler handler,rotateHandler;
+    Runnable runnable,rotateRunnable;
 
     Random r;
 
@@ -73,17 +80,17 @@ public class GameActivity extends AppCompatActivity {
 
     int buttonState = STATE_BLUE; // Left side (colors)
 
-    int chosenShape;
-    int chosenColor;
+    int chosenShape,selectedShape;
+    int chosenColor,selectedColor=STATE_BLUE;
     int chosenShapePositionInAnswers;
     int otherThreeAnswers;
     int[] chosenAnswers = new int[16];
     int[] tempIndexArray = new int[4];
-    int[] rotation = {0,1,2,3};
+    int[] rotation = {0,3,2,1};
 
     // שיניתי מ12 ל24
-    int currentTime = 8000;
-    int startTime = 8000;
+    int currentTime = 18000;
+    int startTime = 18000;
 
     int currentPoints = 0;
 
@@ -174,6 +181,11 @@ public class GameActivity extends AppCompatActivity {
 
 
 
+
+
+
+
+
         fireworks1=findViewById(R.id.fireworks1);
         fireworks2=findViewById(R.id.fireworks2);
         welldoneConfeti=findViewById(R.id.welldoneConfetiAnimation);
@@ -187,8 +199,6 @@ public class GameActivity extends AppCompatActivity {
         pauseBtn=findViewById(R.id.pauseBtn);
 
         trapArrows = findViewById(R.id.trap_arrows_iv);
-        tweenAnim3= AnimationUtils.loadAnimation(this,R.anim.tween_anim_3);
-        tweenAnim4= AnimationUtils.loadAnimation(this,R.anim.tween_anim_4);
 
 
 
@@ -203,9 +213,12 @@ public class GameActivity extends AppCompatActivity {
 
 
         answerPositions[0]=findViewById(R.id.shape_TOP);
-        answerPositions[1]=findViewById(R.id.shape_RIGHT);
+        answerPositions[1]=findViewById(R.id.shape_LEFT);
         answerPositions[2]=findViewById(R.id.shape_BOTTOM);
-        answerPositions[3]=findViewById(R.id.shape_LEFT);
+        answerPositions[3]=findViewById(R.id.shape_RIGHT);
+
+
+
 
 
 
@@ -258,7 +271,7 @@ public class GameActivity extends AppCompatActivity {
                                     3
          */
 
-        chosenShapePositionInAnswers=r.nextInt(4)+1; // 4 possible options for answer to be in (1=top 2= right 3=bottom 4=left
+        chosenShapePositionInAnswers=r.nextInt(4); // 4 possible options for answer to be in
         generateAnswerAtPosition(chosenShapePositionInAnswers,chosenShape);
 
         generateOtherThreeShapes();
@@ -292,6 +305,11 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //rotate the colors
+
+                selectedColor=(selectedColor+1)%5; // 1->2->3->4 -->  0(1)->2->3->4 -->  0(1)->2....
+                if (selectedColor == 0)
+                    selectedColor = 1;
+
                 setButtonImage(setButtonPosition(buttonState));
             }
         });
@@ -300,6 +318,11 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //rotate the shapes
+
+                rotationCounter++;      // 0->1->2->3 --> 0->3->2->1
+                if (rotationCounter==4)
+                    rotationCounter=0;
+
                 rotateShapes();
             }
         });
@@ -319,7 +342,8 @@ public class GameActivity extends AppCompatActivity {
                     handler.postDelayed(runnable, 10);
                 }
                 else{ // check if the colors of the arrow and the button are the same
-                    if (true /* for testing purposes - you can't lose.  here should be "if (color and shape is correct)"... else -> you lose*/)
+                    System.out.println("rotationCounter= "+rotationCounter+"    chosenShapePositionInAnswers="+chosenShapePositionInAnswers);
+                    if ((chosenColor==selectedColor && chosenShapePositionInAnswers==rotationCounter))
                     {
                         //increase points and show them
 
@@ -346,7 +370,7 @@ public class GameActivity extends AppCompatActivity {
                             playIngameAnimation("newhighscore");
                         }
 
-                        if (currentPoints%4==0)
+                        if (currentPoints!=5)
                             playIngameAnimation("trap_rotate");
 
                         // When to say welldone
@@ -369,7 +393,7 @@ public class GameActivity extends AppCompatActivity {
 
                         //generate the above chosenShape in a random position in the answers
                         //and then generate 3 other random answers in random locations
-                        chosenShapePositionInAnswers=r.nextInt(4)+1;
+                        chosenShapePositionInAnswers=r.nextInt(4);
                         generateAnswerAtPosition(chosenShapePositionInAnswers,chosenShape);
 
                         generateOtherThreeShapes();
@@ -465,10 +489,10 @@ public class GameActivity extends AppCompatActivity {
             //              0
             //            3   1   <---
             //              2
-            path.arcTo(answerPositions[3].getLeft(), answerPositions[0].getTop(), answerPositions[1].getLeft(),  answerPositions[2].getTop() , 270f, 90f, true);
-            path2.arcTo(answerPositions[3].getLeft(), answerPositions[0].getTop(), answerPositions[1].getLeft(),  answerPositions[2].getTop() , 360f, 90f, true);
-            path3.arcTo(answerPositions[3].getLeft(), answerPositions[0].getTop(), answerPositions[1].getLeft(),  answerPositions[2].getTop() , 90, 90f, true);
-            path4.arcTo(answerPositions[3].getLeft(), answerPositions[0].getTop(), answerPositions[1].getLeft(),  answerPositions[2].getTop(), 180, 90f, true);
+            path.arcTo(answerPositions[1].getLeft(), answerPositions[0].getTop(), answerPositions[3].getLeft(),  answerPositions[2].getTop() , 270f, 90f, true);
+            path2.arcTo(answerPositions[1].getLeft(), answerPositions[0].getTop(), answerPositions[3].getLeft(),  answerPositions[2].getTop() , 360f, 90f, true);
+            path3.arcTo(answerPositions[1].getLeft(), answerPositions[0].getTop(), answerPositions[3].getLeft(),  answerPositions[2].getTop() , 90, 90f, true);
+            path4.arcTo(answerPositions[1].getLeft(), answerPositions[0].getTop(), answerPositions[3].getLeft(),  answerPositions[2].getTop(), 180, 90f, true);
 
 
             ObjectAnimator animator1,animator2,animator3,animator4;
@@ -519,8 +543,8 @@ public class GameActivity extends AppCompatActivity {
     public void setImageShapeAndColor()
     {
         // This function is used to create the shape+color in the middle of the screen (the main shape)
+        rotationCounter=chosenShapePositionInAnswers; // re-adjust rotation counter
         chosenShape=r.nextInt(16); // random shape
-
         ShapeOutline.setImageResource(ShapesOutlineArray[chosenShape]); // Drawing the outline
         ShapeFillerColor.setImageResource(ShapesFillerColorArray[chosenShape]); // Drawing the inside (default red)
         colorTheShape(ShapeFillerColor); // Painting the inside (from default red to random color)
@@ -614,10 +638,10 @@ public class GameActivity extends AppCompatActivity {
             firstIndexOfChosenShape--;
         }
         ArrayList<Integer> list = new ArrayList<Integer>();
-        for (int i = 1; i <= 4; i++) { // Make a list with 1,2,3,4
+        for (int i = 0; i <= 3; i++) { // Make a list with 0,1,2,3
             list.add(new Integer(i));
         }
-        Collections.shuffle(list); // Mix the list to get random order of the numbers in it
+        Collections.shuffle(list); // Mix the list to get random order of the numbers in it (Ex. 3,1,2,0)
         for (int i = 0; i <= 3; i++) { // Pull all the unsorted numbers from the above list (list[0],list[1],list[2],list[3]) , these numbers will be used for the next position to draw to
             if (list.get(i)!=chosenShapePositionInAnswers) // this if-statement is to avoid choosing the same position as the correct shape
             {
@@ -651,16 +675,16 @@ public class GameActivity extends AppCompatActivity {
         chosenAnswers[shapeOutline]=1; // Mark answer as used
         switch(pos)
         {
-            case 1:
+            case 0:
                 answerPositions[0].setImageResource(ShapesOutlineArray[shapeOutline]);
                 break;
-            case 2:
+            case 1:
                 answerPositions[1].setImageResource(ShapesOutlineArray[shapeOutline]);
                 break;
-            case 3:
+            case 2:
                 answerPositions[2].setImageResource(ShapesOutlineArray[shapeOutline]);
                 break;
-            case 4:
+            case 3:
                 answerPositions[3].setImageResource(ShapesOutlineArray[shapeOutline]);
         }
     }
@@ -679,7 +703,7 @@ public class GameActivity extends AppCompatActivity {
         rotatingAnswersLL.setAlpha((float) 0.1); // make the bottom half of the screen (linear layout containing the answers) less noticeable
         fourColorsImage.setClickable(false); // disable the ability to rotate the colors
         fourShapesLayout.setClickable(false); // disable the ability to click on the 4 shape-answers
-        paused.setVisibility(View.VISIBLE); // show "Paused"
+       // paused.setVisibility(View.VISIBLE); // show "Paused"
         ShapeFillerColor.setVisibility(View.INVISIBLE); // remove shape in the middle of the screen
         ShapeOutline.setVisibility(View.INVISIBLE);
 
@@ -759,7 +783,7 @@ public class GameActivity extends AppCompatActivity {
         // these 4 lines of code is , again , to draw in the middle of the screen a new shape , and then 3 wrong answers and 1 correct answer
         // ** we change the shapes to avoid pause-cheating
         setImageShapeAndColor();
-        chosenShapePositionInAnswers = r.nextInt(4) + 1;
+        chosenShapePositionInAnswers = r.nextInt(4) ;
         generateAnswerAtPosition(chosenShapePositionInAnswers, chosenShape);
         generateOtherThreeShapes();
         if (difficuiltyAlertTV.getAlpha() == 0.1f) // If a difficuilty alert (moving shape!) is on the screen
@@ -815,6 +839,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void playIngameAnimation(String animName)
     {
         switch(animName) {
@@ -882,31 +907,30 @@ public class GameActivity extends AppCompatActivity {
                 break;
 
             case "trap_rotate":
-                trapArrows.setVisibility(View.VISIBLE);
-                trapArrows.startAnimation(tweenAnim3);
-                trapArrows.setVisibility(View.INVISIBLE);
-                answerPositions[0].startAnimation(tweenAnim4);
-                answerPositions[1].startAnimation(tweenAnim4);
-                answerPositions[2].startAnimation(tweenAnim4);
-                answerPositions[3].startAnimation(tweenAnim4);
-//                ObjectAnimator animator0 = ObjectAnimator.ofFloat(answerPositions[0],"rotation",360).setDuration(750);
-//                animator0.setRepeatCount(1);
-//                animator0.start();
-//                ObjectAnimator animator1 = ObjectAnimator.ofFloat(answerPositions[1],"rotation",360).setDuration(750);
-//                animator1.setRepeatCount(1);
-//                animator1.start();
-//                ObjectAnimator animator2 = ObjectAnimator.ofFloat(answerPositions[2],"rotation",360).setDuration(750);
-//                animator2.setRepeatCount(1);
-//                animator2.start();
-//                ObjectAnimator animator3 = ObjectAnimator.ofFloat(answerPositions[3],"rotation",360).setDuration(750);
-//                animator3.setRepeatCount(1);
-//                animator3.start();
-//                ObjectAnimator animator4 = ObjectAnimator.ofFloat(trapArrows,"alpha",0).setDuration(750);
-//                animator4.start();
 
-                //Topic animations
+                trapArrows.animate().alpha(1).setDuration(150).setStartDelay(0).translationX(300).withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        trapArrows.animate().alpha(0).setDuration(200).setStartDelay(1000).start();
+                        trapArrows.animate().setDuration(400).translationX(0).setStartDelay(1000);
+
+                    }
+                });
+
+
+
+                animator0 = ObjectAnimator.ofFloat(answerPositions[0],"rotation",360).setDuration(startTime/7);
+                animator1 = ObjectAnimator.ofFloat(answerPositions[1],"rotation",360).setDuration(startTime/7);
+                animator2 = ObjectAnimator.ofFloat(answerPositions[2],"rotation",360).setDuration(startTime/7);
+                animator3 = ObjectAnimator.ofFloat(answerPositions[3],"rotation",360).setDuration(startTime/7);
+
+
+
+                settest.play(animator0).with(animator1).with(animator2).with(animator3);
+                settest.start();
+
+
                 break;
-
 
 
 

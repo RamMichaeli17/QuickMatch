@@ -25,14 +25,14 @@
     <ImageView
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_marginStart="-60dp"
         android:src="@drawable/trap_arrows"
         android:scaleType="fitCenter"
         android:background="@null"
         android:id="@+id/trap_arrows_iv"
         android:layout_below="@+id/current_high_score_trophy"
         android:layout_marginTop="40dp"
-        android:layout_marginStart="70dp"
-        android:visibility="invisible" />
+        android:alpha="0"/>
 
 <!--**** צריך לחשוב על משהו אחר מהתזוזה של הצורה כמו שהצורות שבגלגל הימני יסתבבו סביב עצמן ויעלה אייקון על המסך-->
 <!--    במקום הכתב-->
@@ -127,6 +127,7 @@
 
     <!--Layout of Wheels-->
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -135,15 +136,23 @@
         android:id="@+id/rotating_answers_linear_layout">
 
        <!-- Colors Wheel-->
-    <ImageView
-        android:layout_width="365dp"
-        android:layout_height="wrap_content"
-        android:scaleType="centerInside"
-        android:layout_alignParentStart="true"
-        android:id="@+id/fourColorsImage"
-        android:src="@drawable/ic_button_blue" />
 
         <!--Shapes Wheel-->
+
+
+
+        <ImageView
+            android:id="@+id/fourColorsImage"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
+            android:paddingEnd="-4dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/newcolors"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -196,7 +205,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/shape_LEFT" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
+    <ImageView
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/newcolorsblack"
+        android:scaleY="0.4"
+        android:scaleX="0.4"
+        android:layout_alignBottom="@id/rotating_answers_linear_layout"
+        android:layout_marginBottom="115.7dp"
 
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
