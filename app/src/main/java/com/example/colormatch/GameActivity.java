@@ -90,8 +90,8 @@ public class GameActivity extends AppCompatActivity {
     int[] rotation = {0,3,2,1};
 
     // שיניתי מ12 ל24
-    int currentTime = 18000;
-    int startTime = 18000;
+    int currentTime = 98000;
+    int startTime = 98000;
 
     int currentPoints = 0;
 
@@ -108,6 +108,7 @@ public class GameActivity extends AppCompatActivity {
     String userName;
 
     MediaPlayer song; //Background songs
+    MediaPlayer clickSound;
     boolean musicButtonState; //Music mode
     boolean soundButtonState = true; //Sound mode
 
@@ -205,6 +206,8 @@ public class GameActivity extends AppCompatActivity {
 
         trapArrows = findViewById(R.id.trap_arrows_iv);
 
+        //Click Sound
+        clickSound = MediaPlayer.create(this,R.raw.press_game);
         song = MediaPlayer.create(GameActivity.this, R.raw.during_game_music);
         song.setLooping(true);
         song.start();
@@ -314,6 +317,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //rotate the colors
+                if(soundButtonState)clickSound.start();
 
                 selectedColor=(selectedColor+1)%5; // 1->2->3->4 -->  0(1)->2->3->4 -->  0(1)->2....
                 if (selectedColor == 0)
@@ -327,6 +331,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //rotate the shapes
+                if(soundButtonState)clickSound.start();
 
                 rotationCounter++;      // 0->1->2->3 --> 0->3->2->1
                 if (rotationCounter==4)
@@ -739,7 +744,7 @@ public class GameActivity extends AppCompatActivity {
         Button resume_paused=dialog.findViewById(R.id.resume_pauseBtn);
         Button back_to_menu=dialog.findViewById(R.id.back_to_menu_pauseBtn);
         ImageButton music_bn=dialog.findViewById(R.id.music_button2);
-        ImageButton sound_on=dialog.findViewById(R.id.pink_sound_button2);
+        ImageButton sound_btn=dialog.findViewById(R.id.pink_sound_button2);
         restart_paused.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -789,9 +794,21 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        sound_on.setOnClickListener(new View.OnClickListener() {
+        sound_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (soundButtonState) {
+                    clickSound.pause();
+                    soundButtonState = false;
+                    sound_btn.setImageResource(R.drawable.sound_off);
+                    Toast.makeText(GameActivity.this, R.string.no_sound, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                sound_btn.setImageResource(R.drawable.sound_on);
+                clickSound.start();
+                Toast.makeText(GameActivity.this, R.string.sound_on, Toast.LENGTH_SHORT).show();
+                soundButtonState = true;
+                if(soundButtonState)clickSound.start();
 
 
             }
