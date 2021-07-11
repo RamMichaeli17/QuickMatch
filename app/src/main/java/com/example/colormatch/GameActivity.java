@@ -87,8 +87,8 @@ public class GameActivity extends AppCompatActivity {
     int[] rotation = {0,3,2,1};
 
     // שיניתי מ12 ל24
-    int currentTime = 98000;
-    int startTime = 98000;
+    int currentTime = 18000;
+    int startTime = 18000;
 
     int currentPoints = 0;
 
@@ -419,7 +419,18 @@ public class GameActivity extends AppCompatActivity {
                     else {
                         fourColorsImage.setEnabled(false);
                         fourShapesLayout.setEnabled(false);
-                        Toast.makeText(GameActivity.this, "Game Over", Toast.LENGTH_SHORT).show();
+
+                        Dialog dialog= new Dialog(GameActivity.this);
+                        dialog.setContentView(R.layout.activity_game_over);
+                        int width = (int)(getResources().getDisplayMetrics().widthPixels*0.50);
+                        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.95);
+                        dialog.getWindow().setLayout(width, height);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                        dialog.show();
+                        dialog.setCanceledOnTouchOutside(false);
+                        dialog.setCancelable(false);
+
                         updateHighScores();
                     }
                 }
