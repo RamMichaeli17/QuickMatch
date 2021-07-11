@@ -3,7 +3,10 @@ package com.example.colormatch;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +20,7 @@ import java.util.ArrayList;
 public class HighScore extends AppCompatActivity {
 
     ListView scorelistview;
-    Button clearBTN;
+    Button clearBTN, yesToClearBTN, cancelToClearBTN;
     ArrayList<HighScoreObject> highScoreObjectArrayList;
     ImageView backgroundStars;
 
@@ -49,35 +52,36 @@ public class HighScore extends AppCompatActivity {
         // Initial screen load
         refreshScreen();
 
-
-
-
         clearBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(HighScore.this);
-                builder.setTitle("Are you sure?");
+                Dialog dialog= new Dialog(HighScore.this);
+                dialog.setContentView(R.layout.areyousureyouwanttoclear);
 
+                int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
+                int height = (int)(getResources().getDisplayMetrics().heightPixels*0.4);
+                dialog.getWindow().setLayout(width, height);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                yesToClearBTN=dialog.findViewById(R.id.btnyes);
+                cancelToClearBTN=dialog.findViewById(R.id.btnno);
+
+                yesToClearBTN.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(View v) {
                         highScoreObjectArrayList.clear();
                         ConfigSharedPreferences.writeListInPref(getApplicationContext(), highScoreObjectArrayList); // This line ensures that both lists (from game and from highscores) reset
                         refreshScreen();
-
                     }
                 });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                cancelToClearBTN.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
+                    public void onClick(View v) {
+                        dialog.dismiss();
                     }
                 });
-
-                builder.show();
-
-
+                dialog.show();
             }
         });
 
