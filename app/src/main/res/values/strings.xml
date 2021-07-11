@@ -36,4 +36,5 @@
     <string name="levels_played">Levels played:</string>
     <string name="time_played">Time played:</string>
     <string name="final_score">Final score:</string>
+    <string name="share_score_btn">Share</string>
 </resources>

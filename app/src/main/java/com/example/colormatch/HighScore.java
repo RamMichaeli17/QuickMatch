@@ -72,6 +72,7 @@ public class HighScore extends AppCompatActivity {
                         highScoreObjectArrayList.clear();
                         ConfigSharedPreferences.writeListInPref(getApplicationContext(), highScoreObjectArrayList); // This line ensures that both lists (from game and from highscores) reset
                         refreshScreen();
+                        dialog.dismiss();
                     }
                 });
 

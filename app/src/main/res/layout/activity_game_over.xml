@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/game_over_background">
+    android:background="@drawable/game_over_background2">
 
     <TextView
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/main_app_font"
         android:shadowColor="@color/black"
         android:shadowRadius="20"
@@ -24,7 +24,7 @@
 
     <TextView
         android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_height="67dp"
        android:layout_marginLeft="70dp"
         android:fontFamily="@font/main_app_font"
         android:shadowColor="@color/black"
@@ -40,116 +40,123 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:text="@string/levels_played"
         android:fontFamily="@font/main_app_font"
         android:textSize="23sp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="start"
+        android:layout_marginLeft="60dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:text="@string/time_played"
         android:fontFamily="@font/main_app_font"
         android:textSize="23sp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="start"
+        android:layout_marginLeft="60dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="@string/final_score"
         android:fontFamily="@font/main_app_font"
         android:textSize="28sp"
-        android:textStyle="bold||italic"
+        android:textStyle="bold"
         android:shadowColor="@color/black"
         android:shadowRadius="3"
-        android:layout_gravity="center"/>
+        android:layout_gravity="start"
+        android:layout_marginLeft="60dp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp">
+        android:layout_gravity="start"
+        android:layout_marginTop="5dp">
 
         <EditText
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:text="@string/nickname_et"
-            android:textAlignment="center"
-            android:layout_gravity="center"
-            android:textSize="23sp"
-            android:layout_marginTop="10dp"
-            android:textStyle="italic"
-            android:id="@+id/nickname"
-            android:fontFamily="@font/aboutus_popup_font"
-            android:layout_marginBottom="20dp"/>
-
-        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/submit_btn"
-            android:textSize="18sp"
-            android:background="@drawable/custom_blue_button"
+            android:text="@string/nickname_et"
+            android:layout_marginLeft="60dp"
+            android:textSize="20sp"
+            android:padding="15dp"
+            android:layout_marginTop="7dp"
+            android:textStyle="italic"
+            android:id="@+id/nickname"
+            android:fontFamily="@font/aboutus_popup_font" />
+
+        <Button
             android:id="@+id/submit_game_over"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="10dp"
-            android:fontFamily="@font/main_app_font"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp"
+            android:textColor="#525252"
+            android:background="@drawable/leaving_selector"
+            android:fontFamily="@font/main_app_font"
+            android:padding="5dp"
+            android:text="@string/submit_btn"
+            android:textSize="18sp" />
     </LinearLayout>
-    <!--<Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:background="@drawable/custom_red_button"
-        android:layout_weight="1"
-        android:layout_marginLeft="20dp"/>-->
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/main_menu_btn"
-            android:background="@drawable/custom_blue_button"
-            android:id="@+id/mainmenu"
-            android:textSize="18sp"
-            android:padding="10dp"
-            android:layout_gravity="center"
-            android:fontFamily="@font/main_app_font"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="20dp"/>
+        android:layout_gravity="center_horizontal">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/replay_btn"
-            android:background="@drawable/custom_blue_button"
+            android:background="@drawable/custom_game_over_buttons"
             android:id="@+id/replay"
             android:layout_gravity="center"
             android:textSize="18sp"
             android:padding="10dp"
-            android:fontFamily="@font/main_app_font"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginBottom="20dp"/>
+            android:fontFamily="@font/main_app_font" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_menu_btn"
+            android:background="@drawable/custom_game_over_buttons"
+            android:id="@+id/mainmenu"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/main_app_font"
+            android:layout_marginLeft="15dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/share_score_btn"
+            android:background="@drawable/custom_game_over_buttons"
+            android:id="@+id/share_score"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/main_app_font"
+            android:layout_marginLeft="15dp" />
+
+
+
     </LinearLayout>
 
-    <LinearLayout
+   <!-- <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="40dp">
+        android:layout_gravity="top">
+
         <ImageButton
             android:layout_width="65dp"
             android:layout_height="100dp"
@@ -157,7 +164,6 @@
             android:scaleType="fitCenter"
             android:background="@null"
             android:layout_marginLeft="50dp"
-            android:layout_alignParentBottom="true"
             android:id="@+id/facebook"/>
 
         <ImageButton
@@ -166,7 +172,6 @@
             android:src="@drawable/instagram"
             android:scaleType="fitCenter"
             android:background="@null"
-            android:layout_alignParentBottom="true"
             android:layout_toEndOf="@+id/facebook"
             android:layout_marginStart="20dp"
             android:id="@+id/instagram" />
@@ -193,5 +198,5 @@
             android:layout_marginStart="20dp"
             android:id="@+id/gmail"/>
 
-    </LinearLayout>
+    </RelativeLayout>-->
 </LinearLayout>

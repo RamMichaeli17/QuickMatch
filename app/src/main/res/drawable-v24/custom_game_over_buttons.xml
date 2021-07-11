@@ -2,38 +2,14 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="false">
-        <shape
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
             android:shape="rectangle">
 
             <gradient
-                android:angle="90"
+                android:angle="180"
+                android:centerColor="#cff6e5"
                 android:endColor="@color/white"
-                android:startColor="@color/logo_green"
-                android:type="linear"/>
-
-            <corners
-                android:bottomLeftRadius="20dp"
-                android:bottomRightRadius="20dp"
-                android:topLeftRadius="20dp"
-                android:topRightRadius="20dp" />
-
-            <stroke
-                android:width="2dp"
-                android:color="@color/black"/>
-
-        </shape>
-    </item>
-
-    <item android:state_pressed="true">
-        <shape
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:shape="rectangle">
-
-            <gradient
-                android:angle="270"
-                android:endColor="@color/lightGrey"
-                android:startColor="@color/Grey"
+                android:startColor="#f9f1c2"
                 android:type="linear"/>
 
             <corners
@@ -43,9 +19,32 @@
                 android:topRightRadius="20dp" />
 
             <stroke android:width="2dp"
-                android:color="@color/black"/>
+                android:color="#abdae0" />
+
         </shape>
     </item>
 
+    <item android:state_pressed="true">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
 
+            <gradient android:angle="360"
+                android:centerColor="#cff6e5"
+                android:endColor="@color/white"
+                android:startColor="#f9f1c2"
+                android:type="linear"/>
+
+            <corners
+                android:bottomLeftRadius="20dp"
+                android:bottomRightRadius="20dp"
+                android:topLeftRadius="20dp"
+                android:topRightRadius="20dp" />
+
+            <stroke android:width="1dp"
+                android:color="@color/black"
+                android:dashGap="3dp"
+                android:dashWidth="1dp" />
+
+        </shape>
+    </item>
 </selector>

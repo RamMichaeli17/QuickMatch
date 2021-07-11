@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/info_selector">
+    android:background="@drawable/high_score_selector">
 
     <!--Question Mark Icon-->
     <ImageView
@@ -53,7 +53,6 @@
         android:textSize="25sp"
         android:shadowRadius="2"
         android:shadowColor="@color/black"
-        android:layout_below="@+id/tv"
         android:id="@+id/btnyes"
         android:background="@drawable/custom_green_button"/>
 
@@ -66,15 +65,13 @@
         android:id="@+id/btnno"
         android:layout_width="90dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv"
-        android:layout_centerHorizontal="true"
         android:textSize="25sp"
         android:textStyle="bold"
         android:shadowRadius="2"
         android:shadowColor="@color/black"
+        android:textAlignment="center"
         android:fontFamily="@font/popup_bold_font"
         android:text="@string/cancel_btn"
-        android:layout_toRightOf="@+id/btnyes"
         android:textAllCaps="false"
         android:background="@drawable/custom_red_button"/>
 

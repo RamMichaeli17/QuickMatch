@@ -40,7 +40,7 @@
       android:fontFamily="@font/popup_bold_font"
       android:text="@string/resume_btn"
       android:textAllCaps="false"
-      android:background="@drawable/custom_pink_button"
+      android:background="@drawable/custom_paused_buttons"
       android:textStyle="bold"/>
 
   <!--Restart-->
@@ -52,7 +52,7 @@
         android:layout_below="@+id/resume_pauseBtn"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:background="@drawable/custom_pink_button"
+        android:background="@drawable/custom_paused_buttons"
         android:fontFamily="@font/popup_bold_font"
         android:text="@string/restart_btn"
         android:textAllCaps="false"
@@ -76,7 +76,7 @@
         android:fontFamily="@font/popup_bold_font"
         android:text="@string/back_to_menu_btn"
         android:textAllCaps="false"
-        android:background="@drawable/custom_pink_button"
+        android:background="@drawable/custom_paused_buttons"
         android:textSize="28sp"
         android:textStyle="bold"
         android:shadowRadius="10"

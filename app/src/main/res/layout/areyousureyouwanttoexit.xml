@@ -51,9 +51,9 @@
         android:fontFamily="@font/popup_bold_font"
         android:textAllCaps="false"
         android:textSize="25sp"
+        android:textAlignment="center"
         android:shadowRadius="2"
         android:shadowColor="@color/black"
-        android:layout_below="@+id/tv"
         android:id="@+id/btnyes"
         android:background="@drawable/custom_green_button"/>
 
@@ -66,15 +66,13 @@
         android:id="@+id/btnno"
         android:layout_width="90dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv"
-        android:layout_centerHorizontal="true"
         android:textSize="25sp"
         android:textStyle="bold"
         android:shadowRadius="2"
+        android:textAlignment="center"
         android:shadowColor="@color/black"
         android:fontFamily="@font/popup_bold_font"
         android:text="@string/No_btn"
-        android:layout_toRightOf="@+id/btnyes"
         android:textAllCaps="false"
         android:background="@drawable/custom_red_button"/>
 

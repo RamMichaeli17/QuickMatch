@@ -2,31 +2,39 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="false">
         <shape>
-
-            <gradient        android:startColor="#BCFFFFFF"
+            <gradient
+                android:startColor="#BCFFFFFF"
                 android:endColor="#FFFFFFFF"
                 android:type="linear"
+                android:angle="90"/>
 
-                />
-
-
-           <corners android:radius="60dp" />
-
-
-
+           <corners
+               android:radius="60dp" />
 
             <stroke
-
-                android:color="@color/black"
+                android:color="@color/Grey"
                 android:width="1dp"
-                />
-
-
-
-
+                android:dashGap="3dp"
+                android:dashWidth="6dp"/>
         </shape>
-
-
     </item>
 
+    <item android:state_pressed="true">
+        <shape>
+            <gradient
+                android:startColor="#BCFFFFFF"
+                android:endColor="#FFFFFFFF"
+                android:type="linear"
+                android:angle="270"/>
+
+            <corners
+                android:radius="60dp" />
+
+            <stroke
+                android:color="@color/black"
+                android:width="1dp"
+                android:dashGap="3dp"
+                android:dashWidth="6dp"/>
+        </shape>
+    </item>
 </selector>

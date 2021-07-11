@@ -37,4 +37,5 @@
     <string name="levels_played">שלבים שעברת:</string>
     <string name="time_played">זמן ששיחקת:</string>
     <string name="final_score">ניקוד סופי:</string>
+    <string name="share_score_btn">שתף</string>
 </resources>
