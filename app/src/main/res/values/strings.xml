@@ -31,9 +31,10 @@
     <string name="nickname_et">Enter your nickname</string>
     <string name="submit_btn">Submit</string>
     <string name="main_menu_btn">Main Menu</string>
-    <string name="replay_btn">Replay</string>
+    <string name="replay_btn">Play again</string>
     <string name="levels_played">Levels played:</string>
     <string name="time_played">Time played:</string>
     <string name="final_score">Final score:</string>
     <string name="share_score_btn">Share</string>
+    <string name="unknown_user">Unknown</string>
 </resources>

@@ -6,9 +6,12 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -164,8 +167,8 @@ public class GameActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras(); // Get username from mainActivity (dialog that pops before game)
         if(extras !=null) {
-            userName = extras.getString("userName","Unknown");
-            restart=extras.getBoolean("restart",false);
+            userName = extras.getString(getString(R.string.Username),getString(R.string.unknown_user));
+            restart=extras.getBoolean(getString(R.string.restart_btn),false);
             difficulty=extras.getInt("difficulty",1); // 1 Beginner , 2 Adv , 3 Pro
             musicButtonState=extras.getBoolean("musicButtonState",true);
             soundButtonState=extras.getBoolean("soundButtonState",true);
@@ -184,17 +187,9 @@ public class GameActivity extends AppCompatActivity {
         progressBar=findViewById(R.id.progressbar);
         highestscoreTV=findViewById(R.id.highest_score_tv);
         paused=findViewById(R.id.pause);
-        /* continueBTN=findViewById(R.id.continueplay);*/
-        /*exitBTN=findViewById(R.id.exit);*/
         rotatingAnswersLL=findViewById(R.id.rotating_answers_linear_layout);
         difficuiltyAlertTV =findViewById(R.id.movingShapeAlert);
         fourShapesLayout=findViewById(R.id.fourShapes_layout);
-
-
-
-
-
-
 
 
         fireworks1=findViewById(R.id.fireworks1);
@@ -215,7 +210,6 @@ public class GameActivity extends AppCompatActivity {
         swipeSound = MediaPlayer.create(this,R.raw.press_game);
         clickSound = MediaPlayer.create(this,R.raw.click_sound);
         song = MediaPlayer.create(GameActivity.this, R.raw.during_game_music);
-
         song.setLooping(true);
         song.start();
 
@@ -249,17 +243,10 @@ public class GameActivity extends AppCompatActivity {
 
 
 
-
-
         answerPositions[0]=findViewById(R.id.shape_TOP);
         answerPositions[1]=findViewById(R.id.shape_LEFT);
         answerPositions[2]=findViewById(R.id.shape_BOTTOM);
         answerPositions[3]=findViewById(R.id.shape_RIGHT);
-
-
-
-
-
 
 
 
@@ -326,20 +313,6 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-      /*  continueBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                continueTheGame();
-            }
-        });
-
-        exitBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateHighScores();
-                finish();
-            }
-        });*/
 
         fourColorsImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -422,8 +395,6 @@ public class GameActivity extends AppCompatActivity {
                         if(currentPoints==5) {
                             playIngameAnimation("airplane");
                         }
-
-
 
                         progressBar.setMax(startTime);
                         currentTime=startTime;
@@ -532,7 +503,6 @@ public class GameActivity extends AppCompatActivity {
 
     public void rotateShapes() {
 
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Path path = new Path();
             Path path2 = new Path();
@@ -574,12 +544,8 @@ public class GameActivity extends AppCompatActivity {
             set.play(animator1).with(animator2).with(animator3).with(animator4);
             set.setDuration(75);
             set.start();
-
-
-
         }
     }
-
 
 
     private void updateHighScores() //דרוש הסבר
@@ -601,7 +567,6 @@ public class GameActivity extends AppCompatActivity {
         ShapeOutline.setImageResource(ShapesOutlineArray[chosenShape]); // Drawing the outline
         ShapeFillerColor.setImageResource(ShapesFillerColorArray[chosenShape]); // Drawing the inside (default red)
         colorTheShape(ShapeFillerColor); // Painting the inside (from default red to random color)
-
     }
 
 
@@ -836,7 +801,6 @@ public class GameActivity extends AppCompatActivity {
         music_bn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (musicButtonState) {
                     if(soundButtonState)clickSound.start();
                     song.setVolume(0,0);
@@ -872,14 +836,12 @@ public class GameActivity extends AppCompatActivity {
                 Toast.makeText(GameActivity.this, R.string.sound_on, Toast.LENGTH_SHORT).show();
                 soundButtonState = true;
                 if(soundButtonState)clickSound.start();
-
             }
         });
-
         dialog.show();
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
-    };
+    }
 
     public void continueTheGame() {
         // This method takes care of pausing the game
@@ -902,10 +864,6 @@ public class GameActivity extends AppCompatActivity {
         if (difficuiltyAlertTV.getAlpha() == 0.1f) // If a difficuilty alert (moving shape!) is on the screen
             difficuiltyAlertTV.animate().alpha(0.6f).setDuration(1500); // return it to normal alpha
 
-
-
-      /*  continueBTN.setVisibility(View.GONE); // remove continue/exit buttons
-        exitBTN.setVisibility(View.GONE);*/
 
         rotatingAnswersLL.animate().alpha(1).setDuration(1500); // return the answers to normal alpha
         paused.setAlpha(0); // This is used (with the animate() 2 rows later) to create the 3-2-1 fading effect
@@ -1041,16 +999,9 @@ public class GameActivity extends AppCompatActivity {
 
                 settest.play(animator0).with(animator1).with(animator2).with(animator3);
                 settest.start();
-
-
                 break;
-
-
-
-
         }
     }
-
 
 
     @Override

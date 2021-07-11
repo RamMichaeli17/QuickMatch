@@ -29,7 +29,7 @@
     <string name="cancel_btn">ביטול</string>
     <string name="areYouSureYouWannaClear">האם אתה בטוח שברצונך למחוק את כל השיאים?</string>
     <string name="game_over">המשחק נגמר !</string>
-    <string name="nickname_et">הזן את הכינוי שלך</string>
+    <string name="nickname_et">" הזן את הכינוי שלך"</string>
     <string name="submit_btn">אישור</string>
     <string name="main_menu_btn">תפריט ראשי</string>
     <string name="replay_btn">שחק שוב</string>
@@ -37,4 +37,5 @@
     <string name="time_played">זמן ששיחקת:</string>
     <string name="final_score">ניקוד סופי:</string>
     <string name="share_score_btn">שתף</string>
+    <string name="unknown_user">לא ידוע</string>
 </resources>

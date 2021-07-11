@@ -56,8 +56,8 @@
         android:shadowColor="@color/white"
         android:shadowRadius="20"
         android:textStyle="italic"
-        android:padding="5dp"
-        android:textSize="17sp"
+        android:padding="10dp"
+        android:textSize="20sp"
         android:textColor="@color/black"
         android:id="@+id/info_aboutUS"
         android:layout_marginBottom="20dp" />
