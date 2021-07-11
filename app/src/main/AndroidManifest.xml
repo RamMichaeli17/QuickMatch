@@ -39,11 +39,6 @@
 
         </activity>
 
-        <activity
-            android:name=".AreYouSureYouWantToExit"
-            android:theme="@style/Theme.Transparent"
-            android:screenOrientation="portrait">
-        </activity>
     </application>
 
 </manifest>

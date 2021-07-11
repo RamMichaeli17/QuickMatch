@@ -6,12 +6,9 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +16,7 @@ import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
@@ -111,11 +109,7 @@ public class GameActivity extends AppCompatActivity {
     MediaPlayer swipeSound;
     MediaPlayer clickSound;
     boolean musicButtonState; //Music mode
-    boolean soundButtonState = true; //Sound mode
-
-    LinearLayout gameOverLayout;
-    ImageView tryThis;
-
+    boolean soundButtonState; //Sound mode
 
     int[] ShapesFillerColorArray= {R.drawable.star_1_fill_color,R.drawable.star_2_fill_color,R.drawable.star_3_fill_color,R.drawable.star_4_fill_color,R.drawable.circles_1_fill_color,R.drawable.circles_2_fill_color,R.drawable.circles_3_fill_color,R.drawable.circles_4_fill_color,R.drawable.three_shapes_1_fill_color,R.drawable.three_shapes_2_fill_color,R.drawable.three_shapes_3_fill_color,R.drawable.three_shapes_4_fill_color,R.drawable.noodles_1_fill_color,R.drawable.noodles_2_fill_color,R.drawable.noodles_3_fill_color,R.drawable.noodles_4_fill_color};
     int[] ShapesOutlineArray= {R.drawable.star_1_outline,R.drawable.star_2_outline,R.drawable.star_3_outline,R.drawable.star_4_outline,R.drawable.circles_1_outline,R.drawable.circles_2_outline,R.drawable.circles_3_outline,R.drawable.circles_4_outline,R.drawable.three_shapes_1_outline,R.drawable.three_shapes_2_outline,R.drawable.three_shapes_3_outline,R.drawable.three_shapes_4_outline,R.drawable.noodles_1_outline,R.drawable.noodles_2_outline,R.drawable.noodles_3_outline,R.drawable.noodles_4_outline};
@@ -173,7 +167,13 @@ public class GameActivity extends AppCompatActivity {
             userName = extras.getString("userName","Unknown");
             restart=extras.getBoolean("restart",false);
             difficulty=extras.getInt("difficulty",1); // 1 Beginner , 2 Adv , 3 Pro
+            musicButtonState=extras.getBoolean("musicButtonState",true);
+            soundButtonState=extras.getBoolean("soundButtonState",true);
         }
+
+
+
+
 
         firstTimeOnResumeCalled=true;
         gameIsNotPaused =true;
@@ -215,11 +215,29 @@ public class GameActivity extends AppCompatActivity {
         swipeSound = MediaPlayer.create(this,R.raw.press_game);
         clickSound = MediaPlayer.create(this,R.raw.click_sound);
         song = MediaPlayer.create(GameActivity.this, R.raw.during_game_music);
+
         song.setLooping(true);
         song.start();
 
-//        gameOverLayout = findViewById(R.id.game_over_layout);
-//        tryThis = findViewById(R.id.try_this);
+        if (musicButtonState) {
+            song.setVolume(1,1);
+        }
+        else
+            song.setVolume(0,0);
+
+
+
+        if (soundButtonState)
+            clickSound.start();
+        else
+        {
+            swipeSound.pause();
+            clickSound.pause();
+        }
+
+
+
+
 
 
 
@@ -367,7 +385,7 @@ public class GameActivity extends AppCompatActivity {
                 }
                 else{ // check if the colors of the arrow and the button are the same
                     System.out.println("rotationCounter= "+rotationCounter+"    chosenShapePositionInAnswers="+chosenShapePositionInAnswers);
-                    if ((chosenColor==selectedColor && chosenShapePositionInAnswers==rotationCounter))
+                    if ((chosenColor==selectedColor && chosenShapePositionInAnswers==rotationCounter) || true)
                     {
                         //increase points and show them
 
@@ -430,16 +448,16 @@ public class GameActivity extends AppCompatActivity {
                         fourColorsImage.setEnabled(false);
                         fourShapesLayout.setEnabled(false);
 
-                        Dialog dialog= new Dialog(GameActivity.this);
-                        dialog.setContentView(R.layout.activity_game_over);
-                        int width = (int)(getResources().getDisplayMetrics().widthPixels*0.50);
-                        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.95);
-                        dialog.getWindow().setLayout(width, height);
-                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                        dialog.show();
-                        dialog.setCanceledOnTouchOutside(false);
-                        dialog.setCancelable(false);
+//                        Dialog dialog= new Dialog(GameActivity.this);
+//                        dialog.setContentView(R.layout.activity_game_over);
+//                        int width = (int)(getResources().getDisplayMetrics().widthPixels*0.50);
+//                        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.95);
+//                        dialog.getWindow().setLayout(width, height);
+//                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//
+//                        dialog.show();
+//                        dialog.setCanceledOnTouchOutside(false);
+//                        dialog.setCancelable(false);
 
                         updateHighScores();
                     }
@@ -494,19 +512,19 @@ public class GameActivity extends AppCompatActivity {
     private void setButtonImage(int state){
         switch (state) {
             case STATE_BLUE:
-                setRotation(fourColorsImage,R.drawable.ic_button_blue);
+                setRotation(fourColorsImage,R.drawable.newcolors); // = default blue top
                 buttonState = STATE_BLUE;
                 break;
             case STATE_RED:
-                setRotation(fourColorsImage,R.drawable.ic_button_red);
+                setRotation(fourColorsImage,R.drawable.colorsredtop);
                 buttonState = STATE_RED;
                 break;
             case STATE_YELLOW:
-                setRotation(fourColorsImage,R.drawable.ic_button_yellow);
+                setRotation(fourColorsImage,R.drawable.colorsyellowtop);
                 buttonState = STATE_YELLOW;
                 break;
             case STATE_GREEN:
-                setRotation(fourColorsImage,R.drawable.ic_button_green);
+                setRotation(fourColorsImage,R.drawable.colorsgreentop);
                 buttonState = STATE_GREEN;
                 break;
         }
@@ -619,9 +637,9 @@ public class GameActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (!musicButtonState)
-            song.pause();
+            song.setVolume(0,0);
         else
-            song.start();
+            song.setVolume(1,1);
 
         /*
            If the user navigates away from our application (clicking home button for example) onPause() gets called which stops the game (without the visuals continueBTN/exitBTN/paused text)
@@ -644,7 +662,8 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        song.pause();
+        song.setVolume(0,0);
+
     }
 
     public void alertUserToCustomDifficulty()
@@ -764,15 +783,28 @@ public class GameActivity extends AppCompatActivity {
         Button restart_paused=dialog.findViewById(R.id.restart_pauseBtn);
         Button resume_paused=dialog.findViewById(R.id.resume_pauseBtn);
         Button back_to_menu=dialog.findViewById(R.id.back_to_menu_pauseBtn);
+
         ImageButton music_bn=dialog.findViewById(R.id.music_button2);
+        if(!musicButtonState)
+            music_bn.setImageResource(R.drawable.music_off);
+
+
         ImageButton sound_btn=dialog.findViewById(R.id.pink_sound_button2);
+        if(!soundButtonState)
+            sound_btn.setImageResource(R.drawable.sound_off);
+
+
         restart_paused.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(soundButtonState)clickSound.start();
                 Intent intent = new Intent(GameActivity.this, GameActivity.class);
                 intent.putExtra("restart",true);
+                intent.putExtra("userName",userName);
                 intent.putExtra("difficulty",difficulty);
+                intent.putExtra("musicButtonState",musicButtonState);
+                intent.putExtra("soundButtonState",soundButtonState);
+
                 startActivity(intent);
             }
         });
@@ -793,7 +825,11 @@ public class GameActivity extends AppCompatActivity {
                 if(soundButtonState)clickSound.start();
                 updateHighScores();
                 Intent intent = new Intent(GameActivity.this, MainActivity.class);
+                intent.putExtra("musicButtonState",musicButtonState);
+                intent.putExtra("soundButtonState",soundButtonState);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+
             }
         });
 
@@ -803,17 +839,18 @@ public class GameActivity extends AppCompatActivity {
 
                 if (musicButtonState) {
                     if(soundButtonState)clickSound.start();
-                    song.pause();
+                    song.setVolume(0,0);
                     musicButtonState = false;
                     music_bn.setImageResource(R.drawable.music_off);
                     Toast.makeText(GameActivity.this, R.string.no_music, Toast.LENGTH_SHORT).show();
-                    return;
                 }
-                song.setLooping(true);
-                song.start();
-                music_bn.setImageResource(R.drawable.music_on);
-                Toast.makeText(GameActivity.this, R.string.music_on, Toast.LENGTH_SHORT).show();
-                musicButtonState = true;
+                else {
+                    song.setVolume(1,1);
+
+                    music_bn.setImageResource(R.drawable.music_on);
+                    Toast.makeText(GameActivity.this, R.string.music_on, Toast.LENGTH_SHORT).show();
+                    musicButtonState = true;
+                }
 
 
             }
@@ -1014,33 +1051,6 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    public void convertLayoutToImage()
-    {
-        Bitmap image = getBitmapFromView(gameOverLayout);
-        tryThis.setImageBitmap(image);
-
-    }
-
-    private Bitmap getBitmapFromView(View view) {
-        //Define a bitmap with the same size as the view
-        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(),Bitmap.Config.ARGB_8888);
-        //Bind a canvas to it
-        Canvas canvas = new Canvas(returnedBitmap);
-        //Get the view's background
-        Drawable bgDrawable =view.getBackground();
-        if (bgDrawable!=null) {
-            //has background drawable, then draw it on the canvas
-            bgDrawable.draw(canvas);
-        }   else{
-            //does not have background drawable, then draw white background on the canvas
-            canvas.drawColor(Color.WHITE);
-        }
-        // draw the view on the canvas
-        view.draw(canvas);
-        //return the bitmap
-        return returnedBitmap;
-    }
-
 
 
     @Override
@@ -1049,7 +1059,5 @@ public class GameActivity extends AppCompatActivity {
         handler.removeCallbacks(runnable);
         super.onPause();
     }
-
-
 
 }

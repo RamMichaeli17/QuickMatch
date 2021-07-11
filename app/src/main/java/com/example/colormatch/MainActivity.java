@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -60,6 +61,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Bundle extras = getIntent().getExtras(); // If we MainActivity got called by GameActivity , we want to remember sound options
+        if(extras !=null) {
+            musicButtonState=extras.getBoolean("musicButtonState",true);
+            soundButtonState=extras.getBoolean("soundButtonState",true);
+        }
 
 
 
@@ -236,8 +243,15 @@ public class MainActivity extends AppCompatActivity {
 
 
         about_us_bn = (ImageButton) findViewById(R.id.about_us_button);
+
         music_bn = (ImageButton) findViewById(R.id.music_button);
+        if(!musicButtonState)  // If user went in-game and disabled music , we want to load music_off in mainmenu if he returns to mainmenu
+            music_bn.setImageResource(R.drawable.music_off);
+
+
         sound_btn = (ImageButton) findViewById(R.id.pink_sound_button);
+        if(!soundButtonState) // As written above
+            sound_btn.setImageResource(R.drawable.sound_off);
 
         about_us_bn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -395,7 +409,10 @@ public class MainActivity extends AppCompatActivity {
                 myIntent.putExtra("userName",inputUsername);
                 myIntent.putExtra("difficulty",difficulty);
                 myIntent.putExtra("musicButtonState",musicButtonState);
+                myIntent.putExtra("soundButtonState",soundButtonState);
                 startActivity(myIntent);
+                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
