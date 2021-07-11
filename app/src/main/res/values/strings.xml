@@ -31,7 +31,7 @@
     <string name="nickname_et">Enter your nickname</string>
     <string name="submit_btn">Submit</string>
     <string name="main_menu_btn">Main Menu</string>
-    <string name="replay_btn">Replay</string>
+    <string name="replay_btn">Play again</string>
     <string name="over">Over !</string>
     <string name="levels_played">Levels played:</string>
     <string name="time_played">Time played:</string>
