@@ -429,6 +429,7 @@ public class MainActivity extends AppCompatActivity {
                     inputUsername = "Unknown";
                 myIntent.putExtra("userName",inputUsername);
                 myIntent.putExtra("difficulty",difficulty);
+                myIntent.putExtra("musicButtonState",musicButtonState);
                 startActivity(myIntent);
             }
         });

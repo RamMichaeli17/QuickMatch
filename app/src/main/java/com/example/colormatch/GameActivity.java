@@ -108,6 +108,8 @@ public class GameActivity extends AppCompatActivity {
     String userName;
 
     MediaPlayer song; //Background songs
+    boolean musicButtonState; //Music mode
+    boolean soundButtonState = true; //Sound mode
 
     int[] ShapesFillerColorArray= {R.drawable.star_1_fill_color,R.drawable.star_2_fill_color,R.drawable.star_3_fill_color,R.drawable.star_4_fill_color,R.drawable.circles_1_fill_color,R.drawable.circles_2_fill_color,R.drawable.circles_3_fill_color,R.drawable.circles_4_fill_color,R.drawable.three_shapes_1_fill_color,R.drawable.three_shapes_2_fill_color,R.drawable.three_shapes_3_fill_color,R.drawable.three_shapes_4_fill_color,R.drawable.noodles_1_fill_color,R.drawable.noodles_2_fill_color,R.drawable.noodles_3_fill_color,R.drawable.noodles_4_fill_color};
     int[] ShapesOutlineArray= {R.drawable.star_1_outline,R.drawable.star_2_outline,R.drawable.star_3_outline,R.drawable.star_4_outline,R.drawable.circles_1_outline,R.drawable.circles_2_outline,R.drawable.circles_3_outline,R.drawable.circles_4_outline,R.drawable.three_shapes_1_outline,R.drawable.three_shapes_2_outline,R.drawable.three_shapes_3_outline,R.drawable.three_shapes_4_outline,R.drawable.noodles_1_outline,R.drawable.noodles_2_outline,R.drawable.noodles_3_outline,R.drawable.noodles_4_outline};
@@ -590,6 +592,10 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (!musicButtonState)
+            song.pause();
+        else
+            song.start();
 
         /*
            If the user navigates away from our application (clicking home button for example) onPause() gets called which stops the game (without the visuals continueBTN/exitBTN/paused text)
@@ -607,6 +613,12 @@ public class GameActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        song.pause();
     }
 
     public void alertUserToCustomDifficulty()
@@ -726,7 +738,7 @@ public class GameActivity extends AppCompatActivity {
         Button restart_paused=dialog.findViewById(R.id.restart_pauseBtn);
         Button resume_paused=dialog.findViewById(R.id.resume_pauseBtn);
         Button back_to_menu=dialog.findViewById(R.id.back_to_menu_pauseBtn);
-        ImageButton music_on=dialog.findViewById(R.id.music_button2);
+        ImageButton music_bn=dialog.findViewById(R.id.music_button2);
         ImageButton sound_on=dialog.findViewById(R.id.pink_sound_button2);
         restart_paused.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -756,9 +768,23 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        music_on.setOnClickListener(new View.OnClickListener() {
+        music_bn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (musicButtonState) {
+                    song.pause();
+                    musicButtonState = false;
+                    music_bn.setImageResource(R.drawable.music_off);
+                    Toast.makeText(GameActivity.this, R.string.no_music, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                song.setLooping(true);
+                song.start();
+                music_bn.setImageResource(R.drawable.music_on);
+                Toast.makeText(GameActivity.this, R.string.music_on, Toast.LENGTH_SHORT).show();
+                musicButtonState = true;
+
 
             }
         });
@@ -766,6 +792,7 @@ public class GameActivity extends AppCompatActivity {
         sound_on.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 
             }
         });
