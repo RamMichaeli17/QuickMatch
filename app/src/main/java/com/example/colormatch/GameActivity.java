@@ -6,9 +6,12 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -110,6 +113,10 @@ public class GameActivity extends AppCompatActivity {
     boolean musicButtonState; //Music mode
     boolean soundButtonState = true; //Sound mode
 
+    LinearLayout gameOverLayout;
+    ImageView tryThis;
+
+
     int[] ShapesFillerColorArray= {R.drawable.star_1_fill_color,R.drawable.star_2_fill_color,R.drawable.star_3_fill_color,R.drawable.star_4_fill_color,R.drawable.circles_1_fill_color,R.drawable.circles_2_fill_color,R.drawable.circles_3_fill_color,R.drawable.circles_4_fill_color,R.drawable.three_shapes_1_fill_color,R.drawable.three_shapes_2_fill_color,R.drawable.three_shapes_3_fill_color,R.drawable.three_shapes_4_fill_color,R.drawable.noodles_1_fill_color,R.drawable.noodles_2_fill_color,R.drawable.noodles_3_fill_color,R.drawable.noodles_4_fill_color};
     int[] ShapesOutlineArray= {R.drawable.star_1_outline,R.drawable.star_2_outline,R.drawable.star_3_outline,R.drawable.star_4_outline,R.drawable.circles_1_outline,R.drawable.circles_2_outline,R.drawable.circles_3_outline,R.drawable.circles_4_outline,R.drawable.three_shapes_1_outline,R.drawable.three_shapes_2_outline,R.drawable.three_shapes_3_outline,R.drawable.three_shapes_4_outline,R.drawable.noodles_1_outline,R.drawable.noodles_2_outline,R.drawable.noodles_3_outline,R.drawable.noodles_4_outline};
     private int currentApiVersion;
@@ -210,6 +217,9 @@ public class GameActivity extends AppCompatActivity {
         song = MediaPlayer.create(GameActivity.this, R.raw.during_game_music);
         song.setLooping(true);
         song.start();
+
+//        gameOverLayout = findViewById(R.id.game_over_layout);
+//        tryThis = findViewById(R.id.try_this);
 
 
 
@@ -420,16 +430,16 @@ public class GameActivity extends AppCompatActivity {
                         fourColorsImage.setEnabled(false);
                         fourShapesLayout.setEnabled(false);
 
-//                        Dialog dialog= new Dialog(GameActivity.this);
-//                        dialog.setContentView(R.layout.activity_game_over);
-//                        int width = (int)(getResources().getDisplayMetrics().widthPixels*0.50);
-//                        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.95);
-//                        dialog.getWindow().setLayout(width, height);
-//                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//
-//                        dialog.show();
-//                        dialog.setCanceledOnTouchOutside(false);
-//                        dialog.setCancelable(false);
+                        Dialog dialog= new Dialog(GameActivity.this);
+                        dialog.setContentView(R.layout.activity_game_over);
+                        int width = (int)(getResources().getDisplayMetrics().widthPixels*0.50);
+                        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.95);
+                        dialog.getWindow().setLayout(width, height);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                        dialog.show();
+                        dialog.setCanceledOnTouchOutside(false);
+                        dialog.setCancelable(false);
 
                         updateHighScores();
                     }
@@ -1002,6 +1012,33 @@ public class GameActivity extends AppCompatActivity {
 
 
         }
+    }
+
+    public void convertLayoutToImage()
+    {
+        Bitmap image = getBitmapFromView(gameOverLayout);
+        tryThis.setImageBitmap(image);
+
+    }
+
+    private Bitmap getBitmapFromView(View view) {
+        //Define a bitmap with the same size as the view
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(),Bitmap.Config.ARGB_8888);
+        //Bind a canvas to it
+        Canvas canvas = new Canvas(returnedBitmap);
+        //Get the view's background
+        Drawable bgDrawable =view.getBackground();
+        if (bgDrawable!=null) {
+            //has background drawable, then draw it on the canvas
+            bgDrawable.draw(canvas);
+        }   else{
+            //does not have background drawable, then draw white background on the canvas
+            canvas.drawColor(Color.WHITE);
+        }
+        // draw the view on the canvas
+        view.draw(canvas);
+        //return the bitmap
+        return returnedBitmap;
     }
 
 
