@@ -12,14 +12,12 @@
     </item>
 
     <item android:id="@android:id/progress">
-
         <scale android:scaleWidth="100%">
 
             <shape android:shape="rectangle">
                 <corners android:radius="20dp"></corners>
                 <solid android:color="#287CF6"></solid>
             </shape>
-
         </scale>
 
     </item>

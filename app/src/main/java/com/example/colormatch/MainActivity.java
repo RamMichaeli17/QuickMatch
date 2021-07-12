@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     Animation tweenAnim1, tweenAnim2;  //Title animations
 
 
-    Button beginnerBtn, advancedBtn, professionalBtn, oneVsOneBtn; // Difficulty buttons
+    Button beginnerBtn, advancedBtn, professionalBtn; // Difficulty buttons
     Animation scaleUp, scaleDown; // Buttons animations
 
 
@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
         beginnerBtn = findViewById(R.id.easy_btn);
         advancedBtn = findViewById(R.id.medium_btn);
         professionalBtn = findViewById(R.id.hard_btn);
-        oneVsOneBtn = findViewById(R.id.dual_btn);
 
         //Settings menu
         rotateOpen= AnimationUtils.loadAnimation(this,R.anim.rotate_open_anim);
@@ -157,8 +156,6 @@ public class MainActivity extends AppCompatActivity {
                 else if (event.getAction()== MotionEvent.ACTION_UP) {
                     beginnerBtn.startAnimation(scaleDown);
                 }
-
-
                 return false;
             }
         });
@@ -195,21 +192,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-                oneVsOneBtn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if(event.getAction()== MotionEvent.ACTION_DOWN) {
-                    oneVsOneBtn.startAnimation(scaleUp);
-                }
-                else if (event.getAction()== MotionEvent.ACTION_UP) {
-                    oneVsOneBtn.startAnimation(scaleDown);
-                }
-
-
-                return false;
-            }
-        });
 
                 beginnerBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -231,15 +213,6 @@ public class MainActivity extends AppCompatActivity {
                         startGame(3); // 3 = difficulty (3 confusing shapes)
                     }
                 });
-
-                oneVsOneBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(soundButtonState)
-                        clickSound.start();
-                    }
-                });
-
 
 
         about_us_bn = (ImageButton) findViewById(R.id.about_us_button);
