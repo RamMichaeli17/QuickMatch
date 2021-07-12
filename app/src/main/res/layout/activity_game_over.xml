@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:background="@drawable/game_over_background2"
+    android:background="@drawable/paused_selector"
     android:id="@+id/game_over_layout">
 
     <LinearLayout
@@ -24,7 +24,7 @@
         android:textStyle="bold"
         android:id="@+id/game_title"
         android:text="@string/game_over"
-        android:textSize="50sp"
+        android:textSize="35sp"
 
         android:layout_gravity="center"
         android:padding="5dp"/>
@@ -196,5 +196,21 @@
             android:id="@+id/gmail"/>
 
     </RelativeLayout>-->
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/main_app_font"
+        android:shadowColor="@color/black"
+        android:shadowRadius="20"
+        android:textColor="@color/black"
+        android:textStyle="italic"
+        android:text="Quick Shape"
+        android:textSize="50sp"
+        android:layout_marginLeft="310dp"
+        android:layout_marginTop="110dp"
+        android:padding="10dp"
+        android:rotation="17" />
 
 </RelativeLayout>

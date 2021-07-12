@@ -358,7 +358,7 @@ public class GameActivity extends AppCompatActivity {
                 }
                 else{ // check if the colors of the arrow and the button are the same
                     System.out.println("rotationCounter= "+rotationCounter+"    chosenShapePositionInAnswers="+chosenShapePositionInAnswers);
-                    if ((chosenColor==selectedColor && chosenShapePositionInAnswers==rotationCounter) || true)
+                    if (chosenColor==selectedColor && chosenShapePositionInAnswers==rotationCounter)
                     {
                         //increase points and show them
 
@@ -419,16 +419,16 @@ public class GameActivity extends AppCompatActivity {
                         fourColorsImage.setEnabled(false);
                         fourShapesLayout.setEnabled(false);
 
-//                        Dialog dialog= new Dialog(GameActivity.this);
-//                        dialog.setContentView(R.layout.activity_game_over);
-//                        int width = (int)(getResources().getDisplayMetrics().widthPixels*0.50);
-//                        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.95);
-//                        dialog.getWindow().setLayout(width, height);
-//                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//
-//                        dialog.show();
-//                        dialog.setCanceledOnTouchOutside(false);
-//                        dialog.setCancelable(false);
+                        Dialog dialog= new Dialog(GameActivity.this);
+                        dialog.setContentView(R.layout.activity_game_over);
+                        int width = (int)(getResources().getDisplayMetrics().widthPixels*0.85);
+                        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.95);
+                        dialog.getWindow().setLayout(width, height);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                        dialog.show();
+                        dialog.setCanceledOnTouchOutside(false);
+                        dialog.setCancelable(false);
 
                         updateHighScores();
                     }
