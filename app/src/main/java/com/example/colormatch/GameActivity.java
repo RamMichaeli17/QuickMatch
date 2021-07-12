@@ -12,7 +12,6 @@ import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.shapes.Shape;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -21,7 +20,6 @@ import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.Window;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -45,90 +43,85 @@ import androidx.core.content.FileProvider;
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 
-import org.w3c.dom.Text;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity {
 
+    Button nxtBtn;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     ImageView fourColorsImage, ShapeFillerColor, ShapeOutline;
-    ImageView[] answerPositions= new ImageView[4];
-    TextView tv_points,highestscoreTV,paused, difficuiltyAlertTV,welldoneTV,fantasticTV,levelsplayedVALUETV,timeplayedVALUETV,finalscoreVALUETV;
+    ImageView[] answerPositions= new ImageView[4]; //contains the 4 rotating shapes
+    TextView tv_points, highestScoreTV,paused, difficultyAlertTV, wellDoneTV,fantasticTV, levelsPlayedVALUETV, timePlayedVALUETV, finalScoreVALUETV;
     ProgressBar progressBar;
-    Button continueBTN,exitBTN;
     LinearLayout rotatingAnswersLL;
-    boolean firstTimeOnResumeCalled, gameIsNotPaused,airplanepause, restart=false,firstTimePlaying;
+    boolean firstTimeOnResumeCalled, gameIsNotPaused, airPlanePause, restart=false,firstTimePlaying;
     ConstraintLayout fourShapesLayout;
     ImageButton pauseBtn;
     ImageView trapArrows;
-
-    ObjectAnimator animator0,animator1,animator2,animator3,animator4;
-    AnimatorSet traprotate_animationSet = new AnimatorSet();
-
-    LottieAnimationView fireworks1,fireworks2,welldoneConfeti,airplane;
+    ObjectAnimator animator0,animator1,animator2,animator3;
+    AnimatorSet trapRotateAnimationSet = new AnimatorSet();
+    LottieAnimationView fireworks1,fireworks2, wellDoneConfetti,airplane;
     RelativeLayout newHighScoreLayout,wellDoneLayout;
-
-
-    Handler handler,rotateHandler;
-    Runnable runnable,rotateRunnable;
-
+    Handler handler; // When and how frequerently our game will loop
+    Runnable runnable; // the game loop
     Random r;
-
-
+    //Colors
     private final static int STATE_BLUE = 1;
     private final static int STATE_GREEN = 2;
     private final static int STATE_RED = 3;
     private final static int STATE_YELLOW = 4;
-
-
     int buttonState = STATE_BLUE; // Left side (colors)
-
-    int chosenShape,selectedShape;
+    int chosenShape;
     int chosenColor,selectedColor=STATE_BLUE;
     int chosenShapePositionInAnswers;
     int otherThreeAnswers;
-    int[] chosenAnswers = new int[16];
-    ImageView[] tempImageArray = new ImageView[4];
+    int[] chosenAnswers = new int[16]; // which shapes have been chosen
     int[] rotation = {0,1,2,3};
 
-    // שיניתי מ12 ל24
-    int currentTime = 20000;
-    int startTime = 20000;
-
+    //time set to 8 seconds
+    int currentTime = 50000;
+    int startTime = 50000;
     int currentPoints = 0;
     int levelsPlayedCounter=0;
     int[] tempIndexArray = new int[4];
     int rotationCounter=0;
-
     int highScore;
     int difficulty;
-
     int screenWidth;
-
-    int secondsToRemoveBecausePaused=0;
-    int minutesStart,secondsStart;
     int secondsPassed=0;
     Thread t;
     Animation anim;
-
     ArrayList<HighScoreObject> highScoreList;
-
     String userName;
-
-    MediaPlayer song; //Background songs
+    MediaPlayer song;
     MediaPlayer swipeSound;
     MediaPlayer clickSound;
     boolean musicButtonState; //Music mode
     boolean soundButtonState; //Sound mode
-
+    boolean highScoreFlag=true;
+    //Arrays of the outline shapes and their colors, sorted by 4 groups
     int[] ShapesFillerColorArray= {R.drawable.star_1_fill_color,R.drawable.star_2_fill_color,R.drawable.star_3_fill_color,R.drawable.star_4_fill_color,R.drawable.circles_1_fill_color,R.drawable.circles_2_fill_color,R.drawable.circles_3_fill_color,R.drawable.circles_4_fill_color,R.drawable.three_shapes_1_fill_color,R.drawable.three_shapes_2_fill_color,R.drawable.three_shapes_3_fill_color,R.drawable.three_shapes_4_fill_color,R.drawable.noodles_1_fill_color,R.drawable.noodles_2_fill_color,R.drawable.noodles_3_fill_color,R.drawable.noodles_4_fill_color};
     int[] ShapesOutlineArray= {R.drawable.star_1_outline,R.drawable.star_2_outline,R.drawable.star_3_outline,R.drawable.star_4_outline,R.drawable.circles_1_outline,R.drawable.circles_2_outline,R.drawable.circles_3_outline,R.drawable.circles_4_outline,R.drawable.three_shapes_1_outline,R.drawable.three_shapes_2_outline,R.drawable.three_shapes_3_outline,R.drawable.three_shapes_4_outline,R.drawable.noodles_1_outline,R.drawable.noodles_2_outline,R.drawable.noodles_3_outline,R.drawable.noodles_4_outline};
     private int currentApiVersion;
@@ -140,6 +133,22 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beginner);
+
+
+        nxtBtn= findViewById(R.id.GALTESTnext);
+        nxtBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentTime=0;
+            }
+        });
+
+
+
+
+
+
+
 
 
         //The next 32 lines of code is used to permanently hide & draw over the navigation bar at the right side of the screen
@@ -180,9 +189,10 @@ public class GameActivity extends AppCompatActivity {
         }
 
 
+
         Bundle extras = getIntent().getExtras();
         if(extras !=null) {
-            restart=extras.getBoolean("restart",false);
+            restart=extras.getBoolean("restart",false); // makes 3,2,1 count
             difficulty=extras.getInt("difficulty",1); // 1 Beginner , 2 Adv , 3 Pro
             musicButtonState=extras.getBoolean("musicButtonState",true);
             soundButtonState=extras.getBoolean("soundButtonState",true);
@@ -192,36 +202,29 @@ public class GameActivity extends AppCompatActivity {
          startClock(); // Start counting seconds , stop when paused. this will be used for game-over dialog to show time passed
 
 
-
         firstTimeOnResumeCalled=true;
         gameIsNotPaused =true;
-        fourColorsImage =findViewById(R.id.fourColorsImage); //צריך להחליף לצבעים ולשנות בהתאם
+        fourColorsImage =findViewById(R.id.fourColorsImage);
         ShapeFillerColor =findViewById(R.id.main_shape_color);
         ShapeOutline =findViewById(R.id.main_shape_outline);
         tv_points=findViewById(R.id.tv_points);
         progressBar=findViewById(R.id.progressbar);
-        highestscoreTV=findViewById(R.id.highest_score_tv);
+        highestScoreTV =findViewById(R.id.highest_score_tv);
         paused=findViewById(R.id.pause);
         rotatingAnswersLL=findViewById(R.id.rotating_answers_linear_layout);
-        difficuiltyAlertTV =findViewById(R.id.movingShapeAlert);
+        difficultyAlertTV =findViewById(R.id.movingShapeAlert);
         fourShapesLayout=findViewById(R.id.fourShapes_layout);
-
-
         fireworks1=findViewById(R.id.fireworks1);
         fireworks2=findViewById(R.id.fireworks2);
-        welldoneConfeti=findViewById(R.id.welldoneConfetiAnimation);
+        wellDoneConfetti =findViewById(R.id.welldoneConfetiAnimation);
         wellDoneLayout=findViewById(R.id.welldoneAnimationRelativeLayout);
-        welldoneTV=findViewById(R.id.welldoneTV);
+        wellDoneTV =findViewById(R.id.welldoneTV);
         airplane=findViewById(R.id.airplaneAnimation);
         fantasticTV=findViewById(R.id.fantasticWithAirplaneTV);
-
         newHighScoreLayout=findViewById(R.id.newHighScoreRelativeLayout);
-
         pauseBtn=findViewById(R.id.pauseBtn);
-
         trapArrows = findViewById(R.id.trap_arrows_iv);
-
-        //Click Sound
+        //Sounds
         swipeSound = MediaPlayer.create(this,R.raw.press_game);
         clickSound = MediaPlayer.create(this,R.raw.click_sound);
         song = MediaPlayer.create(GameActivity.this, R.raw.during_game_music);
@@ -234,8 +237,6 @@ public class GameActivity extends AppCompatActivity {
         else
             song.setVolume(0,0);
 
-
-
         if (soundButtonState)
             clickSound.start();
         else
@@ -244,63 +245,46 @@ public class GameActivity extends AppCompatActivity {
             clickSound.pause();
         }
 
-
-
-
-
-
-
-        // These 4 lines of code are used in airplane animation
+        // These 3 lines of code are used in airplane animation
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        //int height = displayMetrics.heightPixels;
         screenWidth = displayMetrics.widthPixels;
-
-
 
         answerPositions[0]=findViewById(R.id.shape_TOP);
         answerPositions[1]=findViewById(R.id.shape_RIGHT);
         answerPositions[2]=findViewById(R.id.shape_BOTTOM);
         answerPositions[3]=findViewById(R.id.shape_LEFT);
 
-
-
-
-
-        // Shared Preferences - get data
-        highScoreList = ConfigSharedPreferences.readListFromPref(this);
+        // Shared preferences - get data
+        highScoreList = ConfigSharedPreferences.readListFromPref(this); // fetch high score data
         firstTimePlaying = ConfigSharedPreferences.readIsItFirstTime(this);
-        if (firstTimePlaying)
+        if (firstTimePlaying) // if it's your first time playing then show instructions
         {
             Intent firstTimeIntent = new Intent(GameActivity.this, Tutorial.class);
             firstTimeIntent.putExtra("musicButtonState",musicButtonState);
             firstTimeIntent.putExtra("soundButtonState",soundButtonState);
             startActivity(firstTimeIntent);
-
         }
 
 
-        if ( highScoreList ==null || highScoreList.isEmpty()) {
-            highestscoreTV.setText("0");
+        if ( highScoreList == null || highScoreList.isEmpty()) {
+            highestScoreTV.setText("0");
             highScoreList = new ArrayList<>();
         }
         else
-            highestscoreTV.setText(highScoreList.get(0).getScore());
+            highestScoreTV.setText(highScoreList.get(0).getScore());
 
-        highScore = Integer.parseInt(highestscoreTV.getText().toString()); // save HighScoreObject to an int to avoid calling parseInt/getText/toString multiple times during runtime
+        highScore = Integer.parseInt(highestScoreTV.getText().toString()); // save HighScoreObject to an int to avoid calling parseInt/getText/toString multiple times during runtime
 
-        // איך 4 שניות אם למעלה רשום 12 ?
-        //set the initial progressbar time to 4 seconds
+        //set the initial progressbar time
         progressBar.setMax(startTime);
         progressBar.setProgress(startTime);
 
         //display the starting points
         tv_points.setText(R.string.points_calculator + currentPoints);
 
-        //generate random shape and color at the start of the game
         r = new Random();
 
-        // לכפות על הביגינר שיהיו 2 דומים ולא רק 1 אותו דבר כדי שבאמת יהיה עניין למשחק....
 
         /*
            in the next few lines of code we generate the chosenShape at a random position (logic is inside functions for reuse later in main-game loop)
@@ -318,9 +302,9 @@ public class GameActivity extends AppCompatActivity {
                  So I just used random shape + random position to solve this problem (in beginner wont matter , in harder difficulties it will)
 
                  Answers index will look like this:
-                                    1
-                                 4     2
-                                    3
+                                    0
+                                 3     1
+                                    2
          */
 
         pauseBtn.setOnClickListener(new View.OnClickListener() {
@@ -353,11 +337,7 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //rotate the shapes
                 if(soundButtonState) swipeSound.start();
-
-
                 rotationCounter=(rotationCounter+1)%4; // 0->1->2->3 -->  ....
-
-
                 rotateShapes();
             }
         });
@@ -377,46 +357,53 @@ public class GameActivity extends AppCompatActivity {
                     handler.postDelayed(runnable, 10);
                 }
                 else{ // check if the color and shape is correct
-                    if ((chosenColor==selectedColor)&&(4-(chosenShapePositionInAnswers+rotationCounter))%4==0 ) {
+                    if ((chosenColor==selectedColor)&&(4-(chosenShapePositionInAnswers+rotationCounter))%4==0 ){
 
                         //increase points and show them
                         levelsPlayedCounter++; // For game over dialog
                         currentPoints = currentPoints + 10;
-                        tv_points.setText(getString(R.string.points_calculator) + currentPoints);
 
                         // reset the chosenAnswers array
                         Arrays.fill(chosenAnswers, 0); // java method to fill every index in the array with value 0 (best way to reset the array)
 
-                        //make the speed higher after every turn / if the speed is 1 second make it again 2 seconds
-                        startTime = startTime - 100;
-                        if (startTime < 1000) {
-                            startTime = 2000;
+                        //make the speed higher after every turn
+                        startTime = startTime - 1000;
+                        if (startTime <= 17000) {
+                            startTime = 17000;
                         }
 
                         // Adding difficulty to level / Alerting before difficulty level
-                        if (currentPoints == 1)
+                        if (currentPoints == 20|| currentPoints == 130)
                             alertUserToCustomDifficulty();
 
-                        if (currentPoints == 2)
+                        if (currentPoints == 30 || currentPoints == 140)
                             moveShape();
 
-                        // Checking if new highscore
-                        if (highScore!=0 && currentPoints > highScore ) {
-                            playIngameAnimation("newhighscore");
+                        if (currentPoints == 40 || currentPoints == 150)
+                        {
+                            playIngameAnimation("welldone");
+                            currentPoints+=10;
                         }
 
-                        if (currentPoints!=5)
+                        // Checking if new high score
+                        if (highScore!=0 && currentPoints>highScore && highScoreFlag ) {
+                            playIngameAnimation("newhighscore");
+                            highScoreFlag = false;
+                        }
+
+                        if (currentPoints == 70 || currentPoints == 180)
                             playIngameAnimation("trap_rotate");
 
-                        // When to say welldone
-                        if(currentPoints==3)
+                        // When to say well done
+                        if(currentPoints == 80|| currentPoints == 190) {
                             playIngameAnimation("welldone");
+                            currentPoints+=10;
+                        }
 
-                        if(currentPoints==5)
+                        if(currentPoints == 120 || currentPoints == 230)
                             playIngameAnimation("airplane");
 
-                        playIngameAnimation("blinking");
-
+                        tv_points.setText(getString(R.string.points_calculator) + currentPoints);
 
                         progressBar.setMax(startTime);
                         currentTime=startTime;
@@ -430,18 +417,15 @@ public class GameActivity extends AppCompatActivity {
                         //and then generate 3 other random answers in random locations
                         chosenShapePositionInAnswers=r.nextInt(4);
                         generateAnswerAtPosition(chosenShapePositionInAnswers,chosenShape);
-
                         generateOtherThreeShapes();
-
-
-                        if (!airplanepause)
+                        if (!airPlanePause) // puase the game during the airplane animation
                             handler.postDelayed(runnable,20);
                     }
+
+                    // Game over
                     else {
                         fourColorsImage.setEnabled(false);
                         fourShapesLayout.setEnabled(false);
-
-
 
                         Dialog dialog= new Dialog(GameActivity.this);
                         dialog.setContentView(R.layout.activity_game_over);
@@ -450,19 +434,13 @@ public class GameActivity extends AppCompatActivity {
                         dialog.getWindow().setLayout(width, height);
                         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+                        levelsPlayedVALUETV =dialog.findViewById(R.id.levelsplayedVALUETV);
+                        timePlayedVALUETV =dialog.findViewById(R.id.time_played_VALUETV);
+                        finalScoreVALUETV =dialog.findViewById(R.id.finalscoreVALUETV);
 
-
-                        levelsplayedVALUETV=dialog.findViewById(R.id.levelsplayedVALUETV);
-                        timeplayedVALUETV=dialog.findViewById(R.id.time_played_VALUETV);
-                        finalscoreVALUETV=dialog.findViewById(R.id.finalscoreVALUETV);
-
-
-
-
-                        levelsplayedVALUETV.setText(levelsPlayedCounter+"");
-                        timeplayedVALUETV.setText((secondsPassed/60)+" "+getString(R.string.mins)+" "+(secondsPassed)%60+" "+getString(R.string.secs));
-                        finalscoreVALUETV.setText(currentPoints+"");
-
+                        levelsPlayedVALUETV.setText(levelsPlayedCounter+"");
+                        timePlayedVALUETV.setText((secondsPassed/60)+" "+getString(R.string.mins)+" "+(secondsPassed)%60+" "+getString(R.string.secs));
+                        finalScoreVALUETV.setText(currentPoints+"");
 
                         RelativeLayout relativeLayout = dialog.findViewById(R.id.game_over_layout);
                         Button shareBtn = dialog.findViewById(R.id.share_score);
@@ -497,9 +475,7 @@ public class GameActivity extends AppCompatActivity {
                             public void onClick(View v) {
 
                                 String sharedText = getString(R.string.with_share);
-                                Bitmap bitmap = getBitmapFromView(relativeLayout);
-
-
+                                Bitmap bitmap = getBitmapFromView(relativeLayout); // convert the layout to an image
 
                                 try {
                                     File file = new File(getApplicationContext().getExternalCacheDir(), File.separator +"Quick Match Record.png");
@@ -550,8 +526,6 @@ public class GameActivity extends AppCompatActivity {
                                         userName=getString(R.string.unknown_user);
                                     updateHighScores();
                                     submitGameOverBTN.setClickable(false);
-
-
                             }
                         });
 
@@ -565,12 +539,10 @@ public class GameActivity extends AppCompatActivity {
         };
 
         //start the game loop
-
         if(!restart)
             handler.postDelayed(runnable,100);
         else {
             continueTheGame();
-
         }
     }
 
@@ -583,19 +555,15 @@ public class GameActivity extends AppCompatActivity {
         rotateAnimation.setInterpolator(new LinearInterpolator());
         rotateAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
+            public void onAnimationStart(Animation animation) { }
             @Override
-            public void onAnimationEnd(Animation animation) {
+            public void onAnimationEnd(Animation animation)
+            {
                 image.setImageResource(drawable);
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
+            public void onAnimationRepeat(Animation animation) { }
         });
         image.startAnimation(rotateAnimation);
     }
@@ -630,6 +598,7 @@ public class GameActivity extends AppCompatActivity {
                 break;
         }
     }
+
 
     public void rotateShapes() {
 
@@ -677,8 +646,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-
-    private void updateHighScores() //דרוש הסבר
+    private void updateHighScores()
     {
         HighScoreObject newHighScore = new HighScoreObject(userName,Integer.toString(currentPoints)); // Create a new highscore with username and current points
         highScoreList.add(newHighScore); // Add it to the list
@@ -764,11 +732,11 @@ public class GameActivity extends AppCompatActivity {
     public void alertUserToCustomDifficulty()
     {
         // this function is used to alert the user 1 level before a difficult level comes (for example , moving shape! level)
-        difficuiltyAlertTV.animate().alpha(0.6f).setDuration(800);
+        difficultyAlertTV.animate().alpha(0.6f).setDuration(800);
     }
     public void moveShape()
     {
-        difficuiltyAlertTV.animate().alpha(0).setDuration(400);
+        difficultyAlertTV.animate().alpha(0).setDuration(400);
         // Some animations on the shape in the middle (right to left to center), to increase level difficulty
         ShapeOutline.animate().translationX(800).setDuration(350); // take shape to right side
         ShapeFillerColor.animate().translationX(800).setDuration(350).withEndAction(new Runnable() {
@@ -857,7 +825,6 @@ public class GameActivity extends AppCompatActivity {
 
         t.interrupt(); // stop counting play time seconds
 
-        anim.cancel(); // If blinking effect is active , cancel it
 
 
         gameIsNotPaused=false; // used in many places that needs to know if the game is paused or running
@@ -984,8 +951,8 @@ public class GameActivity extends AppCompatActivity {
         chosenShapePositionInAnswers = r.nextInt(4) ;
         generateAnswerAtPosition(chosenShapePositionInAnswers, chosenShape);
         generateOtherThreeShapes();
-        if (difficuiltyAlertTV.getAlpha() == 0.1f) // If a difficuilty alert (moving shape!) is on the screen
-            difficuiltyAlertTV.animate().alpha(0.6f).setDuration(1500); // return it to normal alpha
+        if (difficultyAlertTV.getAlpha() == 0.1f) // If a difficuilty alert (moving shape!) is on the screen
+            difficultyAlertTV.animate().alpha(0.6f).setDuration(1500); // return it to normal alpha
 
 
         rotatingAnswersLL.animate().alpha(1).setDuration(1500); // return the answers to normal alpha
@@ -1050,7 +1017,7 @@ public class GameActivity extends AppCompatActivity {
                 fireworks2.setRepeatMode(LottieDrawable.RESTART);
                 fireworks1.playAnimation();
                 fireworks2.playAnimation();
-                newHighScoreLayout.animate().translationX(620).setDuration(600).alpha(1).withEndAction(new Runnable() {
+                newHighScoreLayout.animate().translationX(850).setDuration(600).alpha(1).withEndAction(new Runnable() {
                     @Override
                     public void run() {
                         newHighScoreLayout.animate().translationX(0).alpha(0).setStartDelay(1500);
@@ -1060,15 +1027,15 @@ public class GameActivity extends AppCompatActivity {
 
             case "welldone":
                 wellDoneLayout.setVisibility(View.VISIBLE);
-                welldoneTV.animate().alpha(1).setDuration(400).withEndAction(new Runnable() {
+                wellDoneTV.animate().alpha(1).setDuration(400).withEndAction(new Runnable() {
                     @Override
                     public void run() {
-                        welldoneTV.animate().alpha(0).setDuration(400).setStartDelay(300);
+                        wellDoneTV.animate().alpha(0).setDuration(400).setStartDelay(300);
                     }
                 });
-                welldoneConfeti.setRepeatMode(LottieDrawable.RESTART);
-                welldoneConfeti.setRepeatCount(0);
-                welldoneConfeti.playAnimation();
+                wellDoneConfetti.setRepeatMode(LottieDrawable.RESTART);
+                wellDoneConfetti.setRepeatCount(0);
+                wellDoneConfetti.playAnimation();
                 break;
 
             case "airplane":
@@ -1080,7 +1047,7 @@ public class GameActivity extends AppCompatActivity {
                 gameIsNotPaused=false;
                 ShapeFillerColor.setVisibility(View.INVISIBLE); // Hide center shape
                 ShapeOutline.setVisibility(View.INVISIBLE);
-                airplanepause=true; // Disable game loop
+                airPlanePause =true; // Disable game loop
                 Resources reso = getResources();
                 float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 450f, reso.getDisplayMetrics() ); // Get 185 in device independent pixels
 
@@ -1098,7 +1065,7 @@ public class GameActivity extends AppCompatActivity {
                         ShapeOutline.setVisibility(View.VISIBLE);
                         airplane.cancelAnimation();
                         gameIsNotPaused=true;
-                        airplanepause=false; // Enable game loop
+                        airPlanePause =false; // Enable game loop
                         handler.postDelayed(runnable,20); // Resume
                     }
                 });
@@ -1125,28 +1092,10 @@ public class GameActivity extends AppCompatActivity {
 
 
 
-                traprotate_animationSet.play(animator0).with(animator1).with(animator2).with(animator3);
-                traprotate_animationSet.start();
+                trapRotateAnimationSet.play(animator0).with(animator1).with(animator2).with(animator3);
+                trapRotateAnimationSet.start();
                 break;
-            case "blinking":
 
-                anim = new AlphaAnimation(0.0f, 1.0f);
-                anim.setDuration(1000); //You can manage the blinking time with this parameter
-                anim.setStartOffset(20);
-                anim.setRepeatMode(Animation.REVERSE);
-                anim.setRepeatCount(Animation.INFINITE);
-                ShapeFillerColor.startAnimation(anim);
-                ShapeOutline.startAnimation(anim);
-
-                final Handler handlerBlinking = new Handler();
-                handlerBlinking.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        anim.cancel();
-                    }
-                }, startTime/7);
-
-                break;
         }
     }
 
@@ -1220,6 +1169,7 @@ public class GameActivity extends AppCompatActivity {
         //return the bitmap
         return returnedBitmap;
     }
+
 
 
     @Override

@@ -25,7 +25,7 @@ public class ConfigSharedPreferences {
 
     public static void writeListInPref(Context context, ArrayList<HighScoreObject> list) {
         Gson gson = new Gson();
-        String jsonString = gson.toJson(list); // Convert our highscore list (ArrayList) to Json and saving the resulted string in variable 'jsonString'
+        String jsonString = gson.toJson(list); // Convert our high score list (ArrayList) to Json and saving the resulted string in variable 'jsonString'
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context); // Get shared preferences
         SharedPreferences.Editor editor = pref.edit(); // Get editor for shared preferences (since we want to write to shared preferences)
@@ -35,7 +35,7 @@ public class ConfigSharedPreferences {
 
     public static ArrayList<HighScoreObject> readListFromPref(Context context) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context); // Get shared preferences
-        String jsonString = pref.getString(LIST_KEY,""); // Get the highscore list (still in Json format)
+        String jsonString = pref.getString(LIST_KEY,""); // Get the high score list (still in Json format)
 
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<HighScoreObject>>(){}.getType(); // Set the conversion to be from Json to ArrayList (using getType on our list)
