@@ -351,14 +351,13 @@ public class GameActivity extends AppCompatActivity {
                 //show progress
                 currentTime = currentTime-100;
                 progressBar.setProgress(currentTime);
-                restart=false;
 
                 //check if there is still some time left in the progressBar
                 if (currentTime>0) {
                     handler.postDelayed(runnable, 10);
                 }
                 else{ // check if the color and shape is correct
-                    if ((chosenColor==selectedColor)&&(4-(chosenShapePositionInAnswers+rotationCounter))%4==0 ){
+                    if ((chosenColor==selectedColor)&&(4-(chosenShapePositionInAnswers+rotationCounter))%4==0  ){
 
                         //increase points and show them
                         levelsPlayedCounter++; // For game over dialog
@@ -427,6 +426,7 @@ public class GameActivity extends AppCompatActivity {
                     else {
                         fourColorsImage.setEnabled(false);
                         fourShapesLayout.setEnabled(false);
+                        restart=true;
 
                         Dialog dialog= new Dialog(GameActivity.this);
                         dialog.setContentView(R.layout.activity_game_over);
@@ -713,6 +713,8 @@ public class GameActivity extends AppCompatActivity {
            But because onResume() gets called when the game ("GameActivity.java") first loads , the game starts in paused mode ...
            we don't want that to happen , so if it's the first time onResume has been called (if game just started) , we ignore it (we don't pause)
          */
+
+        System.out.println("firsttime ="+firstTimeOnResumeCalled+"   restart="+restart);
         if (firstTimeOnResumeCalled || restart==true) {
             firstTimeOnResumeCalled = false;
         }
@@ -935,6 +937,7 @@ public class GameActivity extends AppCompatActivity {
 
     public void continueTheGame() {
         // This method takes care of pausing the game
+        restart=false;
         gameIsNotPaused=false;
         t.interrupt(); // Stop counting time (relevant if we restart the gam)
         paused.setVisibility(View.VISIBLE);
