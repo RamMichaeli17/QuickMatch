@@ -426,6 +426,24 @@ public class GameActivity extends AppCompatActivity {
                         dialog.getWindow().setLayout(width, height);
                         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+                        Button restartGameOver = dialog.findViewById(R.id.replay);
+                        Button mainMenu= dialog.findViewById(R.id.mainmenu);
+
+
+                        restartGameOver.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                restartTheGame();
+                            }
+                        });
+
+                        mainMenu.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                switchToMainActivity();
+                            }
+                        });
+
                         dialog.show();
                         dialog.setCanceledOnTouchOutside(false);
                         dialog.setCancelable(false);
@@ -762,15 +780,7 @@ public class GameActivity extends AppCompatActivity {
         restart_paused.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(soundButtonState)clickSound.start();
-                Intent intent = new Intent(GameActivity.this, GameActivity.class);
-                intent.putExtra("restart",true);
-                intent.putExtra("userName",userName);
-                intent.putExtra("difficulty",difficulty);
-                intent.putExtra("musicButtonState",musicButtonState);
-                intent.putExtra("soundButtonState",soundButtonState);
-
-                startActivity(intent);
+                restartTheGame();
             }
         });
 
@@ -787,14 +797,7 @@ public class GameActivity extends AppCompatActivity {
         back_to_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(soundButtonState)clickSound.start();
-                updateHighScores();
-                Intent intent = new Intent(GameActivity.this, MainActivity.class);
-                intent.putExtra("musicButtonState",musicButtonState);
-                intent.putExtra("soundButtonState",soundButtonState);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
-
+                switchToMainActivity();
             }
         });
 
@@ -1001,6 +1004,28 @@ public class GameActivity extends AppCompatActivity {
                 settest.start();
                 break;
         }
+    }
+
+    public void switchToMainActivity ()
+    {
+        if(soundButtonState)clickSound.start();
+        Intent intent = new Intent(GameActivity.this, MainActivity.class);
+        intent.putExtra("musicButtonState",musicButtonState);
+        intent.putExtra("soundButtonState",soundButtonState);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+    }
+
+    public void restartTheGame ()
+    {
+        if(soundButtonState)clickSound.start();
+        Intent intent = new Intent(GameActivity.this, GameActivity.class);
+        intent.putExtra("restart",true);
+        intent.putExtra("userName",userName);
+        intent.putExtra("difficulty",difficulty);
+        intent.putExtra("musicButtonState",musicButtonState);
+        intent.putExtra("soundButtonState",soundButtonState);
+        startActivity(intent);
     }
 
 
