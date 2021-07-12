@@ -329,7 +329,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.areyousureyouwanttoexit);
 
         int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
-        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.35);
+        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.40);
         dialog.getWindow().setLayout(width, height);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
