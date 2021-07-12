@@ -43,4 +43,7 @@
     <string name="new_high_score">שיא חדש!</string>
     <string name="well_done_topic">כל הכבוד!</string>
     <string name="with_share">אני ב- Quick Match! 🎨\nבוא\\י נראה אם תוכל\\י לנצח אותי 🏅</string>
+    <string name="mins">דק\'</string>
+    <string name="secs">שנ\'</string>
+    <string name="submit_nick">הניקוד שלך התווסף לרשימת השיאים</string>
 </resources>

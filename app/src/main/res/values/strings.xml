@@ -42,4 +42,7 @@
     <string name="new_high_score">New High Score!</string>
     <string name="well_done_topic">Well Done!</string>
     <string name="with_share">I\'m on Quick Match! 🎨\nLet\'s see if you can beat me 🏅</string>
+    <string name="mins">m</string>
+    <string name="secs">s</string>
+    <string name="submit_nick">Your score has been added to the high score list</string>
 </resources>

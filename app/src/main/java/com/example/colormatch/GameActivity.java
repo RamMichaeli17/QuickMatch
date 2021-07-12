@@ -454,7 +454,7 @@ public class GameActivity extends AppCompatActivity {
 
 
                         levelsplayedVALUETV.setText(levelsPlayedCounter+"");
-                        timeplayedVALUETV.setText((secondsPassed/60)+"m "+(secondsPassed+1)%60+"s");
+                        timeplayedVALUETV.setText((secondsPassed/60)+" "+getString(R.string.mins)+" "+(secondsPassed+1)%60+" "+getString(R.string.secs));
                         finalscoreVALUETV.setText(currentPoints+"");
 
 
