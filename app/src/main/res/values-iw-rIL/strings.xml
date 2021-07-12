@@ -8,9 +8,9 @@
     <string name="hard_btn">מקצוענים</string>
     <string name="dual_btn">1 על 1</string>
     <string name="no_music">מוזיקה כבוייה 🔕</string>
-    <string name="no_sound">צליל כבוי 🔈</string>
+    <string name="no_sound">צליל כבוי 🔇</string>
     <string name="music_on">מוזיקה דלוקה 🔔</string>
-    <string name="sound_on">צליל דלוק 🔇</string>
+    <string name="sound_on">צליל דלוק 🔈</string>
     <string name="areYouSureYouWannaQuit">האם אתה בטוח שברצונך לצאת ?</string>
     <string name="restart_btn">משחק חדש</string>
     <string name="resume_btn">המשך משחק</string>
@@ -38,4 +38,8 @@
     <string name="final_score">ניקוד סופי:</string>
     <string name="share_score_btn">שתף</string>
     <string name="unknown_user">לא ידוע</string>
+    <string name="pause_topic">השהייה</string>
+    <string name="fantastic_plane">פנטסטי</string>
+    <string name="new_high_score">שיא חדש!</string>
+    <string name="well_done_topic">כל הכבוד!</string>
 </resources>

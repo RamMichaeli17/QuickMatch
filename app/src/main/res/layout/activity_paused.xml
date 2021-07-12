@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:text="Paused"
+        android:text="@string/pause_topic"
         android:textColor="@color/logo_blue"
         android:shadowColor="@color/logo_yellow"
         android:shadowRadius="40"

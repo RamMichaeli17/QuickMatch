@@ -32,7 +32,7 @@
         android:textAlignment="center"
         android:padding="10dp"
         android:textColor="@color/black"
-        android:textSize="25sp" />
+        android:textSize="30sp" />
 
     <!--Buttons Layout-->
     <LinearLayout
@@ -50,7 +50,7 @@
         android:textStyle="bold"
         android:fontFamily="@font/popup_bold_font"
         android:textAllCaps="false"
-        android:textSize="25sp"
+        android:textSize="30sp"
         android:textAlignment="center"
         android:shadowRadius="2"
         android:shadowColor="@color/black"
@@ -66,7 +66,7 @@
         android:id="@+id/btnno"
         android:layout_width="90dp"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         android:shadowRadius="2"
         android:textAlignment="center"
