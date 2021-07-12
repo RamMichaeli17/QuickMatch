@@ -24,6 +24,7 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -40,16 +41,21 @@ import androidx.core.content.ContextCompat;
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity {
 
     ImageView fourColorsImage, ShapeFillerColor, ShapeOutline;
     ImageView[] answerPositions= new ImageView[4];
-    TextView tv_points,highestscoreTV,paused, difficuiltyAlertTV,welldoneTV,fantasticTV;
+    TextView tv_points,highestscoreTV,paused, difficuiltyAlertTV,welldoneTV,fantasticTV,levelsplayedVALUETV,timeplayedVALUETV,finalscoreVALUETV;
     ProgressBar progressBar;
     Button continueBTN,exitBTN;
     LinearLayout rotatingAnswersLL;
@@ -95,6 +101,7 @@ public class GameActivity extends AppCompatActivity {
     int startTime = 18000;
 
     int currentPoints = 0;
+    int levelsPlayedCounter=0;
 
     int rotationCounter=0;
 
@@ -103,6 +110,11 @@ public class GameActivity extends AppCompatActivity {
     int difficulty;
 
     int screenWidth;
+
+    int secondsToRemoveBecausePaused=0;
+    int minutesStart,secondsStart;
+    int secondsPassed=0;
+    Thread t;
 
     ArrayList<HighScoreObject> highScoreList;
 
@@ -165,16 +177,16 @@ public class GameActivity extends AppCompatActivity {
         }
 
 
-        Bundle extras = getIntent().getExtras(); // Get username from mainActivity (dialog that pops before game)
+        Bundle extras = getIntent().getExtras();
         if(extras !=null) {
-            userName = extras.getString(getString(R.string.Username),getString(R.string.unknown_user));
-            restart=extras.getBoolean(getString(R.string.restart_btn),false);
+            restart=extras.getBoolean("restart",false);
             difficulty=extras.getInt("difficulty",1); // 1 Beginner , 2 Adv , 3 Pro
             musicButtonState=extras.getBoolean("musicButtonState",true);
             soundButtonState=extras.getBoolean("soundButtonState",true);
         }
 
 
+         startClock(); // Start counting seconds , stop when paused. this will be used for game-over dialog to show time passed
 
 
 
@@ -190,6 +202,7 @@ public class GameActivity extends AppCompatActivity {
         rotatingAnswersLL=findViewById(R.id.rotating_answers_linear_layout);
         difficuiltyAlertTV =findViewById(R.id.movingShapeAlert);
         fourShapesLayout=findViewById(R.id.fourShapes_layout);
+
 
 
         fireworks1=findViewById(R.id.fireworks1);
@@ -356,12 +369,11 @@ public class GameActivity extends AppCompatActivity {
                 if (currentTime>0) {
                     handler.postDelayed(runnable, 10);
                 }
-                else{ // check if the colors of the arrow and the button are the same
-                    System.out.println("rotationCounter= "+rotationCounter+"    chosenShapePositionInAnswers="+chosenShapePositionInAnswers);
+                else{ // check if the color and shape is correct
                     if (chosenColor==selectedColor && chosenShapePositionInAnswers==rotationCounter)
                     {
                         //increase points and show them
-
+                        levelsPlayedCounter++; // For game over dialog
                         currentPoints = currentPoints +1;
                         tv_points.setText(getString(R.string.points_calculator)+currentPoints);
 
@@ -419,6 +431,8 @@ public class GameActivity extends AppCompatActivity {
                         fourColorsImage.setEnabled(false);
                         fourShapesLayout.setEnabled(false);
 
+
+
                         Dialog dialog= new Dialog(GameActivity.this);
                         dialog.setContentView(R.layout.activity_game_over);
                         int width = (int)(getResources().getDisplayMetrics().widthPixels*0.85);
@@ -426,8 +440,44 @@ public class GameActivity extends AppCompatActivity {
                         dialog.getWindow().setLayout(width, height);
                         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+
+
+                        levelsplayedVALUETV=dialog.findViewById(R.id.levelsplayedVALUETV);
+                        timeplayedVALUETV=dialog.findViewById(R.id.time_played_VALUETV);
+                        finalscoreVALUETV=dialog.findViewById(R.id.finalscoreVALUETV);
+
+
+
+
+                        levelsplayedVALUETV.setText(levelsPlayedCounter+"");
+                        timeplayedVALUETV.setText((secondsPassed/60)+"m "+(secondsPassed+1)%60+"s");
+                        finalscoreVALUETV.setText(currentPoints+"");
+
+
                         Button restartGameOver = dialog.findViewById(R.id.replay);
                         Button mainMenu= dialog.findViewById(R.id.mainmenu);
+                        Button submitGameOverBTN=dialog.findViewById(R.id.submit_game_over);
+                        EditText nicknameET=dialog.findViewById(R.id.nicknameET);
+                        LottieAnimationView newHighScoreFireworks = dialog.findViewById(R.id.newhighscorefireworks);
+                        TextView newHighScoreTV = dialog.findViewById(R.id.newhighscoreTV);
+
+                      //  if (currentPoints == highScore + 1 )
+                        {
+                            newHighScoreTV.setVisibility(View.VISIBLE);
+                            newHighScoreFireworks.setVisibility(View.VISIBLE);
+
+
+                                newHighScoreTV.animate().scaleY(1.3f).rotation(3f).setDuration(1400);
+                                newHighScoreTV.animate().scaleX(1.3f).setDuration(1400).withEndAction(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        newHighScoreTV.animate().scaleX(1).rotation(0).setDuration(1400);
+                                        newHighScoreTV.animate().scaleY(1).setDuration(1400);
+                                    }
+                                });
+
+
+                        }
 
 
                         restartGameOver.setOnClickListener(new View.OnClickListener() {
@@ -444,11 +494,18 @@ public class GameActivity extends AppCompatActivity {
                             }
                         });
 
+                        submitGameOverBTN.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                userName=nicknameET.getText().toString();
+                                updateHighScores();
+                            }
+                        });
+
                         dialog.show();
                         dialog.setCanceledOnTouchOutside(false);
                         dialog.setCancelable(false);
 
-                        updateHighScores();
                     }
                 }
             }
@@ -458,8 +515,10 @@ public class GameActivity extends AppCompatActivity {
 
         if(!restart)
             handler.postDelayed(runnable,100);
-        else
+        else {
             continueTheGame();
+
+        }
     }
 
     //rotate animation of the button when clicked
@@ -741,6 +800,10 @@ public class GameActivity extends AppCompatActivity {
         // This method takes care of pausing the game
 /*        if(difficuiltyAlertTV.getAlpha()==0.6f) // If a difficuilty alert (moving shape!) is on the screen
             difficuiltyAlertTV.setAlpha(0.1f); // make it less noticeable*/
+
+        t.interrupt(); // stop counting play time seconds
+
+
         gameIsNotPaused=false; // used in many places that needs to know if the game is paused or running
         currentTime=startTime; // reset the time left
         handler.removeCallbacks(runnable); // stop the handler - a way to pause the game
@@ -902,6 +965,8 @@ public class GameActivity extends AppCompatActivity {
                                 ShapeFillerColor.setVisibility(View.VISIBLE);
                                 ShapeOutline.setVisibility(View.VISIBLE);
 
+                                startClock();
+
                             }
                         });
                     }
@@ -1021,7 +1086,6 @@ public class GameActivity extends AppCompatActivity {
         if(soundButtonState)clickSound.start();
         Intent intent = new Intent(GameActivity.this, GameActivity.class);
         intent.putExtra("restart",true);
-        intent.putExtra("userName",userName);
         intent.putExtra("difficulty",difficulty);
         intent.putExtra("musicButtonState",musicButtonState);
         intent.putExtra("soundButtonState",soundButtonState);
@@ -1029,6 +1093,31 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
+    private void startClock(){
+         t = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(1000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Calendar c = Calendar.getInstance();
+
+                                secondsPassed++;
+
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        t.start();
+    }
     @Override
     protected void onPause() {
         System.out.println("OnPause()");

@@ -381,40 +381,16 @@ public class MainActivity extends AppCompatActivity {
         if(soundButtonState)
             clickSound.start();
 
-        // Asking for username dialog (before entering game)
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Enter username");
+        Intent myIntent = new Intent(MainActivity.this, GameActivity.class);
+
+        myIntent.putExtra("difficulty",difficulty);
+        myIntent.putExtra("musicButtonState",musicButtonState);
+        myIntent.putExtra("soundButtonState",soundButtonState);
+        startActivity(myIntent);
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
 
 
-        final EditText input = new EditText(MainActivity.this);
 
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        builder.setView(input);
-
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                inputUsername = input.getText().toString();
-                Intent myIntent = new Intent(MainActivity.this, GameActivity.class);
-                if (inputUsername.isEmpty())
-                    inputUsername = getString(R.string.unknown_user);
-                myIntent.putExtra("userName",inputUsername);
-                myIntent.putExtra("difficulty",difficulty);
-                myIntent.putExtra("musicButtonState",musicButtonState);
-                myIntent.putExtra("soundButtonState",soundButtonState);
-                startActivity(myIntent);
-                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
-
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        builder.show();
 
     }
 
