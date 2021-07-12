@@ -30,7 +30,20 @@
         android:padding="5dp"/>
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
 
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/info_vert_layout"
+            android:layout_weight="2">
 
     <TextView
         android:layout_width="wrap_content"
@@ -66,8 +79,29 @@
         android:layout_gravity="start"
         android:layout_marginStart="60dp"/>
 
+        </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/main_app_font"
+                android:shadowColor="@color/black"
+                android:shadowRadius="20"
+                android:textColor="@color/black"
+                android:textStyle="italic"
+                android:text="Quick Shape"
+                android:textSize="50sp"
+                android:padding="5dp"
+                android:rotation="17"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                />
+        </LinearLayout>
+
 
     <LinearLayout
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -198,19 +232,6 @@
     </RelativeLayout>-->
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/main_app_font"
-        android:shadowColor="@color/black"
-        android:shadowRadius="20"
-        android:textColor="@color/black"
-        android:textStyle="italic"
-        android:text="Quick Shape"
-        android:textSize="50sp"
-        android:layout_marginLeft="310dp"
-        android:layout_marginTop="110dp"
-        android:padding="10dp"
-        android:rotation="17" />
+
 
 </RelativeLayout>
