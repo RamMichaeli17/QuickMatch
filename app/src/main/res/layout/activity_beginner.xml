@@ -10,6 +10,15 @@
     >
 
     <!--Pause Button-->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="next"
+        android:layout_below="@id/pauseBtn"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="20dp"
+        android:id="@+id/GALTESTnext"
+        />
     <ImageButton
         android:layout_width="25dp"
         android:layout_height="35dp"
@@ -332,9 +341,205 @@
             app:lottie_loop="false"/>
     </RelativeLayout>
 
+    <!--Tutorial TextViews-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/main_shape_outline"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/main_app_font"
+        android:textSize="30sp"
+        android:alpha="0"
+        android:text="Welcome to the tutorial , click next to begin"
+        android:id="@+id/welcometuttv"
+        />
+
+    <!--Tutorial progress bar-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This is the progress bar\nit indicates how much time you have left"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:layout_below="@id/tv_points"
+        android:fontFamily="@font/main_app_font"
+        android:shadowColor="@color/lightblack"
+        android:shadowRadius="10"
+        android:shadowDx="-20"
+        android:shadowDy="10"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:alpha="0"
+        android:id="@+id/tutorialprogbar"
+        />
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rotation="140"
+        android:alpha="0"
+        android:scaleY="-1"
+        android:scaleX="1"
+        android:layout_toEndOf="@id/tutorialprogbar"
+        android:layout_alignBottom="@id/tutorialprogbar"
+        android:layout_marginVertical="20dp"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="false"
+        app:lottie_rawRes="@raw/arrowtutorial"
+        android:id="@+id/tutorialprogbarArrow"/>
+
+    <!--Tutorial nextBtn-->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:fontFamily="@font/main_app_font"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:visibility="gone"
+        android:textAllCaps="false"
+        android:background="@drawable/leaving_selector"
+        android:id="@+id/nextBtn"
+        />
 
 
+    <!--Tutorial center shape-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:fontFamily="@font/main_app_font"
+        android:shadowColor="@color/lightblack"
+        android:shadowRadius="10"
+        android:shadowDx="-20"
+        android:shadowDy="10"
+        android:alpha="0"
+        android:text="This is the shape that\nyou will have to match your answer to"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/main_shape_outline"
+        android:id="@+id/centerShapeTut"
+        />
 
+    <!--Tutorial colors-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:fontFamily="@font/main_app_font"
+        android:shadowColor="@color/lightblack"
+        android:shadowRadius="10"
+        android:shadowDx="-20"
+        android:shadowDy="10"
+        android:alpha="0"
+        android:text="You match your answer by rotating the colors"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@id/main_shape_outline"
+
+        android:id="@+id/colorstut1"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:fontFamily="@font/main_app_font"
+        android:shadowColor="@color/lightblack"
+        android:shadowRadius="10"
+        android:shadowDx="-20"
+        android:shadowDy="10"
+        android:alpha="0"
+        android:text="  The top color is your answer"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@id/colorstut1"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:id="@+id/colorstut2"/>
+
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_baseline_arrow_downward_24"
+        android:layout_below="@id/colorstut2"
+        android:layout_alignStart="@id/tutorialprogbar"
+        android:layout_marginHorizontal="21dp"
+        android:alpha="0"
+        android:id="@+id/colorstutarrowdown"
+        />
+
+    <!--Tutorial shape-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/main_shape_outline"
+        android:layout_alignParentEnd="true"
+        android:text="Same thing for the shape"
+        android:fontFamily="@font/main_app_font"
+        android:shadowColor="@color/lightblack"
+        android:shadowRadius="10"
+        android:shadowDx="-20"
+        android:shadowDy="10"
+        android:alpha="0"
+        android:textSize="25sp"
+        android:layout_marginEnd="45dp"
+        android:id="@+id/shapestut"
+        />
+
+    <!--Tutorial ending-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/main_shape_outline"
+        android:text="And thats all you need to know!"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/main_app_font"
+        android:shadowColor="@color/lightblack"
+        android:shadowRadius="10"
+        android:shadowDx="-20"
+        android:shadowDy="10"
+        android:alpha="0"
+        android:textSize="25sp"
+        android:layout_marginEnd="45dp"
+        android:id="@+id/thatsitTut"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/thatsitTut"
+        android:layout_marginVertical="50dp"
+        android:id="@+id/finishTutLL">
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Finish"
+        android:fontFamily="@font/main_app_font"
+        android:background="@drawable/custom_game_over_buttons"
+        android:id="@+id/finishTutbtn"
+        android:layout_margin="10dp"
+android:visibility="gone"
+        android:alpha="0"
+        android:layout_centerInParent="true"
+        />
+
+        <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Replay"
+            android:fontFamily="@font/main_app_font"
+            android:layout_margin="10dp"
+            android:alpha="0"
+            android:visibility="gone"
+        android:background="@drawable/custom_game_over_buttons"
+        android:id="@+id/replayTutbtn"
+        android:layout_centerInParent="true"
+        />
+
+    </LinearLayout>
 
 
 </RelativeLayout>

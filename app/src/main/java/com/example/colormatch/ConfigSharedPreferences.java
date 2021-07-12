@@ -21,6 +21,7 @@ public class ConfigSharedPreferences {
      */
 
     private static final String LIST_KEY = "list_key";
+    private static final String FIRST_TIME = "true";
 
     public static void writeListInPref(Context context, ArrayList<HighScoreObject> list) {
         Gson gson = new Gson();
@@ -40,6 +41,22 @@ public class ConfigSharedPreferences {
         Type type = new TypeToken<ArrayList<HighScoreObject>>(){}.getType(); // Set the conversion to be from Json to ArrayList (using getType on our list)
         ArrayList<HighScoreObject> list = gson.fromJson(jsonString,type); // Convert the extracted data from shared preferences to the above type (ArrayList) and store it in variable 'list'
         return list;
+    }
+
+    public static void writeIsItFirstTime(Context context, boolean firstTime) {
+
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context); // Get shared preferences
+        SharedPreferences.Editor editor = pref.edit(); // Get editor for shared preferences (since we want to write to shared preferences)
+        editor.putBoolean(FIRST_TIME, firstTime); // update firstTime indicator
+        editor.apply();
+    }
+
+    public static boolean readIsItFirstTime(Context context) {
+
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context); // Get shared preferences
+        boolean firstTime = pref.getBoolean(FIRST_TIME,true); // Get firstTime indicator status
+
+        return firstTime;
     }
 }
 
