@@ -22,7 +22,7 @@
     <string name="Score">Score</string>
     <string name="high_scores">High Scores</string>
     <string name="clear_btn">Clear</string>
-    <string name="points_calculator">Points: 0</string>
+    <string name="points_calculator">"Points: "</string>
     <string name="moving_shape_alarm">Moving shape!</string>
     <string name="disppearing_pause_notice">Paused</string>
     <string name="cancel_btn">Cancel</string>

@@ -269,7 +269,7 @@ public class GameActivity extends AppCompatActivity {
         progressBar.setProgress(startTime);
 
         //display the starting points
-        tv_points.setText("Points: " + currentPoints);
+        tv_points.setText(R.string.points_calculator + currentPoints);
 
         //generate random shape and color at the start of the game
         r = new Random();
@@ -363,7 +363,7 @@ public class GameActivity extends AppCompatActivity {
                         //increase points and show them
 
                         currentPoints = currentPoints +1;
-                        tv_points.setText("Points: "+currentPoints);
+                        tv_points.setText(getString(R.string.points_calculator)+currentPoints);
 
                         // reset the chosenAnswers array
                         Arrays.fill(chosenAnswers,0 ); // java method to fill every index in the array with value 0 (best way to reset the array)
