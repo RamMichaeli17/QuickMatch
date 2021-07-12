@@ -13,6 +13,7 @@ import android.graphics.Path;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -37,12 +38,15 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -454,6 +458,8 @@ public class GameActivity extends AppCompatActivity {
                         finalscoreVALUETV.setText(currentPoints+"");
 
 
+                        RelativeLayout relativeLayout = dialog.findViewById(R.id.game_over_layout);
+                        Button shareBtn = dialog.findViewById(R.id.share_score);
                         Button restartGameOver = dialog.findViewById(R.id.replay);
                         Button mainMenu= dialog.findViewById(R.id.mainmenu);
                         Button submitGameOverBTN=dialog.findViewById(R.id.submit_game_over);
@@ -479,6 +485,37 @@ public class GameActivity extends AppCompatActivity {
 
                         }
 
+                        shareBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                String sharedText = getString(R.string.with_share);
+                                Bitmap bitmap = getBitmapFromView(relativeLayout);
+
+
+
+                                try {
+                                    File file = new File(getApplicationContext().getExternalCacheDir(), File.separator +"Quick Match Record.png");
+                                    FileOutputStream fOut = new FileOutputStream(file);
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+                                    fOut.flush();
+                                    fOut.close();
+                                    file.setReadable(true, false);
+                                    final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    Uri photoURI = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID +".provider", file);
+
+                                    intent.putExtra(Intent.EXTRA_TEXT,sharedText);
+                                    intent.putExtra(Intent.EXTRA_STREAM, photoURI);
+                                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                    intent.setType("image/png");
+
+                                    startActivity(Intent.createChooser(intent, "Share image via"));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
 
                         restartGameOver.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -1117,6 +1154,27 @@ public class GameActivity extends AppCompatActivity {
         };
 
         t.start();
+    }
+
+    // Convert a view (layout) to a picture
+    public static Bitmap getBitmapFromView(View view) {
+        //Define a bitmap with the same size as the view
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(),Bitmap.Config.ARGB_8888);
+        //Bind a canvas to it
+        Canvas canvas = new Canvas(returnedBitmap);
+        //Get the view's background
+        Drawable bgDrawable =view.getBackground();
+        if (bgDrawable!=null) {
+            //has background drawable, then draw it on the canvas
+            bgDrawable.draw(canvas);
+        }   else{
+            //does not have background drawable, then draw white background on the canvas
+            canvas.drawColor(Color.WHITE);
+        }
+        // draw the view on the canvas
+        view.draw(canvas);
+        //return the bitmap
+        return returnedBitmap;
     }
     @Override
     protected void onPause() {
