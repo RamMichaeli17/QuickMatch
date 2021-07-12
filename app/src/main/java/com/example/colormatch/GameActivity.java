@@ -357,7 +357,7 @@ public class GameActivity extends AppCompatActivity {
                     handler.postDelayed(runnable, 10);
                 }
                 else{ // check if the color and shape is correct
-                    if ((chosenColor==selectedColor)&&(4-(chosenShapePositionInAnswers+rotationCounter))%4==0  ){
+                    if ((chosenColor==selectedColor)&&(4-(chosenShapePositionInAnswers+rotationCounter))%4==0  ||true){
 
                         //increase points and show them
                         levelsPlayedCounter++; // For game over dialog
@@ -727,7 +727,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        t.interrupt();
+        t.interrupt(); // Stop the time counter
         song.setVolume(0,0);
 
     }
@@ -822,24 +822,16 @@ public class GameActivity extends AppCompatActivity {
 
     public void pauseTheGame()
     {
-        // This method takes care of pausing the game
-/*        if(difficuiltyAlertTV.getAlpha()==0.6f) // If a difficuilty alert (moving shape!) is on the screen
-            difficuiltyAlertTV.setAlpha(0.1f); // make it less noticeable*/
-
         t.interrupt(); // stop counting play time seconds
-
-
 
         gameIsNotPaused=false; // used in many places that needs to know if the game is paused or running
         currentTime=startTime; // reset the time left
         handler.removeCallbacks(runnable); // stop the handler - a way to pause the game
-     /*   continueBTN.setVisibility(View.VISIBLE); // show the 'continue' and 'exit' buttons
-        exitBTN.setVisibility(View.VISIBLE);*/
 
         rotatingAnswersLL.setAlpha((float) 0.1); // make the bottom half of the screen (linear layout containing the answers) less noticeable
         fourColorsImage.setClickable(false); // disable the ability to rotate the colors
         fourShapesLayout.setClickable(false); // disable the ability to click on the 4 shape-answers
-       // paused.setVisibility(View.VISIBLE); // show "Paused"
+
         ShapeFillerColor.setVisibility(View.INVISIBLE); // remove shape in the middle of the screen
         ShapeOutline.setVisibility(View.INVISIBLE);
 
@@ -947,7 +939,6 @@ public class GameActivity extends AppCompatActivity {
 
 
 
-
         handler.postDelayed(runnable, 3000); // continue the game after 3 seconds
         // these 4 lines of code is , again , to draw in the middle of the screen a new shape , and then 3 wrong answers and 1 correct answer
         // ** we change the shapes to avoid pause-cheating
@@ -988,15 +979,13 @@ public class GameActivity extends AppCompatActivity {
 
                                 if (currentPoints == 2) // If this wont be here (When game returns) we lose the "difficulty effect" (moving shape!) when we resume the game
                                     moveShape();
-                               // if (currentPoints==3)
-                                playIngameAnimation("blinking");
 
                                 gameIsNotPaused = true;
 
                                 ShapeFillerColor.setVisibility(View.VISIBLE);
                                 ShapeOutline.setVisibility(View.VISIBLE);
 
-                                startClock();
+                                startClock(); // Resume counting time
 
                             }
                         });
@@ -1067,13 +1056,15 @@ public class GameActivity extends AppCompatActivity {
                     public void run() {
                         ShapeFillerColor.setVisibility(View.VISIBLE);
                         ShapeOutline.setVisibility(View.VISIBLE);
-                        airplane.cancelAnimation();
+                        airplane.setTranslationX(0);
+                        fantasticTV.setTranslationX(0);
+
+
                         gameIsNotPaused=true;
                         airPlanePause =false; // Enable game loop
                         handler.postDelayed(runnable,20); // Resume
                     }
                 });
-
                 break;
 
             case "trap_rotate":
@@ -1083,18 +1074,12 @@ public class GameActivity extends AppCompatActivity {
                     public void run() {
                         trapArrows.animate().alpha(0).setDuration(200).setStartDelay(1000).start();
                         trapArrows.animate().setDuration(400).translationX(0).setStartDelay(1000);
-
                     }
                 });
-
-
-
                 animator0 = ObjectAnimator.ofFloat(answerPositions[0],"rotation",360).setDuration(startTime/7);
                 animator1 = ObjectAnimator.ofFloat(answerPositions[1],"rotation",360).setDuration(startTime/7);
                 animator2 = ObjectAnimator.ofFloat(answerPositions[2],"rotation",360).setDuration(startTime/7);
                 animator3 = ObjectAnimator.ofFloat(answerPositions[3],"rotation",360).setDuration(startTime/7);
-
-
 
                 trapRotateAnimationSet.play(animator0).with(animator1).with(animator2).with(animator3);
                 trapRotateAnimationSet.start();
