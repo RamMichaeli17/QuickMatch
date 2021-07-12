@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Quick Match</string>
     <string name="about_us_title">אודותינו</string>
-    <string name="about_us_des">"רם מיכאלי, גל ישראלי ויוליה קודרקו\nפורסם לראשונה: 13 ביולי 2021\nגודל קובץ APK: "</string>
+    <string name="about_us_des">רם מיכאלי, גל ישראלי ויוליה קודרקו\nפורסם לראשונה: 13 ביולי 2021</string>
     <string name="easy_btn">מתחילים</string>
     <string name="medium_btn">מתקדמים</string>
     <string name="hard_btn">מקצוענים</string>
@@ -46,4 +46,16 @@
     <string name="mins">דק\'</string>
     <string name="secs">שנ\'</string>
     <string name="submit_nick">הניקוד שלך התווסף לרשימת השיאים</string>
+    <string name="welcome_tutorial">ברוך הבא למדריך, לחץ הבא כדי להתחיל</string>
+    <string name="progress_tutorial">זהו מד הזמן\nהוא מסמל כמה זמן נשאר לך בתור</string>
+    <string name="next_tutorial">המשך</string>
+    <string name="shape_tutorial">זוהי הצורה שאותה\nתצטרך להתאים לתשובה שלך</string>
+    <string name="match_color_tutorial">אתה מתאים את התשובה על ידי סיבוב הצבעים</string>
+    <string name="match_color2_tutorial">הצבע העליון הוא הצבע שייבחר כתשובתך</string>
+    <string name="shape2_tutorial">אותו הדבר לגבי הצורות</string>
+    <string name="thats_all_tutorial">וזה כל מה שאתה צריך לדעת!</string>
+    <string name="finish_tutorial">סיום</string>
+    <string name="replay_tutorial">שוב</string>
+    <string name="simple_right_tutorial">פשוט, נכון?</string>
+    <string name="seeyou_ingame_tutorial">נתראה במשחק!</string>
 </resources>

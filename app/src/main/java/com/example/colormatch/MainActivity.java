@@ -1,22 +1,17 @@
 package com.example.colormatch;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     Animation scaleUp, scaleDown; // Buttons animations
 
 
-    ImageButton about_us_bn, music_bn, sound_btn, goToDB, settingsBtn; //Settings buttons
+    ImageButton about_us_bn, music_bn, sound_btn, goToHighScores, settingsBtn; //Settings buttons
     MediaPlayer song; //Background songs
     MediaPlayer clickSound;
     boolean musicButtonState = true; //Music mode
@@ -67,12 +62,6 @@ public class MainActivity extends AppCompatActivity {
             soundButtonState=extras.getBoolean("soundButtonState",true);
         }
 
-
-
-
-
-
-
         //Topic animations
         colorIv = findViewById(R.id.color_topic);
         matchIv = findViewById(R.id.match_topic);
@@ -99,11 +88,10 @@ public class MainActivity extends AppCompatActivity {
         song.setLooping(true);
         song.start();
 
-
         scaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up);
         scaleDown = AnimationUtils.loadAnimation(this,R.anim.scale_down);
 
-        goToDB=findViewById(R.id.trophy_button);
+        goToHighScores =findViewById(R.id.trophy_button);
 
         //Pop Up Menu
         settingsBtn.setOnClickListener(new View.OnClickListener() {
@@ -119,9 +107,9 @@ public class MainActivity extends AppCompatActivity {
                     sound_btn.setVisibility(View.VISIBLE);
                     sound_btn.startAnimation(fromBottom);
                     sound_btn.setClickable(true);
-                    goToDB.setVisibility(View.VISIBLE);
-                    goToDB.startAnimation(fromBottom);
-                    goToDB.setClickable(true);
+                    goToHighScores.setVisibility(View.VISIBLE);
+                    goToHighScores.startAnimation(fromBottom);
+                    goToHighScores.setClickable(true);
                     settingsBtn.startAnimation(rotateOpen);
                     clicked=true;
                 }
@@ -135,9 +123,9 @@ public class MainActivity extends AppCompatActivity {
                     sound_btn.setVisibility(View.INVISIBLE);
                     sound_btn.startAnimation(toBottom);
                     sound_btn.setClickable(false);
-                    goToDB.setVisibility(View.INVISIBLE);
-                    goToDB.startAnimation(toBottom);
-                    goToDB.setClickable(false);
+                    goToHighScores.setVisibility(View.INVISIBLE);
+                    goToHighScores.startAnimation(toBottom);
+                    goToHighScores.setClickable(false);
                     settingsBtn.startAnimation(rotateClose);
                     clicked=false;
                 }
@@ -265,11 +253,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        goToDB.setOnClickListener(new View.OnClickListener() {
+        goToHighScores.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, HighScore.class);
-                /* intent.putExtra("selectedMp3",SELECTED_MP3_INT);*/
                 startActivity(intent);
                 if(soundButtonState)clickSound.start();
             }
@@ -296,13 +283,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-    /*    startActivity(new Intent(MainActivity.this,AreYouSureYouWantToExit.class));
-        // super.onBackPressed();*/
+         //super.onBackPressed();
         Dialog dialog= new Dialog(MainActivity.this);
         dialog.setContentView(R.layout.areyousureyouwanttoexit);
 
         int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
-        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.40);
+        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.45);
         dialog.getWindow().setLayout(width, height);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -326,13 +312,6 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
-
-
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        song.pause();
-//    }
 
     @Override
     protected void onResume() {

@@ -34,7 +34,7 @@ public class HighScore extends AppCompatActivity {
         clearBTN=findViewById(R.id.clearBTN);
         backgroundStars=findViewById(R.id.backgroundStars);
 
-        ObjectAnimator animation1 = ObjectAnimator.ofFloat(backgroundStars,"translationY",-450);
+        ObjectAnimator animation1 = ObjectAnimator.ofFloat(backgroundStars,"translationY",-50);
         animation1.setDuration(1200);
         ObjectAnimator animation2 = ObjectAnimator.ofFloat(backgroundStars,"alpha",1);
         animation2.setDuration(2500);
@@ -59,7 +59,7 @@ public class HighScore extends AppCompatActivity {
                 dialog.setContentView(R.layout.areyousureyouwanttoclear);
 
                 int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
-                int height = (int)(getResources().getDisplayMetrics().heightPixels*0.4);
+                int height = (int)(getResources().getDisplayMetrics().heightPixels*0.45);
                 dialog.getWindow().setLayout(width, height);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 

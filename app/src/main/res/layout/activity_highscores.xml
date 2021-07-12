@@ -22,18 +22,6 @@
         android:layout_centerHorizontal="true"
         android:background="@null" />
 
-<!--    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/highscores_decoration_one"
-        android:layout_alignParentStart="true" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/highscores_decoration_two"
-        android:layout_alignParentEnd="true" />-->
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,62 +32,6 @@
         android:layout_marginTop="3dp"
         android:id="@+id/HighscoresTV" />
 
-
-<!-- This was used to manually enter scores. scores will now be generated from playing the game
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerHorizontal="true"
-    android:id="@+id/LinearLayout"
-    android:layout_marginTop="35dp">
-    <EditText
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:hint="Username"
-        android:id="@+id/usernameET"
-        android:layout_margin="5dp"
-        />
-
-    <Space
-        android:layout_width="20dp"
-        android:layout_height="0dp"/>
-
-    <EditText
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:hint="Score"
-        android:id="@+id/scoreET"
-        android:layout_margin="5dp"
-        />
-
-    <Button
-        android:id="@+id/addBTNsharedPreferences"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginLeft="20dp"
-        android:text="Add"
-        android:layout_marginTop="5dp"
-        android:textAllCaps="false"
-        android:textSize="15sp"
-        android:background="@null"
-
-
-        />
-    <Button
-        android:id="@+id/clearBTN"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginLeft="20dp"
-        android:text="Clear"
-        android:layout_marginTop="5dp"
-        android:textAllCaps="false"
-        android:textSize="15sp"
-        android:background="@null"
-
-
-        />
-</LinearLayout>
--->
 
     <ListView
         android:layout_width="match_parent"

@@ -25,11 +25,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New High Score!"
+        android:text="@string/new_high_score"
         android:textSize="30dp"
         android:fontFamily="@font/main_app_font"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="170dp"
         android:layout_marginEnd="45dp"
         android:shadowColor="@color/galcustom"
         android:shadowRadius="10"
@@ -151,6 +151,7 @@
             android:layout_marginTop="12dp"
             android:inputType="text"
             android:textStyle="italic"
+            android:gravity="center"
             android:id="@+id/nicknameET"
             android:layout_below="@id/finalscoreTV"
             android:fontFamily="@font/aboutus_popup_font" />
@@ -215,55 +216,6 @@
 
         </LinearLayout>
 
-
-   <!-- <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="top">
-
-        <ImageButton
-            android:layout_width="65dp"
-            android:layout_height="100dp"
-            android:src="@drawable/facebook"
-            android:scaleType="fitCenter"
-            android:background="@null"
-            android:layout_marginLeft="50dp"
-            android:id="@+id/facebook"/>
-
-        <ImageButton
-            android:layout_width="65dp"
-            android:layout_height="100dp"
-            android:src="@drawable/instagram"
-            android:scaleType="fitCenter"
-            android:background="@null"
-            android:layout_toEndOf="@+id/facebook"
-            android:layout_marginStart="20dp"
-            android:id="@+id/instagram" />
-
-        <ImageButton
-            android:layout_width="65dp"
-            android:layout_height="100dp"
-            android:src="@drawable/whatsapp"
-            android:scaleType="fitCenter"
-            android:background="@null"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/instagram"
-            android:id="@+id/whatsapp"
-            android:layout_marginStart="20dp"/>
-
-        <ImageButton
-            android:layout_width="65dp"
-            android:layout_height="100dp"
-            android:src="@drawable/gmail"
-            android:scaleType="fitCenter"
-            android:background="@null"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/whatsapp"
-            android:layout_marginStart="20dp"
-            android:id="@+id/gmail"/>
-
-    </RelativeLayout>-->
 
 
 

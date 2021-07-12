@@ -350,7 +350,7 @@
         android:fontFamily="@font/main_app_font"
         android:textSize="30sp"
         android:alpha="0"
-        android:text="Welcome to the tutorial , click next to begin"
+        android:text="@string/welcome_tutorial"
         android:id="@+id/welcometuttv"
         />
 
@@ -358,7 +358,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This is the progress bar\nit indicates how much time you have left"
+        android:text="@string/progress_tutorial"
         android:gravity="center"
         android:textSize="25sp"
         android:layout_below="@id/tv_points"
@@ -391,7 +391,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Next"
+        android:text="@string/next_tutorial"
         android:fontFamily="@font/main_app_font"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
@@ -415,7 +415,7 @@
         android:shadowDx="-20"
         android:shadowDy="10"
         android:alpha="0"
-        android:text="This is the shape that\nyou will have to match your answer to"
+        android:text="@string/shape_tutorial"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/main_shape_outline"
         android:id="@+id/centerShapeTut"
@@ -433,7 +433,7 @@
         android:shadowDx="-20"
         android:shadowDy="10"
         android:alpha="0"
-        android:text="You match your answer by rotating the colors"
+        android:text="@string/match_color_tutorial"
         android:layout_centerHorizontal="true"
         android:layout_alignBottom="@id/main_shape_outline"
 
@@ -449,11 +449,11 @@
         android:shadowDx="-20"
         android:shadowDy="10"
         android:alpha="0"
-        android:text="  The top color is your answer"
+        android:text="@string/match_color2_tutorial"
         android:layout_centerHorizontal="true"
         android:layout_alignBottom="@id/colorstut1"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="15dp"
         android:id="@+id/colorstut2"/>
 
 
@@ -474,7 +474,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/main_shape_outline"
         android:layout_alignParentEnd="true"
-        android:text="Same thing for the shape"
+        android:text="@string/shape2_tutorial"
         android:fontFamily="@font/main_app_font"
         android:shadowColor="@color/lightblack"
         android:shadowRadius="10"
@@ -491,7 +491,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/main_shape_outline"
-        android:text="And thats all you need to know!"
+        android:text="@string/thats_all_tutorial"
         android:layout_marginBottom="30dp"
         android:gravity="center"
         android:layout_centerHorizontal="true"
@@ -516,7 +516,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Finish"
+        android:text="@string/finish_tutorial"
         android:fontFamily="@font/main_app_font"
         android:background="@drawable/custom_game_over_buttons"
         android:id="@+id/finishTutbtn"
@@ -529,7 +529,7 @@ android:visibility="gone"
         <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Replay"
+        android:text="@string/replay_tutorial"
             android:fontFamily="@font/main_app_font"
             android:layout_margin="10dp"
             android:alpha="0"

@@ -28,7 +28,7 @@
 <!--Menu navigation buttons-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:orientation="vertical"
         android:layout_marginTop="50dp">
 
@@ -46,7 +46,8 @@
             android:id="@+id/easy_btn"
             android:padding="10dp"
             android:shadowColor="@color/white"
-            android:shadowRadius="10"/>
+            android:shadowRadius="10"
+            android:layout_marginTop="15dp"/>
 
         <!--Advanced-->
         <Button
@@ -82,23 +83,7 @@
             android:shadowColor="@color/white"
             android:shadowRadius="10"/>
 
-<!--        &lt;!&ndash;1 VS 1&ndash;&gt;
-        <Button
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="28sp"
-            android:textAllCaps="false"
-            android:textColor="#F9907A"
-            android:background="@drawable/custom_main_buttons"
-            android:text="@string/dual_btn"
-            android:fontFamily="@font/main_app_font"
-            android:layout_marginTop="25dp"
-            android:id="@+id/dual_btn"
-            android:padding="10dp"
-            android:shadowColor="@color/white"
-            android:shadowRadius="10"
-            android:layout_marginBottom="20dp"/>-->
+
     </LinearLayout>
 
 

@@ -1,6 +1,5 @@
 package com.example.colormatch;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -8,34 +7,24 @@ import androidx.core.content.ContextCompat;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.Path;
-import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.airbnb.lottie.LottieDrawable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,11 +36,11 @@ public class Tutorial extends AppCompatActivity {
 
     ImageView fourColorsImage, ShapeFillerColor, ShapeOutline;
     ImageView[] answerPositions = new ImageView[4];
-    TextView tv_points, highestscoreTV, paused, difficuiltyAlertTV, welldoneTV, fantasticTV, levelsplayedVALUETV, timeplayedVALUETV, finalscoreVALUETV;
+    TextView tv_points, highestscoreTV;
     ProgressBar progressBar;
     Button nextBtn;
     LinearLayout rotatingAnswersLL;
-    boolean firstTimeOnResumeCalled, gameIsNotPaused, airplanepause, restart = false, firstTimePlaying;
+    boolean firstTimeOnResumeCalled, gameIsNotPaused, restart = false;
     ConstraintLayout fourShapesLayout;
     ImageButton pauseBtn;
     ImageView trapArrows;
@@ -63,20 +52,8 @@ public class Tutorial extends AppCompatActivity {
 
     LottieAnimationView tutProgBarArrow;
 
-
-
-
-
-    ObjectAnimator animator0, animator1, animator2, animator3, animator4;
-    AnimatorSet traprotate_animationSet = new AnimatorSet();
-
-
-    LottieAnimationView fireworks1, fireworks2, welldoneConfeti, airplane;
-    RelativeLayout newHighScoreLayout, wellDoneLayout;
-
-
-    Handler handler, rotateHandler;
-    Runnable runnable, rotateRunnable;
+    Handler handler;
+    Runnable runnable;
 
     Random r;
 
@@ -89,7 +66,7 @@ public class Tutorial extends AppCompatActivity {
 
     int buttonState = STATE_BLUE; // Left side (colors)
 
-    int chosenShape, selectedShape;
+    int chosenShape;
     int chosenColor, selectedColor = STATE_BLUE;
     int chosenShapePositionInAnswers;
     int otherThreeAnswers;
@@ -97,7 +74,6 @@ public class Tutorial extends AppCompatActivity {
     int[] tempIndexArray = new int[4];
     int[] rotation = {0, 3, 2, 1};
 
-    // שיניתי מ12 ל24
     int currentTime = 28000;
     int startTime = 28000;
 
@@ -119,11 +95,11 @@ public class Tutorial extends AppCompatActivity {
 
     String userName;
 
-    MediaPlayer song; //Background songs
+    MediaPlayer song;
     MediaPlayer swipeSound;
     MediaPlayer clickSound;
-    boolean musicButtonState; //Music mode
-    boolean soundButtonState; //Sound mode
+    boolean musicButtonState;
+    boolean soundButtonState;
 
     int[] ShapesFillerColorArray= {R.drawable.star_1_fill_color,R.drawable.star_2_fill_color,R.drawable.star_3_fill_color,R.drawable.star_4_fill_color,R.drawable.circles_1_fill_color,R.drawable.circles_2_fill_color,R.drawable.circles_3_fill_color,R.drawable.circles_4_fill_color,R.drawable.three_shapes_1_fill_color,R.drawable.three_shapes_2_fill_color,R.drawable.three_shapes_3_fill_color,R.drawable.three_shapes_4_fill_color,R.drawable.noodles_1_fill_color,R.drawable.noodles_2_fill_color,R.drawable.noodles_3_fill_color,R.drawable.noodles_4_fill_color};
     int[] ShapesOutlineArray= {R.drawable.star_1_outline,R.drawable.star_2_outline,R.drawable.star_3_outline,R.drawable.star_4_outline,R.drawable.circles_1_outline,R.drawable.circles_2_outline,R.drawable.circles_3_outline,R.drawable.circles_4_outline,R.drawable.three_shapes_1_outline,R.drawable.three_shapes_2_outline,R.drawable.three_shapes_3_outline,R.drawable.three_shapes_4_outline,R.drawable.noodles_1_outline,R.drawable.noodles_2_outline,R.drawable.noodles_3_outline,R.drawable.noodles_4_outline};
@@ -135,7 +111,7 @@ public class Tutorial extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_beginner);
+        setContentView(R.layout.activity_game);
 
 
         //The next 32 lines of code is used to permanently hide & draw over the navigation bar at the right side of the screen
@@ -213,13 +189,7 @@ public class Tutorial extends AppCompatActivity {
         fourShapesLayout.setAlpha(0);
 
         nextBtn.setVisibility(View.VISIBLE);
-
-
-
-
-
         pauseBtn = findViewById(R.id.pauseBtn);
-
         trapArrows = findViewById(R.id.trap_arrows_iv);
 
         //Click Sound
@@ -248,13 +218,10 @@ public class Tutorial extends AppCompatActivity {
         answerPositions[2] = findViewById(R.id.shape_BOTTOM);
         answerPositions[3] = findViewById(R.id.shape_RIGHT);
 
-
         highestscoreTV.setText("12");
-
         progressBar.setMax(startTime);
         progressBar.setProgress(startTime);
 
-        //display the starting points
         tv_points.setText(R.string.points_calculator + currentPoints);
 
         //generate random shape and color for tutorial
@@ -262,7 +229,7 @@ public class Tutorial extends AppCompatActivity {
         setImageShapeAndColor();
 
 
-        generateAnswerAtPosition(2, chosenShape); // Correct answer will be at the bottom always
+        generateAnswerAtPosition(2, chosenShape);
 
         generateOtherThreeShapes();
 
@@ -711,14 +678,14 @@ public class Tutorial extends AppCompatActivity {
                 tutThatsIt.animate().alpha(0).setDuration(1200).setStartDelay(1500).withEndAction(new Runnable() {
                     @Override
                     public void run() {
-                        tutThatsIt.setText("Simple right?");
+                        tutThatsIt.setText(getString(R.string.simple_right_tutorial));
                         tutThatsIt.animate().alpha(1).setDuration(1200).setStartDelay(0).withEndAction(new Runnable() {
                             @Override
                             public void run() {
                                 tutThatsIt.animate().alpha(0).setDuration(1200).setStartDelay(500).withEndAction(new Runnable() {
                                     @Override
                                     public void run() {
-                                        tutThatsIt.setText("See you in-game!");
+                                        tutThatsIt.setText(getString(R.string.seeyou_ingame_tutorial));
                                         tutThatsIt.animate().alpha(1).setDuration(1200).setStartDelay(0);
                                         finishtut.setVisibility(View.VISIBLE);
                                         replaytut.setVisibility(View.VISIBLE);

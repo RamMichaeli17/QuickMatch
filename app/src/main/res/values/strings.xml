@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Quick Match</string>
     <string name="about_us_title">About Us:</string>
-    <string name="about_us_des">"Ram Michaeli, Gal Israeli and Yulia Kuderko\nFirst published: July 13th, 2021\nAPK File size: "</string>
+    <string name="about_us_des">Ram Michaeli, Gal Israeli and Yulia Kuderko\nFirst published: July 13th, 2021</string>
     <string name="easy_btn">Beginner</string>
     <string name="medium_btn">Advanced</string>
     <string name="hard_btn">Professional</string>
@@ -45,4 +45,16 @@
     <string name="mins">m</string>
     <string name="secs">s</string>
     <string name="submit_nick">Your score has been added to the high score list</string>
+    <string name="welcome_tutorial">Welcome to the tutorial , click next to begin</string>
+    <string name="progress_tutorial">This is the progress bar\nit indicates how much time you have left</string>
+    <string name="next_tutorial">Next</string>
+    <string name="shape_tutorial">This is the shape that\nyou will have to match your answer to</string>
+    <string name="match_color_tutorial">You match your answer by rotating the colors</string>
+    <string name="match_color2_tutorial">The top color is your answer</string>
+    <string name="shape2_tutorial">Same thing for the shape</string>
+    <string name="thats_all_tutorial">And thats all you need to know!</string>
+    <string name="finish_tutorial">Finish</string>
+    <string name="replay_tutorial">Replay</string>
+    <string name="simple_right_tutorial">Simple, right?</string>
+    <string name="seeyou_ingame_tutorial">See you in-game!</string>
 </resources>
