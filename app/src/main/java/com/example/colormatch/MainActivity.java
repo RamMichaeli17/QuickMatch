@@ -386,6 +386,7 @@ public class MainActivity extends AppCompatActivity {
         myIntent.putExtra("difficulty",difficulty);
         myIntent.putExtra("musicButtonState",musicButtonState);
         myIntent.putExtra("soundButtonState",soundButtonState);
+        myIntent.putExtra("restart",true);
         startActivity(myIntent);
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
 

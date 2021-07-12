@@ -6,12 +6,9 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,7 +16,6 @@ import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
@@ -41,15 +37,10 @@ import androidx.core.content.ContextCompat;
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -59,13 +50,13 @@ public class GameActivity extends AppCompatActivity {
     ProgressBar progressBar;
     Button continueBTN,exitBTN;
     LinearLayout rotatingAnswersLL;
-    boolean firstTimeOnResumeCalled, gameIsNotPaused,airplanepause, restart=false;
+    boolean firstTimeOnResumeCalled, gameIsNotPaused,airplanepause, restart=false,firstTimePlaying;
     ConstraintLayout fourShapesLayout;
     ImageButton pauseBtn;
     ImageView trapArrows;
 
     ObjectAnimator animator0,animator1,animator2,animator3,animator4;
-    AnimatorSet settest = new AnimatorSet();
+    AnimatorSet traprotate_animationSet = new AnimatorSet();
 
 
 
@@ -106,7 +97,6 @@ public class GameActivity extends AppCompatActivity {
     int rotationCounter=0;
 
     int highScore;
-
     int difficulty;
 
     int screenWidth;
@@ -267,6 +257,17 @@ public class GameActivity extends AppCompatActivity {
 
         // Shared Preferences - get data
         highScoreList = ConfigSharedPreferences.readListFromPref(this);
+        firstTimePlaying = ConfigSharedPreferences.readIsItFirstTime(this);
+        if (firstTimePlaying)
+        {
+            Intent firstTimeIntent = new Intent(GameActivity.this, Tutorial.class);
+            firstTimeIntent.putExtra("musicButtonState",musicButtonState);
+            firstTimeIntent.putExtra("soundButtonState",soundButtonState);
+            startActivity(firstTimeIntent);
+
+        }
+
+
         if ( highScoreList ==null || highScoreList.isEmpty()) {
             highestscoreTV.setText("0");
             highScoreList = new ArrayList<>();
@@ -450,7 +451,7 @@ public class GameActivity extends AppCompatActivity {
 
 
                         levelsplayedVALUETV.setText(levelsPlayedCounter+"");
-                        timeplayedVALUETV.setText((secondsPassed/60)+"m "+(secondsPassed+1)%60+"s");
+                        timeplayedVALUETV.setText((secondsPassed/60)+"m "+(secondsPassed)%60+"s");
                         finalscoreVALUETV.setText(currentPoints+"");
 
 
@@ -460,6 +461,7 @@ public class GameActivity extends AppCompatActivity {
                         EditText nicknameET=dialog.findViewById(R.id.nicknameET);
                         LottieAnimationView newHighScoreFireworks = dialog.findViewById(R.id.newhighscorefireworks);
                         TextView newHighScoreTV = dialog.findViewById(R.id.newhighscoreTV);
+
 
                       //  if (currentPoints == highScore + 1 )
                         {
@@ -497,8 +499,15 @@ public class GameActivity extends AppCompatActivity {
                         submitGameOverBTN.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                userName=nicknameET.getText().toString();
-                                updateHighScores();
+
+                                    submitGameOverBTN.setText("Submitted");
+                                    submitGameOverBTN.setTextSize(13);
+                                    submitGameOverBTN.setAlpha(0.4f);
+                                    userName = nicknameET.getText().toString();
+                                    updateHighScores();
+                                    submitGameOverBTN.setClickable(false);
+
+
                             }
                         });
 
@@ -704,6 +713,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        t.interrupt();
         song.setVolume(0,0);
 
     }
@@ -912,6 +922,7 @@ public class GameActivity extends AppCompatActivity {
     public void continueTheGame() {
         // This method takes care of pausing the game
         gameIsNotPaused=false;
+        t.interrupt(); // Stop counting time (relevant if we restart the gam)
         paused.setVisibility(View.VISIBLE);
         ShapeFillerColor.setVisibility(View.INVISIBLE);
         ShapeOutline.setVisibility(View.INVISIBLE);
@@ -1065,8 +1076,8 @@ public class GameActivity extends AppCompatActivity {
 
 
 
-                settest.play(animator0).with(animator1).with(animator2).with(animator3);
-                settest.start();
+                traprotate_animationSet.play(animator0).with(animator1).with(animator2).with(animator3);
+                traprotate_animationSet.start();
                 break;
         }
     }
@@ -1095,19 +1106,16 @@ public class GameActivity extends AppCompatActivity {
 
     private void startClock(){
          t = new Thread() {
-
             @Override
             public void run() {
                 try {
+                    secondsPassed++;
                     while (!isInterrupted()) {
                         Thread.sleep(1000);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Calendar c = Calendar.getInstance();
-
                                 secondsPassed++;
-
                             }
                         });
                     }
@@ -1122,7 +1130,10 @@ public class GameActivity extends AppCompatActivity {
     protected void onPause() {
         System.out.println("OnPause()");
         handler.removeCallbacks(runnable);
+        song.setVolume(0,0);
+        t.interrupt();
         super.onPause();
     }
+
 
 }
