@@ -697,8 +697,6 @@ public class GameActivity extends AppCompatActivity {
             if(gameIsNotPaused)
                 pauseTheGame();
         }
-
-
     }
 
     @Override
