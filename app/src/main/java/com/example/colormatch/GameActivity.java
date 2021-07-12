@@ -351,6 +351,7 @@ public class GameActivity extends AppCompatActivity {
                 //show progress
                 currentTime = currentTime-100;
                 progressBar.setProgress(currentTime);
+                restart=false;
 
                 //check if there is still some time left in the progressBar
                 if (currentTime>0) {
