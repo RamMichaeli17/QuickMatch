@@ -109,6 +109,9 @@ public class Tutorial extends AppCompatActivity {
 
     int difficulty;
     int nextCounter=0;
+    boolean nextCooldown=true;
+
+    Thread cooldown;
 
 
 
@@ -268,30 +271,43 @@ public class Tutorial extends AppCompatActivity {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nextCounter++;
-
-                switch (nextCounter)
+                if (nextCooldown)
                 {
-                    case 1:
-                        progressBarTutorial();
-                        break;
-                    case 2:
-                        centerShapeTutorial();
-                        break;
-                    case 3:
-                        colorsTutorial();
-                        break;
-                    case 4:
-                        colorsTutorial2();
-                        break;
-                    case 5:
-                        shapeTutorial();
-                        break;
-                   case 6:
-                        thatsall();
-                        break;
-                }
+                    nextCounter++;
+                    nextCooldown=false;
+                    switch (nextCounter)
+                    {
+                        case 1:
+                            progressBarTutorial();
+                            cooldownNext();
+                            nextBtn.animate().alpha(0.3f).setDuration(500);
+                            break;
+                        case 2:
+                            centerShapeTutorial();
+                            cooldownNext();
+                            nextBtn.animate().alpha(0.3f).setDuration(500);
+                            break;
+                        case 3:
+                            colorsTutorial();
+                            cooldownNext();
+                            nextBtn.animate().alpha(0.3f).setDuration(500);
+                            break;
+                        case 4:
+                            colorsTutorial2();
+                            cooldownNext();
+                            nextBtn.animate().alpha(0.3f).setDuration(500);
+                            break;
+                        case 5:
+                            shapeTutorial();
+                            cooldownNext();
+                            nextBtn.animate().alpha(0.3f).setDuration(500);
+                            break;
+                        case 6:
+                            thatsall();
+                            break;
+                    }
 
+                }
             }
         });
 
@@ -722,8 +738,29 @@ public class Tutorial extends AppCompatActivity {
 
     }
 
+    private void cooldownNext(){
+        cooldown = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(3000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                nextCooldown=true;
+                                nextBtn.animate().alpha(1).setDuration(500);
+                                cooldown.interrupt();
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
 
-
+        cooldown.start();
+    }
 
 
 

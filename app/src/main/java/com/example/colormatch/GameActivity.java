@@ -258,7 +258,7 @@ public class GameActivity extends AppCompatActivity {
         // Shared Preferences - get data
         highScoreList = ConfigSharedPreferences.readListFromPref(this);
         firstTimePlaying = ConfigSharedPreferences.readIsItFirstTime(this);
-        if (firstTimePlaying)
+       // if (firstTimePlaying)
         {
             Intent firstTimeIntent = new Intent(GameActivity.this, Tutorial.class);
             firstTimeIntent.putExtra("musicButtonState",musicButtonState);
