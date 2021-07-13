@@ -7,14 +7,6 @@
     android:background="@drawable/highscore_background">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/backgroundgalversion"
-        android:layout_marginTop="25dp"
-        android:alpha="0"
-        android:id="@+id/backgroundStars"/>
-
-    <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:src="@drawable/trophy"
@@ -31,6 +23,12 @@
         android:textSize="27dp"
         android:layout_marginTop="3dp"
         android:id="@+id/HighscoresTV" />
+
+    <com.example.colormatch.FlyingBalloon
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        />
 
 
     <ListView

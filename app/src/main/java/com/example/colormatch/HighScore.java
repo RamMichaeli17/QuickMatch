@@ -32,16 +32,6 @@ public class HighScore extends AppCompatActivity {
 
         scorelistview=findViewById(R.id.listView);
         clearBTN=findViewById(R.id.clearBTN);
-        backgroundStars=findViewById(R.id.backgroundStars);
-
-        ObjectAnimator animation1 = ObjectAnimator.ofFloat(backgroundStars,"translationY",-50);
-        animation1.setDuration(1200);
-        ObjectAnimator animation2 = ObjectAnimator.ofFloat(backgroundStars,"alpha",1);
-        animation2.setDuration(2500);
-
-        AnimatorSet set = new AnimatorSet();
-        set.play(animation1).with(animation2);
-        set.start();
 
 
         // Shared Preferences - get data
