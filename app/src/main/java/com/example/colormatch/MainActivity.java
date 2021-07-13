@@ -298,6 +298,7 @@ public class MainActivity extends AppCompatActivity {
         yesToQuitBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
                 finishAffinity();
             }
         });
