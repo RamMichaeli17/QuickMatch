@@ -52,25 +52,6 @@ import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
 
-    Button nxtBtn;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     ImageView fourColorsImage, ShapeFillerColor, ShapeOutline;
     ImageView[] answerPositions= new ImageView[4]; //contains the 4 rotating shapes
     TextView tv_points, highestScoreTV,paused, difficultyAlertTV, wellDoneTV,fantasticTV, levelsPlayedVALUETV, timePlayedVALUETV, finalScoreVALUETV;
@@ -133,23 +114,6 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
-
-        nxtBtn= findViewById(R.id.GALTESTnext);
-        nxtBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentTime=0;
-            }
-        });
-
-
-
-
-
-
-
-
 
         //The next 32 lines of code is used to permanently hide & draw over the navigation bar at the right side of the screen
         {
@@ -357,7 +321,7 @@ public class GameActivity extends AppCompatActivity {
                     handler.postDelayed(runnable, 10);
                 }
                 else{ // check if the color and shape is correct
-                    if ((chosenColor==selectedColor)&&(4-(chosenShapePositionInAnswers+rotationCounter))%4==0 ||true ){
+                    if ((chosenColor==selectedColor)&&(4-(chosenShapePositionInAnswers+rotationCounter))%4==0 ){
 
                         //increase points and show them
                         levelsPlayedCounter++; // For game over dialog
