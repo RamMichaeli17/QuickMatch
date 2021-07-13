@@ -1033,7 +1033,6 @@ public class GameActivity extends AppCompatActivity {
                 break;
 
             case "trap_rotate":
-
                 trapArrows.animate().alpha(1).setDuration(150).setStartDelay(0).translationX(300).withEndAction(new Runnable() {
                     @Override
                     public void run() {
@@ -1041,14 +1040,13 @@ public class GameActivity extends AppCompatActivity {
                         trapArrows.animate().setDuration(400).translationX(0).setStartDelay(1000);
                     }
                 });
-                RotateAnimation rotate = new RotateAnimation(0, 720, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                rotate.setDuration(startTime/7);
-                rotate.setInterpolator(new LinearInterpolator());
+                animator0 = ObjectAnimator.ofFloat(answerPositions[0],"rotation",360).setDuration(startTime/7);
+                animator1 = ObjectAnimator.ofFloat(answerPositions[1],"rotation",360).setDuration(startTime/7);
+                animator2 = ObjectAnimator.ofFloat(answerPositions[2],"rotation",360).setDuration(startTime/7);
+                animator3 = ObjectAnimator.ofFloat(answerPositions[3],"rotation",360).setDuration(startTime/7);
 
-                answerPositions[0].startAnimation(rotate);
-                answerPositions[1].startAnimation(rotate);
-                answerPositions[2].startAnimation(rotate);
-                answerPositions[3].startAnimation(rotate);
+                trapRotateAnimationSet.play(animator0).with(animator1).with(animator2).with(animator3);
+                trapRotateAnimationSet.start();
                 break;
 
         }
