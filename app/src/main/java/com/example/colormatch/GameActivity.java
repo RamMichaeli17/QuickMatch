@@ -39,6 +39,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import com.airbnb.lottie.L;
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 
@@ -356,7 +357,7 @@ public class GameActivity extends AppCompatActivity {
                     handler.postDelayed(runnable, 10);
                 }
                 else{ // check if the color and shape is correct
-                    if ((chosenColor==selectedColor)&&(4-(chosenShapePositionInAnswers+rotationCounter))%4==0  ){
+                    if ((chosenColor==selectedColor)&&(4-(chosenShapePositionInAnswers+rotationCounter))%4==0 ||true ){
 
                         //increase points and show them
                         levelsPlayedCounter++; // For game over dialog
@@ -372,17 +373,11 @@ public class GameActivity extends AppCompatActivity {
                         }
 
                         // Adding difficulty to level / Alerting before difficulty level
-                        if (currentPoints == 20|| currentPoints == 130)
+                        if (levelsPlayedCounter%7==6)
                             alertUserToCustomDifficulty();
 
-                        if (currentPoints == 30 || currentPoints == 140)
+                        if (levelsPlayedCounter%7==0)
                             moveShape();
-
-                        if (currentPoints == 40 || currentPoints == 150)
-                        {
-                            playIngameAnimation("welldone");
-                            currentPoints+=10;
-                        }
 
                         // Checking if new high score
                         if (highScore!=0 && currentPoints>highScore && highScoreFlag ) {
@@ -390,16 +385,23 @@ public class GameActivity extends AppCompatActivity {
                             highScoreFlag = false;
                         }
 
-                        if (currentPoints == 70 || currentPoints == 180)
+                        if (levelsPlayedCounter%4==0)
                             playIngameAnimation("trap_rotate");
 
-                        // When to say well done
-                        if(currentPoints == 80|| currentPoints == 190) {
+
+                        if (levelsPlayedCounter%4==1 && levelsPlayedCounter!=1)
+                        {
                             playIngameAnimation("welldone");
                             currentPoints+=10;
                         }
 
-                        if(currentPoints == 120 || currentPoints == 230)
+                        // When to say well done
+                        if(levelsPlayedCounter%7==1 && levelsPlayedCounter!=1) {
+                            playIngameAnimation("welldone");
+                            currentPoints+=10;
+                        }
+
+                        if(levelsPlayedCounter%10==0)
                             playIngameAnimation("airplane");
 
                         tv_points.setText(getString(R.string.points_calculator) + currentPoints);
@@ -1075,13 +1077,14 @@ public class GameActivity extends AppCompatActivity {
                         trapArrows.animate().setDuration(400).translationX(0).setStartDelay(1000);
                     }
                 });
-                animator0 = ObjectAnimator.ofFloat(answerPositions[0],"rotation",360).setDuration(startTime/7);
-                animator1 = ObjectAnimator.ofFloat(answerPositions[1],"rotation",360).setDuration(startTime/7);
-                animator2 = ObjectAnimator.ofFloat(answerPositions[2],"rotation",360).setDuration(startTime/7);
-                animator3 = ObjectAnimator.ofFloat(answerPositions[3],"rotation",360).setDuration(startTime/7);
+                RotateAnimation rotate = new RotateAnimation(0, 720, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                rotate.setDuration(startTime/7);
+                rotate.setInterpolator(new LinearInterpolator());
 
-                trapRotateAnimationSet.play(animator0).with(animator1).with(animator2).with(animator3);
-                trapRotateAnimationSet.start();
+                answerPositions[0].startAnimation(rotate);
+                answerPositions[1].startAnimation(rotate);
+                answerPositions[2].startAnimation(rotate);
+                answerPositions[3].startAnimation(rotate);
                 break;
 
         }
