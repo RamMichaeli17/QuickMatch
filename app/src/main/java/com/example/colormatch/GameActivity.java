@@ -82,8 +82,8 @@ public class GameActivity extends AppCompatActivity {
     int[] rotation = {0,1,2,3};
 
     //time set to 8 seconds
-    int currentTime = 50000;
-    int startTime = 50000;
+    int currentTime = 25000;
+    int startTime = 25000;
     int currentPoints = 0;
     int levelsPlayedCounter=0;
     int[] tempIndexArray = new int[4];
