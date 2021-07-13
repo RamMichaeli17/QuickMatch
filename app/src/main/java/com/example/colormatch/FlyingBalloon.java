@@ -17,7 +17,7 @@ public class FlyingBalloon  extends View {
     public FlyingBalloon(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         balloon = BitmapFactory.decodeResource(getResources(),R.drawable.balloonforhighscores);
-        direction_x_balloon =0;
+        direction_x_balloon =3;
         direction_y_balloon =3;
         xAxis_balloon =630;
         yAxis_balloon =630;
@@ -37,9 +37,18 @@ public class FlyingBalloon  extends View {
         {
             direction_y_balloon =3;
         }
+        if(xAxis_balloon>=canvas.getWidth()-100)
+        {
+            direction_x_balloon=-5;
+        }
+        if(xAxis_balloon<=0)
+        {
+            direction_x_balloon=5;
+        }
 
-
-        yAxis_balloon += direction_y_balloon; // Update balloon position according to the speed (direction)
+      // Update balloon position according to the speed (direction)
+        xAxis_balloon += direction_x_balloon;
+        yAxis_balloon += direction_y_balloon;
         canvas.drawBitmap(balloon, xAxis_balloon, yAxis_balloon,paint);
         invalidate();
 
